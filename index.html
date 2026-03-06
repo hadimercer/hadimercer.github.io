@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hadi Mercer — BA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f;
+    --surface: #111518;
+    --surface2: #181d21;
+    --border: #1f2629;
+    --border2: #2a3338;
+    --accent: #00c896;
+    --accent2: #0087ff;
+    --amber: #f5a623;
+    --red: #e8443a;
+    --text: #e8eaeb;
+    --text2: #8a9299;
+    --text3: #4a5560;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Epilogue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(10,13,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+    color: var(--text2);
+    font-weight: 300;
+    max-width: 560px;
+    margin: 28px 0 48px;
+    line-height: 1.7;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .meta-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: var(--accent);
+    color: #000;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #00e0a8;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--text2);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border2);
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--text2);
+    color: var(--text);
+  }
+
+  /* ── DECORATIVE GRID LINE ── */
+  .grid-accent {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 380px;
+    height: 380px;
+    opacity: 0.04;
+    background-image:
+      linear-gradient(var(--accent) 1px, transparent 1px),
+      linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  /* ── SECTION LAYOUT ── */
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 56px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 40px;
+  }
+
+  .skill-cell {
+    background: var(--surface);
+    padding: 28px;
+  }
+
+  .skill-cell-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 0.04em;
+  }
+
+  .tag.learning {
+    border-color: var(--accent2);
+    color: var(--accent2);
+    opacity: 0.8;
+  }
+
+  /* ── PROJECTS GRID ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2px;
+    background: var(--border);
+  }
+
+  .project-card {
+    background: var(--surface);
+    padding: 36px;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+  }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .project-card:hover { background: var(--surface2); }
+  .project-card:hover::after { transform: scaleX(1); }
+
+  .project-card.coming-soon {
+    opacity: 0.45;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding: 4px 10px;
+    border: 1px solid;
+  }
+
+  .badge-live { border-color: var(--accent); color: var(--accent); }
+  .badge-live::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+  .badge-soon { border-color: var(--text3); color: var(--text3); }
+  .badge-flagship { border-color: var(--amber); color: var(--amber); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .card-project-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .card-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tech-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    border: 1px solid var(--border2);
+    padding: 3px 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .card-arrow {
+    position: absolute;
+    top: 36px;
+    right: 36px;
+    font-size: 18px;
+    color: var(--text3);
+    transition: all 0.2s;
+  }
+
+  .project-card:hover .card-arrow {
+    color: var(--accent);
+    transform: translate(3px, -3px);
+  }
+
+  /* ── PROJECT DETAIL PAGES ── */
+  .detail-page {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .detail-page.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .main-content { display: block; }
+  .main-content.hidden { display: none; }
+
+  .detail-hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 120px 40px 60px;
+  }
+
+  .detail-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-bottom: 40px;
+    transition: color 0.2s;
+    padding: 0;
+  }
+
+  .back-btn:hover { color: var(--text); }
+
+  .detail-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .detail-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .detail-tagline {
+    font-size: 18px;
+    color: var(--text2);
+    font-weight: 300;
+    max-width: 640px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  .detail-meta-row {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .detail-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 40px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 64px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .detail-content { grid-template-columns: 1fr; }
+  }
+
+  .detail-main h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--text);
+    margin: 48px 0 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .detail-main h2:first-child { margin-top: 0; }
+
+  .detail-main p {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .capability-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .capability-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .capability-list li::before {
+    content: '→';
+    font-family: 'DM Mono', monospace;
+    color: var(--accent);
+    flex-shrink: 0;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  /* ── SIDEBAR ── */
+  .detail-sidebar {
+    position: sticky;
+    top: 100px;
+  }
+
+  .sidebar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+
+  .sidebar-card h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .demo-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    color: #000;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+  }
+
+  .demo-btn:hover { background: #00e0a8; }
+
+  .github-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    color: var(--text2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border2);
+    transition: all 0.2s;
+  }
+
+  .github-btn:hover { border-color: var(--text2); color: var(--text); }
+
+  .demo-instructions {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-top: 16px;
+  }
+
+  .demo-step {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    background: rgba(0, 200, 150, 0.08);
+    border: 1px solid rgba(0, 200, 150, 0.2);
+    padding: 2px 7px;
+    flex-shrink: 0;
+    height: fit-content;
+    margin-top: 2px;
+  }
+
+  .artifact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+
+  .artifact-link:last-child { border-bottom: none; }
+  .artifact-link:hover { gap: 14px; }
+
+  .artifact-link .aicon {
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .artifact-link .atext {
+    font-size: 13px;
+    color: var(--text2);
+    flex: 1;
+  }
+
+  .artifact-link .aarrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    transition: color 0.2s;
+  }
+
+  .artifact-link:hover .aarrow { color: var(--accent); }
+
+  /* ── TIMELINE BAR ── */
+  .timeline-strip {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 40px;
+  }
+
+  .timeline-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .timeline-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .timeline-track {
+    display: flex;
+    gap: 2px;
+  }
+
+  .timeline-item {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .timeline-bar-fill {
+    height: 4px;
+    margin-bottom: 12px;
+    border-radius: 0;
+  }
+
+  .fill-complete { background: var(--accent); }
+  .fill-planned { background: var(--border2); }
+  .fill-flagship { background: var(--amber); }
+
+  .timeline-item-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .timeline-item.complete .timeline-item-label { color: var(--text2); }
+  .timeline-item.flagship .timeline-item-label { color: var(--amber); opacity: 0.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-right {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-right a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-right a:hover { color: var(--accent); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    section { padding: 60px 20px; }
+    .detail-content { padding: 40px 20px; }
+    .detail-hero { padding: 100px 20px 40px; }
+    footer { padding: 32px 20px; }
+    .timeline-strip { padding: 32px 20px; }
+  }
+
+  /* ── ENTRANCE ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  .fade-up:nth-child(2) { animation-delay: 0.2s; }
+  .fade-up:nth-child(3) { animation-delay: 0.3s; }
+  .fade-up:nth-child(4) { animation-delay: 0.4s; }
+  .fade-up:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo" onclick="showHome()">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="#about" onclick="showHome()">About</a></li>
+    <li><a href="#projects" onclick="showHome()">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<!-- ════════════════════ MAIN HOME ════════════════════ -->
+<div id="main-content" class="main-content">
+
+  <!-- HERO -->
+  <div class="hero" id="top">
+    <div class="grid-accent"></div>
+
+    <p class="hero-eyebrow fade-up">Business Analysis Portfolio — 2026</p>
+
+    <h1 class="fade-up">
+      Hadi<br><em>Mercer</em>
+    </h1>
+
+    <p class="hero-subtitle fade-up">
+      10 years of HR analytics and process engineering, formalized into a business analysis skill set. Six projects spanning requirements engineering, data pipelines, full-stack applications, and AI-assisted tooling.
+    </p>
+
+    <div class="hero-meta fade-up">
+      <div class="meta-item">
+        <span class="meta-label">Background</span>
+        <span class="meta-value">HR Analytics & Operations</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Transitioning To</span>
+        <span class="meta-value">Business Analyst</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Portfolio Projects</span>
+        <span class="meta-value">4 Live · 2 In Progress</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Location</span>
+        <span class="meta-value">Kenitra, Morocco</span>
+      </div>
+    </div>
+
+    <div class="hero-ctas fade-up">
+      <a href="#projects" class="btn-primary">View Projects ↓</a>
+      <a href="https://github.com/hadimercer" target="_blank" class="btn-secondary">GitHub ↗</a>
+      <a href="https://linkedin.com/in/hadimercer" target="_blank" class="btn-secondary">LinkedIn ↗</a>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO PROGRESS STRIP -->
+  <div class="timeline-strip">
+    <div class="timeline-inner">
+      <p class="timeline-label">Portfolio delivery — 12-week roadmap</p>
+      <div class="timeline-track">
+        <div class="timeline-item complete">
+          <div class="timeline-bar-fill fill-complete"></div>
+          <div class="timeline-item-label">S2 Comp Dash</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-bar-fill fill-complete"></div>
+          <div class="timeline-item-label">S4 IncidentOps</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-bar-fill fill-complete"></div>
+          <div class="timeline-item-label">S3 Meridian</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-bar-fill fill-complete"></div>
+          <div class="timeline-item-label">S1 Cadence</div>
+        </div>
+        <div class="timeline-item planned">
+          <div class="timeline-bar-fill fill-planned"></div>
+          <div class="timeline-item-label">F1 Process Intel</div>
+        </div>
+        <div class="timeline-item flagship">
+          <div class="timeline-bar-fill fill-flagship"></div>
+          <div class="timeline-item-label">F2 BA Co-Pilot</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT SECTION -->
+  <section id="about">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About</h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-cell">
+        <p class="skill-cell-label">Core Competencies</p>
+        <div class="skill-tags">
+          <span class="tag">Requirements Elicitation</span>
+          <span class="tag">Process Mapping</span>
+          <span class="tag">Data Analysis</span>
+          <span class="tag">Stakeholder Management</span>
+          <span class="tag">Continuous Improvement</span>
+          <span class="tag">Large Dataset Reporting</span>
+        </div>
+      </div>
+      <div class="skill-cell">
+        <p class="skill-cell-label">Technical — Established</p>
+        <div class="skill-tags">
+          <span class="tag">Excel (Advanced)</span>
+          <span class="tag">PostgreSQL / Supabase</span>
+          <span class="tag">Python</span>
+          <span class="tag">Streamlit</span>
+          <span class="tag">Plotly</span>
+          <span class="tag">Git / GitHub</span>
+        </div>
+      </div>
+      <div class="skill-cell">
+        <p class="skill-cell-label">Technical — In Progress</p>
+        <div class="skill-tags">
+          <span class="tag learning">SQL (Advanced)</span>
+          <span class="tag learning">Power BI</span>
+          <span class="tag learning">REST APIs</span>
+          <span class="tag learning">BABOK v3</span>
+          <span class="tag learning">BPMN 2.0</span>
+          <span class="tag learning">UML</span>
+        </div>
+      </div>
+      <div class="skill-cell">
+        <p class="skill-cell-label">BA Artifacts Produced</p>
+        <div class="skill-tags">
+          <span class="tag">FRD (BABOK-aligned)</span>
+          <span class="tag">BPMN Diagrams</span>
+          <span class="tag">UML Class Diagrams</span>
+          <span class="tag">Sequence Diagrams</span>
+          <span class="tag">Data Dictionaries</span>
+          <span class="tag">Traceability Matrix</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS SECTION -->
+  <section id="projects">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Projects</h2>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- S2: Comp Dashboard -->
+      <a class="project-card" href="#" onclick="showDetail('s2'); return false;">
+        <span class="card-arrow">↗</span>
+        <div class="card-badge badge-live">Live</div>
+        <h3 class="card-title">Compensation & Market Benchmarking Dashboard</h3>
+        <p class="card-desc">End-to-end BLS data pipeline feeding a real-time compensation analysis tool. Internal salary vs. market benchmarks, pay equity flags, and geographic differentials across 5 US metros.</p>
+        <div class="card-tech">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">Streamlit</span>
+          <span class="tech-tag">BLS API</span>
+          <span class="tech-tag">FRD</span>
+        </div>
+      </a>
+
+      <!-- IncidentOps -->
+      <a class="project-card" href="#" onclick="showDetail('incidentops'); return false;">
+        <span class="card-arrow">↗</span>
+        <div class="card-badge badge-live">Live</div>
+        <h3 class="card-title">IncidentOps — Process Mining Insights Hub</h3>
+        <p class="card-desc">Process mining analytics on an IT service desk event log. Surfaces cycle time bottlenecks, escalation patterns, closure governance gaps, and customer satisfaction drivers across incident variants.</p>
+        <div class="card-tech">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Process Mining</span>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">Streamlit</span>
+          <span class="tech-tag">BPMN</span>
+        </div>
+      </a>
+
+      <!-- S3: Meridian -->
+      <a class="project-card" href="#" onclick="showDetail('meridian'); return false;">
+        <span class="card-arrow">↗</span>
+        <div class="card-badge badge-live">Live</div>
+        <h3 class="card-title">Meridian — Workstream Portfolio Health Dashboard</h3>
+        <p class="card-desc">Full-stack multi-user SaaS application. Calculated RAG health scoring engine derived from milestone completion, budget burn, and blocker age — no manual colour-picking. Role-based collaboration built in.</p>
+        <div class="card-tech">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Supabase Auth</span>
+          <span class="tech-tag">RLS</span>
+          <span class="tech-tag">Streamlit</span>
+          <span class="tech-tag">35 FRs</span>
+        </div>
+      </a>
+
+      <!-- S1: Cadence -->
+      <a class="project-card" href="#" onclick="showDetail('cadence'); return false;">
+        <span class="card-arrow">↗</span>
+        <div class="card-badge badge-live">Live</div>
+        <h3 class="card-title">Cadence — HR Process Automation Hub</h3>
+        <p class="card-desc">Workflow automation tool for common HR processes — onboarding, offboarding, leave management, and policy acknowledgements. Structured intake forms feeding automated task routing and audit trails.</p>
+        <div class="card-tech">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Streamlit</span>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">BPMN</span>
+          <span class="tech-tag">Automation</span>
+        </div>
+      </a>
+
+      <!-- F1: Coming Soon -->
+      <div class="project-card coming-soon">
+        <div class="card-badge badge-soon">In Progress</div>
+        <h3 class="card-title">Operational Process Intelligence Platform</h3>
+        <p class="card-desc">What-if simulation engine for process improvement. Models the downstream impact of operational changes before implementation.</p>
+        <div class="card-tech">
+          <span class="tech-tag">Simulation</span>
+          <span class="tech-tag">Process Intelligence</span>
+          <span class="tech-tag">Python</span>
+        </div>
+      </div>
+
+      <!-- F2: Coming Soon -->
+      <div class="project-card coming-soon">
+        <div class="card-badge badge-flagship">Planned</div>
+        <h3 class="card-title">Business Analysis Co-Pilot</h3>
+        <p class="card-desc">AI-powered assistant for BA artifact generation. Produces BABOK-aligned FRDs, user stories, and traceability matrices from stakeholder conversations.</p>
+        <div class="card-tech">
+          <span class="tech-tag">LLM</span>
+          <span class="tech-tag">BABOK</span>
+          <span class="tech-tag">AI-Assisted BA</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p class="footer-left">© 2026 Hadi Mercer · BA Portfolio</p>
+    <div class="footer-right">
+      <a href="https://github.com/hadimercer" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+</div><!-- end main-content -->
+
+<!-- ════════════════════ DETAIL: S2 COMP DASHBOARD ════════════════════ -->
+<div id="detail-s2" class="detail-page">
+  <div class="detail-hero">
+    <div class="detail-hero-inner">
+      <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+      <p class="detail-eyebrow">Compensation Analytics</p>
+      <h1 class="detail-title">Compensation & Market<br>Benchmarking Dashboard</h1>
+      <p class="detail-tagline">An end-to-end data pipeline and analytics dashboard that pulls live BLS wage data, maps it to internal job families, and surfaces pay equity gaps and market positioning for HR and compensation teams.</p>
+      <div class="detail-meta-row">
+        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
+        <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · PostgreSQL · Streamlit · BLS API</span></div>
+        <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · UML Sequence · Data Dictionary · SOC Crosswalk</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-content">
+    <div class="detail-main">
+      <h2>The Problem</h2>
+      <p>Compensation teams at mid-market companies rely on manual exports from commercial survey vendors and static spreadsheets to benchmark roles. These snapshots age quickly, don't connect to internal salary data automatically, and give no systematic view of where pay gaps or equity issues exist.</p>
+      <p>This project simulates TechNova, a fictional 500-person US tech company operating across five metros, and builds the analytics infrastructure that answers: <em>are we paying competitively, and where are our equity risks?</em></p>
+
+      <h2>What It Does</h2>
+      <ul class="capability-list">
+        <li>Pulls live BLS OEWS wage data via API — P25, P50, P75 percentiles for all roles across 5 US MSAs (Austin, New York, San Francisco, Washington DC, Denver)</li>
+        <li>Loads internal salary data via validated CSV upload, mapping roles through a custom SOC crosswalk</li>
+        <li>Displays internal vs. market side-by-side with percentile toggle and below-market flags</li>
+        <li>Surfaces pay equity gap flags based on statistical analysis of salary distribution within job families</li>
+        <li>Logs all pipeline runs with error detection and data freshness indicator</li>
+      </ul>
+
+      <h2>What This Demonstrates</h2>
+      <ul class="capability-list">
+        <li>End-to-end requirements: BABOK-aligned FRD covering 18 functional requirements with MoSCoW prioritisation and traceability</li>
+        <li>API integration: OpenAPI/Swagger spec documented for the BLS OEWS data feed</li>
+        <li>Data modelling: PostgreSQL schema with validated ingestion pipeline and schema-level checks before any write operation</li>
+        <li>UML: Sequence diagram documenting the full data flow from BLS API to dashboard render</li>
+        <li>BA scoping discipline: explicit in-scope and out-of-scope decisions documented (no HRIS integration, no offer workflow, US-only)</li>
+      </ul>
+    </div>
+
+    <div class="detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Try the Application</h3>
+        <a href="https://comp-benchmarking-hadimercer-ps2.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
+        <a href="https://github.com/hadimercer/Comp-Benchmarking" target="_blank" class="github-btn">View on GitHub</a>
+        <div class="demo-instructions">
+          <div class="demo-step"><span class="step-num">1</span><span>Filter by job family, level, and location to see market ranges</span></div>
+          <div class="demo-step"><span class="step-num">2</span><span>Toggle between P25 / P50 / P75 percentile views</span></div>
+          <div class="demo-step"><span class="step-num">3</span><span>Check the Below-Market Flags tab for roles needing attention</span></div>
+          <div class="demo-step"><span class="step-num">4</span><span>Explore the Pay Equity view for within-family distribution gaps</span></div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <h3>BA Artifacts</h3>
+        <a href="https://github.com/hadimercer/Comp-Benchmarking/tree/main/docs" target="_blank" class="artifact-link">
+          <span class="aicon">📄</span><span class="atext">Functional Requirements Document</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Comp-Benchmarking/tree/main/docs" target="_blank" class="artifact-link">
+          <span class="aicon">🔀</span><span class="atext">UML Sequence Diagram</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Comp-Benchmarking/tree/main/docs" target="_blank" class="artifact-link">
+          <span class="aicon">📊</span><span class="atext">BLS OpenAPI Specification</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Comp-Benchmarking/tree/main/docs" target="_blank" class="artifact-link">
+          <span class="aicon">🗂</span><span class="atext">SOC Crosswalk & Data Dictionary</span><span class="aarrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ DETAIL: INCIDENTOPS ════════════════════ -->
+<div id="detail-incidentops" class="detail-page">
+  <div class="detail-hero">
+    <div class="detail-hero-inner">
+      <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+      <p class="detail-eyebrow">Standalone Project · Process Analytics · IT Service Management</p>
+      <h1 class="detail-title">IncidentOps —<br>Process Mining Insights Hub</h1>
+      <p class="detail-tagline">A process mining analytics platform built on a real-world-shaped IT service desk event log. Surfaces how incidents actually flow, where time is lost, and which patterns drive poor customer outcomes.</p>
+      <div class="detail-meta-row">
+        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
+        <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · PostgreSQL · Streamlit · Process Mining</span></div>
+        <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · BPMN · Stakeholder Map · Constraints Log</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-content">
+    <div class="detail-main">
+      <h2>The Problem</h2>
+      <p>A fictional mid-market enterprise IT service desk captures detailed event logs — ticket creation, assignments, escalations, resolution, closure, and customer feedback. But leadership relies on manual exports and surface-level averages, with no consistent view of how incidents actually flow end-to-end.</p>
+      <p>The primary failure mode is decision-making without process visibility. The same incident type can follow materially different paths (variants) with different cycle times, escalation patterns, and customer satisfaction outcomes. Without a process mining lens, teams cannot distinguish healthy flow from costly patterns like escalation ping-pong or premature closure.</p>
+
+      <h2>What It Does</h2>
+      <ul class="capability-list">
+        <li>Discovers and visualises the top process variants — how incidents actually travel through the service desk vs. the intended path</li>
+        <li>Quantifies step-level dwell time and waiting time to pinpoint true bottlenecks vs. active work time</li>
+        <li>Measures escalation and handoff churn, detecting ping-pong patterns that consume L2/L3 specialist capacity</li>
+        <li>Monitors closure governance — captures premature closures leading to reopens and correlates with customer satisfaction</li>
+        <li>Generates a repeatable KPI pack with one-click export for weekly ops review and problem management intake</li>
+      </ul>
+
+      <h2>What This Demonstrates</h2>
+      <ul class="capability-list">
+        <li>Process mining thinking: going beyond averages to variant analysis and bottleneck quantification</li>
+        <li>BABOK-aligned FRD with 5 structured objectives, stakeholder archetypes, and full scope definition</li>
+        <li>BPMN: observed flow mapped against recommended process controls — both as-is and to-be perspectives</li>
+        <li>BA scoping rigour: analytics-only scope explicitly bounded (no ticket actions, no live ITSM integration) with rationale documented</li>
+        <li>Operational thinking: outputs designed for three distinct stakeholder audiences — Process Owner, Operations Manager, and Quality/CX Lead</li>
+      </ul>
+    </div>
+
+    <div class="detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Try the Application</h3>
+        <a href="https://incidentopspmi-hadimercer.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
+        <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub" target="_blank" class="github-btn">View on GitHub</a>
+        <div class="demo-instructions">
+          <div class="demo-step"><span class="step-num">1</span><span>Start at the Process Variants tab — see which incident paths are most and least efficient</span></div>
+          <div class="demo-step"><span class="step-num">2</span><span>Open Bottleneck Analysis to find where time is actually lost</span></div>
+          <div class="demo-step"><span class="step-num">3</span><span>Check Escalation & Handoffs for ping-pong patterns and churn cost</span></div>
+          <div class="demo-step"><span class="step-num">4</span><span>Review Closure Governance for reopen rates and satisfaction correlation</span></div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <h3>BA Artifacts</h3>
+        <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub" target="_blank" class="artifact-link">
+          <span class="aicon">📄</span><span class="atext">Functional Requirements Document (FRD-PMI-001)</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub" target="_blank" class="artifact-link">
+          <span class="aicon">🔄</span><span class="atext">BPMN — Incident Lifecycle & Controls</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub" target="_blank" class="artifact-link">
+          <span class="aicon">👥</span><span class="atext">Stakeholder Map & Objective Traceability</span><span class="aarrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ DETAIL: MERIDIAN ════════════════════ -->
+<div id="detail-meridian" class="detail-page">
+  <div class="detail-hero">
+    <div class="detail-hero-inner">
+      <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+      <p class="detail-eyebrow">Portfolio Health · SaaS Application</p>
+      <h1 class="detail-title">Meridian — Workstream<br>Portfolio Health Dashboard</h1>
+      <p class="detail-tagline">A full-stack multi-user SaaS application where professionals track concurrent workstreams and receive calculated RAG health status — derived automatically from milestone data, budget burn, and blocker age. No manual colour-picking.</p>
+      <div class="detail-meta-row">
+        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
+        <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · Supabase Auth · PostgreSQL RLS · Streamlit</span></div>
+        <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">35-FR FRD · UML · BPMN · Data Dictionary</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-content">
+    <div class="detail-main">
+      <h2>The Problem</h2>
+      <p>Project managers have Jira and Asana. But business analysts, consultants, and professionals who manage work as a by-product of doing their job don't think of themselves as project managers — those tools are abandoned within weeks.</p>
+      <p>The fallback is a spreadsheet with a RAG column updated when there's time on Friday afternoon. That spreadsheet doesn't alert when a workstream is drifting. It shows whatever was last typed.</p>
+      <p>Meridian's central design principle: health status is <em>calculated</em>, not declared. A 9-question context wizard tunes the scoring engine per workstream — a hard-deadline client engagement is scored differently from a self-imposed internal initiative.</p>
+
+      <h2>What It Does</h2>
+      <ul class="capability-list">
+        <li>Calculates composite RAG from three weighted dimensions: Schedule Health (milestone pace vs. elapsed time), Budget Health (planned vs. actual burn), and Blocker Health (unresolved blocker age)</li>
+        <li>9-question context wizard at setup tunes scoring thresholds — 15 modifier rules documented in the FRD</li>
+        <li>Multi-user collaboration with role-based access (Owner / Contributor / Viewer), invite link system, and per-entity comment threads</li>
+        <li>Staleness flag fires when update cadence exceeds the configured threshold</li>
+        <li>Portfolio analytics: health trend over time, scatter matrix across workstreams, milestone velocity</li>
+      </ul>
+
+      <h2>What This Demonstrates</h2>
+      <ul class="capability-list">
+        <li>Full product thinking: problem statement, stakeholder personas, scoping decisions, and design rationale all documented before a line of code was written</li>
+        <li>35-requirement BABOK-aligned FRD with MoSCoW prioritisation and traceability matrix</li>
+        <li>Database design: PostgreSQL schema with 15+ tables, FK constraints, and row-level security via Supabase</li>
+        <li>Auth and security: Supabase Auth, RLS on all user-scoped tables, no credentials in source code</li>
+        <li>UML class diagram documenting the full data model; BPMN covering workstream lifecycle and invite sub-process</li>
+      </ul>
+    </div>
+
+    <div class="detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Try the Application</h3>
+        <a href="https://meridian-hadimercer.streamlit.app/home" target="_blank" class="demo-btn">Open Live Demo ↗</a>
+        <a href="https://github.com/hadimercer/Meridian_Workstream" target="_blank" class="github-btn">View on GitHub</a>
+        <div class="demo-instructions">
+          <div class="demo-step"><span class="step-num">Demo</span><span>Email: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e387868e8ca38e86918a878a828dcd829393">[email&#160;protected]</a></strong> · Password: <strong>meridian2026</strong></span></div>
+          <div class="demo-step"><span class="step-num">1</span><span>Log in and explore the 6 pre-seeded workstreams with 30 days of RAG history</span></div>
+          <div class="demo-step"><span class="step-num">2</span><span>Open any workstream and review the score cards and wizard profile</span></div>
+          <div class="demo-step"><span class="step-num">3</span><span>Check the Milestones and Blockers tabs to see how data feeds the RAG engine</span></div>
+          <div class="demo-step"><span class="step-num">4</span><span>Open Analytics to see the portfolio health trend and scatter matrix</span></div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <h3>BA Artifacts</h3>
+        <a href="https://github.com/hadimercer/Meridian_Workstream/tree/main/docs" target="_blank" class="artifact-link">
+          <span class="aicon">📄</span><span class="atext">FRD — 35 Functional Requirements (BABOK v3)</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Meridian_Workstream/tree/main/docs" target="_blank" class="artifact-link">
+          <span class="aicon">📐</span><span class="atext">UML Class Diagram — Data Model</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Meridian_Workstream/tree/main/docs" target="_blank" class="artifact-link">
+          <span class="aicon">🔄</span><span class="atext">BPMN — Workstream Lifecycle & Invite Sub-Process</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Meridian_Workstream/tree/main/docs" target="_blank" class="artifact-link">
+          <span class="aicon">🗂</span><span class="atext">Data Dictionary</span><span class="aarrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ DETAIL: CADENCE ════════════════════ -->
+<div id="detail-cadence" class="detail-page">
+  <div class="detail-hero">
+    <div class="detail-hero-inner">
+      <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+      <p class="detail-eyebrow">HR Workflow Automation</p>
+      <h1 class="detail-title">Cadence — HR Process<br>Automation Hub</h1>
+      <p class="detail-tagline">A structured workflow automation tool for common HR processes — onboarding, offboarding, leave management, and policy acknowledgements — replacing ad-hoc email chains with auditable, traceable task flows.</p>
+      <div class="detail-meta-row">
+        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
+        <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · PostgreSQL · Streamlit · Supabase</span></div>
+        <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · BPMN · UML · Data Dictionary</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-content">
+    <div class="detail-main">
+      <h2>The Problem</h2>
+      <p>HR teams in mid-market organizations run their core processes — onboarding, offboarding, leave approvals — through email chains, shared spreadsheets, and institutional memory. There's no audit trail, no consistent handoff, and no visibility into where a process currently stands.</p>
+      <p>When processes are invisible, they're unimprovable. Cadence creates structured intake, automated task routing, and a full audit trail for the processes HR runs most frequently.</p>
+
+      <h2>What It Does</h2>
+      <ul class="capability-list">
+        <li>Structured intake forms for onboarding, offboarding, leave requests, and policy acknowledgements — each mapped to a defined process flow</li>
+        <li>Automated task generation and routing based on process type and role configuration</li>
+        <li>Full audit trail — every status change, approval, and action timestamped and attributed</li>
+        <li>Process visibility dashboard showing in-flight cases, overdue tasks, and completion rates by process type</li>
+        <li>BPMN-documented process flows for each HR workflow — as-is and to-be modelled before build</li>
+      </ul>
+
+      <h2>What This Demonstrates</h2>
+      <ul class="capability-list">
+        <li>Process improvement discipline: as-is process documented in BPMN before any solution was designed</li>
+        <li>Domain expertise applied analytically: 10 years of HR operations translated into formal process requirements</li>
+        <li>Requirements engineering: FRD with stakeholder objectives, MoSCoW prioritisation, and NFR coverage</li>
+        <li>Data modelling: schema designed to support audit trail integrity and process state management</li>
+        <li>BA framing of an operational domain — not an HR tool built by an HR professional, but a process solution designed by an analyst who happens to know the domain</li>
+      </ul>
+    </div>
+
+    <div class="detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Try the Application</h3>
+        <a href="https://cadence-hr-workflow.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
+        <a href="https://github.com/hadimercer/Cadence_HR_HUB" target="_blank" class="github-btn">View on GitHub</a>
+        <div class="demo-instructions">
+          <div class="demo-step"><span class="step-num">1</span><span>Start a new Onboarding request and complete the structured intake form</span></div>
+          <div class="demo-step"><span class="step-num">2</span><span>See the auto-generated task list and routing based on your inputs</span></div>
+          <div class="demo-step"><span class="step-num">3</span><span>Work through tasks and observe the audit trail building</span></div>
+          <div class="demo-step"><span class="step-num">4</span><span>Check the Dashboard for a portfolio view of all in-flight processes</span></div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <h3>BA Artifacts</h3>
+        <a href="https://github.com/hadimercer/Cadence_HR_HUB/tree/main/docs/artifacts" target="_blank" class="artifact-link">
+          <span class="aicon">📄</span><span class="atext">Functional Requirements Document</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Cadence_HR_HUB/tree/main/docs/artifacts" target="_blank" class="artifact-link">
+          <span class="aicon">🔄</span><span class="atext">BPMN — HR Process Flows (As-Is & To-Be)</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Cadence_HR_HUB/tree/main/docs/artifacts" target="_blank" class="artifact-link">
+          <span class="aicon">📐</span><span class="atext">UML Class Diagram</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Cadence_HR_HUB/tree/main/docs/artifacts" target="_blank" class="artifact-link">
+          <span class="aicon">🗂</span><span class="atext">Data Dictionary</span><span class="aarrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showHome() {
+    document.getElementById('main-content').classList.remove('hidden');
+    document.querySelectorAll('.detail-page').forEach(p => p.classList.remove('active'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showDetail(id) {
+    document.getElementById('main-content').classList.add('hidden');
+    document.querySelectorAll('.detail-page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('detail-' + id);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }
+
+  // Smooth scroll for anchor links — skip cards that use onclick
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      if (this.hasAttribute('onclick')) return;
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
