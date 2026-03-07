@@ -853,7 +853,7 @@
       </div>
       <div class="meta-item">
         <span class="meta-label">Portfolio Projects</span>
-        <span class="meta-value">4 Live · 2 In Progress</span>
+        <span class="meta-value">5 Live · 2 In Progress</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">Location</span>
@@ -888,6 +888,10 @@
         <div class="timeline-item complete">
           <div class="timeline-bar-fill fill-complete"></div>
           <div class="timeline-item-label">Cadence</div>
+        </div>
+        <div class="timeline-item complete">
+          <div class="timeline-bar-fill fill-complete"></div>
+          <div class="timeline-item-label">Lens</div>
         </div>
         <div class="timeline-item planned">
           <div class="timeline-bar-fill fill-planned"></div>
@@ -1027,6 +1031,21 @@
         </div>
       </a>
 
+      <!-- S4: Lens -->
+      <a class="project-card" href="#" onclick="showDetail('lens'); return false;">
+        <span class="card-arrow">↗</span>
+        <div class="card-badge badge-live">Live</div>
+        <h3 class="card-title">Lens — Sentiment & Text Analytics Tool</h3>
+        <p class="card-desc">LLM-assisted text analysis pipeline for business text at scale. Uploads, validates, and analyses batches of customer feedback, survey responses, or support tickets — then stores results for historical comparison across cycles.</p>
+        <div class="card-tech">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">OpenAI API</span>
+          <span class="tech-tag">PostgreSQL</span>
+          <span class="tech-tag">Streamlit</span>
+          <span class="tech-tag">NLP</span>
+        </div>
+      </a>
+
       <!-- F1: Coming Soon -->
       <div class="project-card coming-soon">
         <div class="card-badge badge-soon">In Progress</div>
@@ -1055,7 +1074,7 @@
   </section>
 
   <footer>
-    <p class="footer-left">© 2026 Hadi Mercer · hadibmercer@gmail.com</p>
+    <p class="footer-left">© 2026 Hadi Mercer · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9bf3fafff2f9f6fee9f8fee9dbfcf6faf2f7b5f8f4f6">[email&#160;protected]</a></p>
     <div class="footer-right">
       <a href="https://github.com/hadimercer" target="_blank">GitHub</a>
       <a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn</a>
@@ -1253,7 +1272,7 @@
         <a href="https://meridian-hadimercer.streamlit.app/home" target="_blank" class="demo-btn">Open Live Demo ↗</a>
         <a href="https://github.com/hadimercer/Meridian_Workstream" target="_blank" class="github-btn">View on GitHub</a>
         <div class="demo-instructions">
-          <div class="demo-step"><span class="step-num">Demo</span><span>Email: <strong>hadibmercer@gmail.com</strong> · Password: <strong>meridian2026</strong></span></div>
+          <div class="demo-step"><span class="step-num">Demo</span><span>Email: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e48c85808d86898196878196a48389858d88ca878b89">[email&#160;protected]</a></strong> · Password: <strong>meridian2026</strong></span></div>
           <div class="demo-step"><span class="step-num">1</span><span>Log in and explore the 6 pre-seeded workstreams with 30 days of RAG history</span></div>
           <div class="demo-step"><span class="step-num">2</span><span>Open any workstream and review the score cards and wizard profile</span></div>
           <div class="demo-step"><span class="step-num">3</span><span>Check the Milestones and Blockers tabs to see how data feeds the RAG engine</span></div>
@@ -1351,6 +1370,79 @@
   </div>
 </div>
 
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><!-- ════════════════════ DETAIL: LENS ════════════════════ -->
+<div id="detail-lens" class="detail-page">
+  <div class="detail-hero">
+    <div class="detail-hero-inner">
+      <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
+      <p class="detail-eyebrow">Sentiment & Text Analytics · LLM Pipeline · NLP</p>
+      <h1 class="detail-title">Lens — Sentiment &<br>Text Analytics Tool</h1>
+      <p class="detail-tagline">A general-purpose text analysis platform that takes batches of business text — customer feedback, employee surveys, support tickets, NPS comments — runs them through an OpenAI-backed NLP pipeline, stores results in PostgreSQL, and makes historical runs reviewable without re-calling the model.</p>
+      <div class="detail-meta-row">
+        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
+        <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · OpenAI API · PostgreSQL · Streamlit</span></div>
+        <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · DFD · ERD · UCD · Schema · Seed Data</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-content">
+    <div class="detail-main">
+      <h2>The Problem</h2>
+      <p>Teams regularly collect large volumes of qualitative text — customer comments, engagement survey responses, support notes, incident narratives — but the analysis workflow breaks down in one of three places: the incoming text is messy, the interpretation lacks business context, or the results aren't stored in a way that supports historical comparison.</p>
+      <p>Lens addresses that gap by treating text analysis as an operational workflow rather than a one-off prompt. Analysts validate a batch, attach business context, compare against prior cycles, persist the run, and reopen it later — without re-calling the model.</p>
+
+      <h2>What It Does</h2>
+      <ul class="capability-list">
+        <li>Accepts CSV uploads or pasted text, runs UTF-8 validation, detects text columns and timestamps, enforces batch limits, and gates execution behind a 5-row preview confirmation</li>
+        <li>Runs an OpenAI-backed pipeline: record-level sentiment scoring, theme extraction, executive summary generation, and anomaly detection — with retry handling on malformed model output</li>
+        <li>Supports named longitudinal series — retrieves the most recent prior cycle and injects that context into each new run for trend comparison</li>
+        <li>Persists all results to PostgreSQL: analysis runs, normalised batch records, context profiles, and a full pipeline run log</li>
+        <li>Runs in Demo Mode when no API key is present — seeded historical analyses load from the database so the app is fully reviewable without live execution</li>
+      </ul>
+
+      <h2>What This Demonstrates</h2>
+      <ul class="capability-list">
+        <li>LLM workflow design: prompted sentiment scoring, theme extraction, summary generation, retry handling — treating the model as a component in a pipeline, not a chat interface</li>
+        <li>Data validation and ingestion engineering: text-column detection, timestamp detection, empty-row rejection, preview gating, and batch size enforcement before any API call is made</li>
+        <li>Longitudinal analysis design: named series, prior-cycle retrieval, run sequencing, and historical comparison context — qualitative data treated as a repeatable operational workflow</li>
+        <li>Five-table PostgreSQL schema with FK chains, helper functions, indexes, and idempotent bootstrap logic — schema and seed run automatically on first deploy</li>
+        <li>BA artifact depth: FRD, Data Flow Diagram, Entity Relationship Diagram, Use Case Diagram, schema SQL, and seed SQL — six distinct artifacts covering requirements, data, and system boundaries</li>
+      </ul>
+    </div>
+
+    <div class="detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Try the Application</h3>
+        <a href="https://lens-sentiment-hadimercer.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
+        <a href="https://github.com/hadimercer/Lens_Sentiment_Engine" target="_blank" class="github-btn">View on GitHub</a>
+        <div class="demo-instructions">
+          <div class="demo-step"><span class="step-num">Demo</span><span>App launches in Demo Mode — seeded historical analyses are pre-loaded, no API key needed</span></div>
+          <div class="demo-step"><span class="step-num">1</span><span>Start at the Overview page to understand the workflow and runtime mode</span></div>
+          <div class="demo-step"><span class="step-num">2</span><span>Open Analysis Library to explore stored runs — filter by series, domain, or date</span></div>
+          <div class="demo-step"><span class="step-num">3</span><span>Reopen any stored analysis to view the full dashboard without re-calling the model</span></div>
+          <div class="demo-step"><span class="step-num">4</span><span>Review the Sentiment, Themes, Anomalies, and Series Context panels</span></div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <h3>BA Artifacts</h3>
+        <a href="https://github.com/hadimercer/Lens_Sentiment_Engine/tree/main/docs/artifacts" target="_blank" class="artifact-link">
+          <span class="aicon">📄</span><span class="atext">Functional Requirements Document (Lens FRD 001)</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Lens_Sentiment_Engine/tree/main/docs/artifacts" target="_blank" class="artifact-link">
+          <span class="aicon">🔀</span><span class="atext">Data Flow Diagram — End-to-End Pipeline</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Lens_Sentiment_Engine/tree/main/docs/artifacts" target="_blank" class="artifact-link">
+          <span class="aicon">📐</span><span class="atext">Entity Relationship Diagram — Schema & Relationships</span><span class="aarrow">→</span>
+        </a>
+        <a href="https://github.com/hadimercer/Lens_Sentiment_Engine/tree/main/docs/artifacts" target="_blank" class="artifact-link">
+          <span class="aicon">👤</span><span class="atext">Use Case Diagram — Analyst Workflows & System Boundaries</span><span class="aarrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   function showHome() {
     document.getElementById('main-content').classList.remove('hidden');
@@ -1370,17 +1462,4 @@
 
   // Smooth scroll for anchor links — skip cards that use onclick
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      if (this.hasAttribute('onclick')) return;
-      const href = this.getAttribute('href');
-      if (href === '#') return;
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-</script>
-</body>
-</html>
+    anchor.addEventList
