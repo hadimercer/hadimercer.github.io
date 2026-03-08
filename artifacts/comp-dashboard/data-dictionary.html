@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comp Dashboard Data Dictionary | Hadi Mercer BA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f; --surface: #111518; --surface2: #181d21;
+    --border: #1f2629; --border2: #2a3338;
+    --accent: #00c896; --accent2: #0087ff;
+    --text: #e8eaeb; --text2: #8a9299; --text3: #4a5560;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Epilogue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; background: rgba(10,13,15,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  .breadcrumb-bar { padding: 80px 40px 0; max-width: 1200px; margin: 0 auto; }
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding-top: 24px; }
+  .breadcrumb a { color: var(--text3); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { color: var(--border2); }
+
+  .page-header { max-width: 1200px; margin: 0 auto; padding: 32px 40px 0; }
+  .artifact-type-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .page-title { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--text); margin-bottom: 8px; }
+  .page-subtitle { font-size: 15px; color: var(--text2); font-weight: 300; max-width: 640px; line-height: 1.6; }
+
+  .doc-meta-block { max-width: 1200px; margin: 0 auto; padding: 28px 40px 0; }
+  .doc-meta-inner { display: flex; flex-wrap: wrap; border: 1px solid var(--border2); }
+  .doc-meta-cell { flex: 1 1 160px; padding: 14px 20px; border-right: 1px solid var(--border2); }
+  .doc-meta-cell:last-child { border-right: none; }
+  .doc-meta-key { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .doc-meta-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
+
+  .doc-body { max-width: 1200px; margin: 0 auto; padding: 48px 40px 80px; }
+
+  .section-heading { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text); margin-bottom: 6px; padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+
+  .req-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 48px; }
+  .req-table th { background: var(--surface2); border: 1px solid var(--border2); padding: 10px 16px; text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; }
+  .req-table td { border: 1px solid var(--border); padding: 11px 16px; color: var(--text2); vertical-align: top; line-height: 1.5; }
+  .req-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); white-space: nowrap; width: 180px; }
+  .req-table td:nth-child(2) { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); white-space: nowrap; width: 100px; }
+  .req-table tr:hover td { background: var(--surface); }
+
+  footer { border-top: 1px solid var(--border); padding: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 20px; }
+  .footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
+  .footer-right a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; margin-left: 24px; }
+  .footer-right a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../../index.html" class="nav-logo">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="../../index.html#about">About</a></li>
+    <li><a href="../../index.html#projects">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb">
+    <a href="../../index.html">Portfolio</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="../comp-dashboard.html">Comp Dashboard</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>Data Dictionary</span>
+  </div>
+</div>
+
+<div class="page-header">
+  <p class="artifact-type-label">BA Artifact · Data Dictionary</p>
+  <h1 class="page-title">Comp Dashboard — Data Dictionary</h1>
+  <p class="page-subtitle">Column-level definitions, data types, constraints, and plain-language business descriptions for all five tables in the TechNova Comp Benchmarking PostgreSQL schema.</p>
+</div>
+
+<div class="doc-meta-block">
+  <div class="doc-meta-inner">
+    <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">FRD-COMP-001 §8</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Tables</div><div class="doc-meta-val">5 tables</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Project</div><div class="doc-meta-val">Comp Dashboard (S2)</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Database</div><div class="doc-meta-val">PostgreSQL (Supabase)</div></div>
+  </div>
+</div>
+
+<div class="doc-body">
+
+  <h2 class="section-heading">employees</h2>
+  <table class="req-table">
+    <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>employee_id</td><td>uuid</td><td>Primary key. Unique identifier per employee record.</td></tr>
+      <tr><td>name</td><td>text</td><td>Employee full name. Used for display only — not used in benchmarking calculations.</td></tr>
+      <tr><td>job_family</td><td>text</td><td>Job family category (e.g. Software Engineering, Finance). Links to job_soc_crosswalk for BLS mapping.</td></tr>
+      <tr><td>job_level</td><td>text</td><td>Level within job family (e.g. L1–L6). Used to filter internal grade bands.</td></tr>
+      <tr><td>office_location</td><td>text</td><td>City or office name. Used to derive msa_code for geographic BLS wage data matching.</td></tr>
+      <tr><td>msa_code</td><td>text</td><td>Bureau of Labor Statistics Metropolitan Statistical Area code. Derived from office_location. Used in all BLS series ID construction.</td></tr>
+      <tr><td>base_salary</td><td>numeric</td><td>Current annual base salary in USD. Compared against BLS percentiles to compute gap $ and gap %.</td></tr>
+      <tr><td>created_at</td><td>timestamptz</td><td>Record creation timestamp. Set on initial CSV upload.</td></tr>
+      <tr><td>updated_at</td><td>timestamptz</td><td>Last update timestamp. Refreshed on each upsert.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">internal_job_grades</h2>
+  <table class="req-table">
+    <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>grade_id</td><td>uuid</td><td>Primary key.</td></tr>
+      <tr><td>job_family</td><td>text</td><td>Job family. Composite key with job_level for grade band lookup.</td></tr>
+      <tr><td>job_level</td><td>text</td><td>Level within family. Composite key with job_family.</td></tr>
+      <tr><td>band_minimum</td><td>numeric</td><td>Bottom of the compensation band for this family/level. Displayed as internal reference in the benchmarking view.</td></tr>
+      <tr><td>band_midpoint</td><td>numeric</td><td>Target midpoint for the band. Used to compute compa-ratio and below-market flag (midpoint &lt; BLS P25 triggers flag).</td></tr>
+      <tr><td>band_maximum</td><td>numeric</td><td>Top of the compensation band. Ceiling for merit increase guidance.</td></tr>
+      <tr><td>effective_date</td><td>date</td><td>Date from which this band is active. Allows historical grade band tracking.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">job_soc_crosswalk</h2>
+  <table class="req-table">
+    <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>crosswalk_id</td><td>uuid</td><td>Primary key.</td></tr>
+      <tr><td>job_family</td><td>text</td><td>Internal job family name. Links to employees.job_family.</td></tr>
+      <tr><td>soc_code</td><td>text</td><td>BLS Standard Occupational Classification code (e.g. 15-1252). Used to construct BLS series IDs for API calls.</td></tr>
+      <tr><td>soc_title</td><td>text</td><td>Official BLS SOC title for the mapped occupation. Displayed in the dashboard for context.</td></tr>
+      <tr><td>match_quality</td><td>text</td><td>Analyst-assigned match quality (Direct / Proxy / Approximate). Displayed as a transparency indicator in the benchmarking view.</td></tr>
+      <tr><td>pipeline_query_flag</td><td>text</td><td>YES/NO flag. Only SOC codes marked YES are included in BLS pipeline API calls, controlling pipeline scope and API budget.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">bls_wage_data</h2>
+  <table class="req-table">
+    <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>wage_id</td><td>uuid</td><td>Primary key.</td></tr>
+      <tr><td>soc_code</td><td>text</td><td>SOC code from BLS API response. Foreign key to job_soc_crosswalk.</td></tr>
+      <tr><td>msa_code</td><td>text</td><td>MSA code from BLS series ID. Matches employees.msa_code for geographic filtering.</td></tr>
+      <tr><td>data_type</td><td>text</td><td>BLS data type code (e.g. 01=annual mean, 10=P10, 25=P25, 50=P50, 75=P75). Maps to wage percentile columns.</td></tr>
+      <tr><td>reference_year</td><td>integer</td><td>Survey year from BLS response. Dashboard always displays the most recent year available (ORDER BY DESC LIMIT 1).</td></tr>
+      <tr><td>pct_25</td><td>numeric</td><td>BLS 25th percentile annual wage for this SOC/MSA/year. Below-market flag triggers if internal band_midpoint &lt; pct_25.</td></tr>
+      <tr><td>pct_50</td><td>numeric</td><td>BLS median annual wage. Primary market benchmark reference point for gap calculations.</td></tr>
+      <tr><td>pct_75</td><td>numeric</td><td>BLS 75th percentile annual wage. Used for above-market positioning assessment.</td></tr>
+      <tr><td>annual_mean</td><td>numeric</td><td>BLS annual mean wage. Supplementary reference shown alongside percentiles.</td></tr>
+      <tr><td>pipeline_run_id</td><td>uuid</td><td>Foreign key to pipeline_run_log. Links wage data to the pipeline run that produced it for auditability.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">pipeline_run_log</h2>
+  <table class="req-table">
+    <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>run_id</td><td>uuid</td><td>Primary key.</td></tr>
+      <tr><td>run_type</td><td>text</td><td>Type of pipeline run: BLS_REFRESH or CSV_UPLOAD. Distinguishes external API runs from internal data uploads.</td></tr>
+      <tr><td>status</td><td>text</td><td>Run outcome: SUCCESS, FAILED, or PARTIAL. Partial indicates some batches succeeded and some failed.</td></tr>
+      <tr><td>records_received</td><td>integer</td><td>Count of records returned by API or present in CSV before validation.</td></tr>
+      <tr><td>records_written</td><td>integer</td><td>Count of records successfully upserted. Discrepancy vs records_received is flagged per NFR-01b.</td></tr>
+      <tr><td>error_detail</td><td>text</td><td>Error message or batch-level warning. Null on SUCCESS runs.</td></tr>
+      <tr><td>run_at</td><td>timestamptz</td><td>Timestamp of pipeline execution start.</td></tr>
+      <tr><td>duration_seconds</td><td>numeric</td><td>Total pipeline execution time. Used to track against OBJ-01 target of 2-minute complete refresh.</td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<footer>
+  <p class="footer-left">FRD-COMP-001 §8 · TechNova Comp Dashboard · Hadi Mercer BA Portfolio 2026</p>
+  <div class="footer-right">
+    <a href="../comp-dashboard.html">← Back to Project</a>
+    <a href="../../index.html#projects">All Projects</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UML Sequence Diagram — Comp Dashboard | Hadi Mercer BA Portfolio</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f; --surface: #111518; --surface2: #181d21;
+    --border: #1f2629; --border2: #2a3338;
+    --accent: #00c896; --text: #e8eaeb; --text2: #8a9299; --text3: #4a5560;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Epilogue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding-top: 56px; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; background: rgba(10,13,15,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  .page-wrap { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 32px; }
+  .breadcrumb a { color: var(--text3); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { color: var(--border2); }
+
+  .page-header { margin-bottom: 28px; }
+  .artifact-type-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .page-title { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 44px); line-height: 1.1; letter-spacing: -0.02em; color: var(--text); margin-bottom: 8px; }
+  .page-subtitle { font-size: 15px; color: var(--text2); font-weight: 300; line-height: 1.6; max-width: 640px; }
+
+  .doc-meta-inner { display: flex; flex-wrap: wrap; border: 1px solid var(--border2); margin-bottom: 40px; }
+  .doc-meta-cell { flex: 1 1 130px; padding: 14px 20px; border-right: 1px solid var(--border2); }
+  .doc-meta-cell:last-child { border-right: none; }
+  .doc-meta-key { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .doc-meta-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
+
+  .diagram-section { margin-bottom: 48px; }
+  .diagram-section h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text); margin-bottom: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .diagram-section p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 16px; }
+  .diagram-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; overflow-x: auto; }
+  .mermaid { min-width: 600px; }
+
+  .error-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px; }
+  .error-table th { background: var(--surface2); border: 1px solid var(--border2); padding: 10px 16px; text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; }
+  .error-table td { border: 1px solid var(--border); padding: 10px 16px; color: var(--text2); font-size: 13px; }
+  .error-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 40px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+  .footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
+  .footer-right a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-decoration: none; text-transform: uppercase; margin-left: 24px; }
+  .footer-right a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../../index.html" class="nav-logo">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="../../index.html#about">About</a></li>
+    <li><a href="../../index.html#projects">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="breadcrumb">
+    <a href="../../index.html">Portfolio</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="../comp-dashboard.html">Comp Dashboard</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>UML Sequence Diagram</span>
+  </div>
+
+  <div class="page-header">
+    <p class="artifact-type-label">BA Artifact · UML Sequence Diagram</p>
+    <h1 class="page-title">End-to-End Data Flow</h1>
+    <p class="page-subtitle">Three-flow sequence diagram showing BLS pipeline ingestion, internal CSV upload, and dashboard query read path. Traces to FR-18, OBJ-02, OBJ-05.</p>
+  </div>
+
+  <div class="doc-meta-inner">
+    <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">FRD-COMP-001 | FR-18</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Traces To</div><div class="doc-meta-val">OBJ-02, OBJ-05</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">February 2026</div></div>
+  </div>
+
+  <div class="diagram-section">
+    <h2>Flow A — BLS Market Data Pipeline</h2>
+    <p>External market data ingestion (quarterly). Total Rewards Admin triggers a pipeline refresh; the BLS Pipeline reads SOC and MSA codes from the database, batches API calls in groups of 50, transforms and upserts wage data, then logs the run result.</p>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Admin as Total Rewards Admin
+    participant UI as Streamlit Dashboard
+    participant PL as BLS Pipeline
+    participant BLS as BLS Public API
+    participant DB as PostgreSQL (Supabase)
+
+    Admin->>UI: Clicks "Refresh BLS Data Now"
+    UI->>PL: Calls pipeline.bls_pipeline.main()
+    PL->>DB: Reads job_soc_crosswalk — get target SOC codes
+    DB-->>PL: Returns SOC codes + pipeline_query_flag = YES
+    PL->>DB: Reads employees — get MSA codes for office locations
+    DB-->>PL: Returns distinct MSA codes
+    Note over PL: Constructs BLS series IDs from SOC × MSA × data_type<br/>Batches into groups of 50 (registered key limit)
+    loop For each batch of ≤50 series IDs
+        PL->>BLS: POST /timeseries/data/ — seriesid[], startyear, endyear
+        BLS-->>PL: HTTP 200 — status, Results: series[]
+        alt status = REQUEST_SUCCEEDED
+            Note over PL: Parses wage values, maps data_type codes<br/>Converts strings to numeric, handles suppressed as NULL
+        else status = REQUEST_FAILED or empty
+            Note over PL: Logs warning (FR-04)<br/>Skips batch — no partial write (NFR-01a)
+        else HTTP 429 — Rate limit
+            PL->>DB: Writes FAILED to pipeline_run_log
+            Note over PL: Preserves last-known-good dataset (NFR-03c)
+        end
+    end
+    PL->>DB: Upserts rows INTO bls_wage_data ON CONFLICT DO UPDATE
+    PL->>DB: Reconciles records_received vs records_written
+    PL->>DB: Writes run summary to pipeline_run_log
+    DB-->>UI: pipeline_run_log updated
+    UI-->>Admin: Displays SUCCESS/FAILED status with record count
+      </div>
+    </div>
+  </div>
+
+  <div class="diagram-section">
+    <h2>Flow B — CSV Internal Data Ingestion</h2>
+    <p>Internal employee and job grade data upload path. Admin uploads a CSV; the system validates schema and data types before writing. On validation failure, no records are written (fail loudly — NFR-01a).</p>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Admin as Total Rewards Admin
+    participant UI as Streamlit Dashboard
+    participant CSV as CSV Ingestion Module
+    participant DB as PostgreSQL (Supabase)
+
+    Admin->>UI: Uploads CSV file (Employee data or Job Grades)
+    UI->>CSV: Passes DataFrame to validate_employees() or validate_job_grades()
+    Note over CSV: Schema validation (FR-06)<br/>Checks required columns, data types, non-null constraints
+    alt Validation FAILS
+        CSV-->>UI: Returns list of validation errors
+        UI-->>Admin: Displays errors — no records written (NFR-01a)
+    else Validation PASSES
+        UI-->>Admin: "Validation passed — confirm load?"
+        Admin->>UI: Clicks "Confirm and Load"
+        UI->>CSV: Calls upsert_df(conn, df, UPSERT_SQL)
+        loop For each row in validated DataFrame
+            CSV->>DB: UPSERT ON CONFLICT DO UPDATE SET all fields
+        end
+        CSV->>DB: Writes run summary to pipeline_run_log
+        DB-->>UI: Commit confirmed
+        UI-->>Admin: Displays records written and duration
+    end
+      </div>
+    </div>
+  </div>
+
+  <div class="diagram-section">
+    <h2>Flow C — Dashboard Query (Read Path)</h2>
+    <p>Read path from End User filter selection through to chart render. All queries cached via <code>@st.cache_data(ttl=300)</code>. Target: complete benchmarking view render in under 2 minutes (OBJ-01).</p>
+    <div class="diagram-wrap">
+      <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor User as End User (Recruiter / HRBP)
+    participant UI as Streamlit Dashboard
+    participant DB as PostgreSQL (Supabase)
+
+    User->>UI: Selects Job Family + Level + Office Location
+    UI->>DB: SELECT from internal_job_grades WHERE job_family=? AND job_level=?
+    DB-->>UI: Returns band_minimum, band_midpoint, band_maximum
+    UI->>DB: SELECT from job_soc_crosswalk WHERE job_family=? AND pipeline_query_flag=YES
+    DB-->>UI: Returns soc_code, match_quality, soc_title
+    UI->>DB: SELECT from employees WHERE office_location=? → MSA code
+    DB-->>UI: Returns msa_code, msa_name
+    UI->>DB: SELECT from bls_wage_data WHERE soc_code=? AND msa_code=? ORDER BY reference_year DESC LIMIT 1
+    DB-->>UI: Returns pct_25, pct_50, pct_75, annual_mean
+    Note over UI: Computes gap $ and gap % vs BLS P50<br/>Applies below-market flag if midpoint < P25<br/>Renders grouped bar chart + KPI metrics
+    UI-->>User: Benchmarking view — Internal vs Market
+    Note over UI: All queries cached via @st.cache_data(ttl=300)
+      </div>
+    </div>
+  </div>
+
+  <div class="diagram-section">
+    <h2>Error Handling Summary</h2>
+    <table class="error-table">
+      <thead><tr><th>Scenario</th><th>Pipeline Behaviour</th><th>Traces To</th></tr></thead>
+      <tbody>
+        <tr><td>BLS API returns REQUEST_FAILED</td><td>Log warning, skip batch, no write</td><td>FR-04</td></tr>
+        <tr><td>HTTP 429 — rate limit</td><td>Log FAILED, preserve existing data</td><td>NFR-03c</td></tr>
+        <tr><td>HTTP 500 — server error</td><td>Log FAILED, preserve existing data</td><td>NFR-03c</td></tr>
+        <tr><td>CSV schema validation fails</td><td>Return errors to UI, zero records written</td><td>NFR-01a, FR-06</td></tr>
+        <tr><td>Records received ≠ records written</td><td>Flag discrepancy in run log</td><td>NFR-01b</td></tr>
+        <tr><td>DB connection failure</td><td>Exception raised, logged, UI shows error</td><td>NFR-03a</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  <p class="footer-left">FRD-COMP-001 FR-18 · TechNova Comp Dashboard · Hadi Mercer BA Portfolio 2026</p>
+  <div class="footer-right">
+    <a href="../comp-dashboard.html">← Back to Project</a>
+    <a href="../../index.html#projects">All Projects</a>
+  </div>
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true,
+      background: '#111518',
+      primaryColor: '#0087ff',
+      primaryTextColor: '#e8eaeb',
+      primaryBorderColor: '#00c896',
+      lineColor: '#00c896',
+      secondaryColor: '#181d21',
+      tertiaryColor: '#0a0d0f',
+      fontSize: '13px',
+    }
+  });
+</script>
+</body>
+</html>
