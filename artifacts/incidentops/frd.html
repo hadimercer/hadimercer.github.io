@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IncidentOps — Product Brief & Requirements | Hadi Mercer BA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f; --surface: #111518; --surface2: #181d21;
+    --border: #1f2629; --border2: #2a3338;
+    --accent: #00c896; --accent2: #0087ff;
+    --amber: #f5a623; --red: #e8443a;
+    --text: #e8eaeb; --text2: #8a9299; --text3: #4a5560;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Epilogue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; background: rgba(10,13,15,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  .breadcrumb-bar { padding: 80px 40px 0; max-width: 1200px; margin: 0 auto; }
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding-top: 24px; }
+  .breadcrumb a { color: var(--text3); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { color: var(--border2); }
+  .breadcrumb-current { color: var(--text2); }
+
+  .page-header { max-width: 1200px; margin: 0 auto; padding: 32px 40px 0; }
+  .artifact-type-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .page-title { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--text); margin-bottom: 8px; }
+  .page-subtitle { font-size: 15px; color: var(--text2); font-weight: 300; max-width: 640px; line-height: 1.6; }
+
+  .doc-meta-block { max-width: 1200px; margin: 0 auto; padding: 28px 40px 0; }
+  .doc-meta-inner { display: flex; flex-wrap: wrap; border: 1px solid var(--border2); }
+  .doc-meta-cell { flex: 1 1 140px; padding: 14px 20px; border-right: 1px solid var(--border2); }
+  .doc-meta-cell:last-child { border-right: none; }
+  .doc-meta-key { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .doc-meta-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
+
+  .doc-body { max-width: 1200px; margin: 0 auto; padding: 48px 40px 80px; }
+  .doc-section { margin-bottom: 48px; }
+  .section-heading { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text); letter-spacing: -0.01em; margin-bottom: 6px; padding-bottom: 16px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 16px; }
+  .section-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.1em; }
+  .doc-prose { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 16px; max-width: 860px; }
+  .doc-prose strong { color: var(--text); }
+
+  .req-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px; }
+  .req-table th { background: var(--surface2); border: 1px solid var(--border2); padding: 10px 16px; text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; }
+  .req-table td { border: 1px solid var(--border); padding: 12px 16px; color: var(--text2); vertical-align: top; line-height: 1.55; }
+  .req-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); white-space: nowrap; width: 80px; }
+  .req-table tr:hover td { background: var(--surface); }
+
+  .badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; font-weight: 600; }
+  .badge-must { background: rgba(0,200,150,0.15); color: var(--accent); border: 1px solid rgba(0,200,150,0.3); }
+  .badge-should { background: rgba(0,135,255,0.12); color: var(--accent2); border: 1px solid rgba(0,135,255,0.25); }
+
+  .problem-block { background: var(--surface); border-left: 3px solid var(--accent); padding: 20px 24px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+  .problem-block p { font-size: 15px; color: var(--text2); line-height: 1.7; font-style: italic; }
+
+  footer { border-top: 1px solid var(--border); padding: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 20px; }
+  .footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; }
+  .footer-right a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; margin-left: 24px; }
+  .footer-right a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../../index.html" class="nav-logo">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="../../index.html#about">About</a></li>
+    <li><a href="../../index.html#projects">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb">
+    <a href="../../index.html">Portfolio</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="../incidentops.html">IncidentOps</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current">Product Brief &amp; Requirements</span>
+  </div>
+</div>
+
+<div class="page-header">
+  <p class="artifact-type-label">BA Artifact · Product Brief</p>
+  <h1 class="page-title">IncidentOps PMI Hub</h1>
+  <p class="page-subtitle">Product brief and functional requirements overview for the process mining analytics platform built on IT service desk incident event logs.</p>
+</div>
+
+<div class="doc-meta-block">
+  <div class="doc-meta-inner">
+    <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">PB-INC-001</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Project</div><div class="doc-meta-val">IncidentOps PMI Hub</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">March 2026</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Source</div><div class="doc-meta-val"><a href="https://github.com/hadimercer/IncidentOps_PMI_Hub/blob/main/docs/product-brief.md" target="_blank" style="color:var(--accent);text-decoration:none;">GitHub ↗</a></div></div>
+  </div>
+</div>
+
+<div class="doc-body">
+
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">01</span>The Business Problem</h2>
+    <p class="doc-prose">IT service organisations operate on intuition and surface-level averages. Incident resolution data exists in ticketing systems, but it is rarely interrogated beyond basic volume and SLA metrics.</p>
+    <div class="problem-block">
+      <p>"Leaders and operators often work from manual exports and surface-level averages, leaving them unable to understand how incidents actually move through the organisation, where time is lost, or what drives escalations and reopens."</p>
+    </div>
+    <p class="doc-prose">Three critical blindspots drive incident management inefficiency:</p>
+    <p class="doc-prose"><strong>Flow visibility:</strong> What are the most common incident paths? Which variants consume the most time? Where are the bottlenecks in the process?</p>
+    <p class="doc-prose"><strong>Handoff friction:</strong> How many teams touch each incident? Where do handoffs create delay? Which transitions are most costly?</p>
+    <p class="doc-prose"><strong>Quality signals:</strong> What drives escalations? Why do incidents reopen? What correlates with poor customer satisfaction outcomes?</p>
+  </div>
+
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">02</span>Product Objectives</h2>
+    <table class="req-table">
+      <thead><tr><th>Ref</th><th>Objective</th><th>Success Indicator</th></tr></thead>
+      <tbody>
+        <tr><td>OBJ-01</td><td>Surface process variant analysis from incident event logs so service owners can identify the most time-consuming paths</td><td>Variant analysis visible within 2 minutes of dashboard load; top 5 paths ranked by cycle time</td></tr>
+        <tr><td>OBJ-02</td><td>Identify bottleneck stages by calculating dwell time per process step and team</td><td>Dwell time by step exported or visible for every incident variant loaded</td></tr>
+        <tr><td>OBJ-03</td><td>Quantify escalation and reopen patterns to support quality improvement decisions</td><td>Escalation rate, churn rate, and FCR visible per category and team</td></tr>
+        <tr><td>OBJ-04</td><td>Provide an audit trail of analytical runs to support reproducibility</td><td>All pipeline runs logged with timestamp, record count, and status</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">03</span>Functional Requirements</h2>
+    <table class="req-table">
+      <thead><tr><th>ID</th><th>Requirement</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td>FR-01</td><td>System shall ingest a semicolon-delimited incident event log CSV and validate required columns (incident_id, event_timestamp, activity, team, resolution_code)</td><td><span class="badge badge-must">Must Have</span></td></tr>
+        <tr><td>FR-02</td><td>System shall compute idempotent event keys to prevent duplicate rows on re-import</td><td><span class="badge badge-must">Must Have</span></td></tr>
+        <tr><td>FR-03</td><td>System shall calculate cycle time from first_event_timestamp to last_event_timestamp per incident_id</td><td><span class="badge badge-must">Must Have</span></td></tr>
+        <tr><td>FR-04</td><td>System shall identify and display the top 10 process variants by frequency and by average cycle time</td><td><span class="badge badge-must">Must Have</span></td></tr>
+        <tr><td>FR-05</td><td>System shall calculate dwell time per activity step (mean, median, P90) across all incidents</td><td><span class="badge badge-must">Must Have</span></td></tr>
+        <tr><td>FR-06</td><td>System shall calculate escalation rate, reopen rate, and FCR (First Contact Resolution) by category and team</td><td><span class="badge badge-must">Must Have</span></td></tr>
+        <tr><td>FR-07</td><td>System shall log every pipeline run with timestamp, record count, status (SUCCESS/PARTIAL/FAILED), and error details</td><td><span class="badge badge-must">Must Have</span></td></tr>
+        <tr><td>FR-08</td><td>Dashboard shall present findings through six workstream modules: Command Center, Flow, Handoffs, Quality, Intake, Enablement</td><td><span class="badge badge-must">Must Have</span></td></tr>
+        <tr><td>FR-09</td><td>System shall support export of analytical results to CSV for use in external BI tools</td><td><span class="badge badge-should">Should Have</span></td></tr>
+        <tr><td>FR-10</td><td>Dashboard shall display customer satisfaction correlation data when CSAT score is present in the source file</td><td><span class="badge badge-should">Should Have</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">04</span>Scope Boundaries</h2>
+    <p class="doc-prose">IncidentOps is an <strong>analytics tool only</strong> — it does not update tickets, integrate with live ticketing systems, or drive automated actions. The system relies on CSV export input, not live API connections. All findings are descriptive and based on historical patterns; process mining outputs are not causal proof.</p>
+    <p class="doc-prose">Designed for portfolio and local execution — not enterprise multi-user deployment. The value proposition is reproducibility, analytical clarity, and business framing of incident patterns.</p>
+  </div>
+
+</div>
+
+<footer>
+  <p class="footer-left">PB-INC-001 · IncidentOps PMI Hub · Hadi Mercer BA Portfolio 2026</p>
+  <div class="footer-right">
+    <a href="../incidentops.html">← Back to Project</a>
+    <a href="../../index.html#projects">All Projects</a>
+  </div>
+</footer>
+
+</body>
+</html>
