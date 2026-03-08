@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lens FRD — Functional Requirements | Hadi Mercer BA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f; --surface: #111518; --surface2: #181d21;
+    --border: #1f2629; --border2: #2a3338;
+    --accent: #00c896; --accent2: #0087ff;
+    --text: #e8eaeb; --text2: #8a9299; --text3: #4a5560;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Epilogue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; background: rgba(10,13,15,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  .breadcrumb-bar { padding: 80px 40px 0; max-width: 1200px; margin: 0 auto; }
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding-top: 24px; }
+  .breadcrumb a { color: var(--text3); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { color: var(--border2); }
+
+  .page-header { max-width: 1200px; margin: 0 auto; padding: 32px 40px 0; }
+  .artifact-type-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .page-title { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--text); margin-bottom: 8px; }
+  .page-subtitle { font-size: 15px; color: var(--text2); font-weight: 300; max-width: 640px; line-height: 1.6; }
+
+  .doc-meta-block { max-width: 1200px; margin: 0 auto; padding: 28px 40px 0; }
+  .doc-meta-inner { display: flex; flex-wrap: wrap; border: 1px solid var(--border2); }
+  .doc-meta-cell { flex: 1 1 140px; padding: 14px 20px; border-right: 1px solid var(--border2); }
+  .doc-meta-cell:last-child { border-right: none; }
+  .doc-meta-key { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .doc-meta-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
+
+  .doc-body { max-width: 1200px; margin: 0 auto; padding: 48px 40px 80px; }
+
+  .preview-block { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px; margin-bottom: 32px; }
+  .preview-block h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text); margin-bottom: 16px; }
+  .preview-block p { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 14px; max-width: 800px; }
+
+  .toc-list { list-style: none; margin: 20px 0; }
+  .toc-list li { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text3); padding: 7px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+  .toc-list li:last-child { border-bottom: none; }
+  .toc-num { color: var(--accent); min-width: 50px; }
+
+  .download-cta { background: rgba(0,200,150,0.06); border: 1px solid rgba(0,200,150,0.25); border-radius: 8px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .download-cta p { font-size: 14px; color: var(--text2); max-width: 560px; line-height: 1.6; }
+  .download-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); border: 1px solid rgba(0,200,150,0.4); padding: 10px 20px; border-radius: 4px; text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.2s; white-space: nowrap; }
+  .download-btn:hover { background: rgba(0,200,150,0.1); }
+
+  footer { border-top: 1px solid var(--border); padding: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 20px; }
+  .footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
+  .footer-right a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; margin-left: 24px; }
+  .footer-right a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../../index.html" class="nav-logo">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="../../index.html#about">About</a></li>
+    <li><a href="../../index.html#projects">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb">
+    <a href="../../index.html">Portfolio</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href="../lens.html">Lens</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>Functional Requirements Document</span>
+  </div>
+</div>
+
+<div class="page-header">
+  <p class="artifact-type-label">BA Artifact · Functional Requirements Document</p>
+  <h1 class="page-title">Lens Sentiment Engine — FRD</h1>
+  <p class="page-subtitle">BABOK v3-aligned functional requirements document covering the NLP sentiment analysis pipeline: batch ingestion, OpenAI API integration, theme extraction, anomaly detection, and dashboard visualisation.</p>
+</div>
+
+<div class="doc-meta-block">
+  <div class="doc-meta-inner">
+    <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">Lens_FRD_001</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Project</div><div class="doc-meta-val">Lens Sentiment Engine (S4)</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Format</div><div class="doc-meta-val">Word Document (.docx)</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Source</div><div class="doc-meta-val"><a href="https://github.com/hadimercer/Lens_Sentiment_Engine/blob/main/docs/artifacts/Lens_FRD_001.docx" target="_blank" style="color:var(--accent);text-decoration:none;">GitHub ↗</a></div></div>
+  </div>
+</div>
+
+<div class="doc-body">
+
+  <div class="preview-block">
+    <h2>Document Contents</h2>
+    <p>Lens_FRD_001 documents the full requirements for the Lens Sentiment &amp; Text Analytics Engine — a tool that ingests open-ended survey and feedback text, runs it through an NLP pipeline (OpenAI API), and surfaces sentiment trends, theme clusters, and anomaly alerts on a Streamlit dashboard.</p>
+    <p>The document traces the requirements chain from business objectives (reduce time-to-insight from unstructured feedback) through to functional requirements for batch ingestion, API call orchestration, result persistence, and dashboard query read paths. Non-functional requirements cover API cost controls, latency SLAs, and auditability of model outputs.</p>
+
+    <ul class="toc-list">
+      <li><span class="toc-num">Section 1</span> Business Problem &amp; Current State — Manual survey analysis, inconsistent theme extraction, no trend view</li>
+      <li><span class="toc-num">Section 2</span> Stakeholder Map — CX Analysts, HR Business Partners, Operations Leads, Data Engineers</li>
+      <li><span class="toc-num">Section 3</span> Product Objectives (OBJ-01 — OBJ-05) with Success Indicators</li>
+      <li><span class="toc-num">Section 4</span> Batch Ingestion Requirements (FR-01 — FR-07) — CSV upload, series context, validation rules</li>
+      <li><span class="toc-num">Section 5</span> NLP Pipeline Requirements (FR-08 — FR-14) — OpenAI API orchestration, prompt design, retry logic</li>
+      <li><span class="toc-num">Section 6</span> Theme Extraction &amp; Anomaly Detection (FR-15 — FR-20) — clustering, RAG scoring, alert thresholds</li>
+      <li><span class="toc-num">Section 7</span> Dashboard &amp; Visualisation Requirements (FR-21 — FR-26) — series comparison, drill-down, export</li>
+      <li><span class="toc-num">Section 8</span> Non-Functional Requirements — API cost controls, latency SLAs, model output auditability</li>
+      <li><span class="toc-num">Section 9</span> Data Model &amp; Data Dictionary — 5-table PostgreSQL schema</li>
+      <li><span class="toc-num">Section 10</span> Out-of-Scope Items &amp; Future Phases</li>
+    </ul>
+  </div>
+
+  <div class="download-cta">
+    <p>The full FRD is available as a Word document on GitHub. It includes all functional requirements tables, MoSCoW prioritisation, NFR rationale paragraphs, the data dictionary covering all five database tables, and API cost control specifications.</p>
+    <a href="https://github.com/hadimercer/Lens_Sentiment_Engine/blob/main/docs/artifacts/Lens_FRD_001.docx" target="_blank" class="download-btn">View on GitHub ↗</a>
+  </div>
+
+</div>
+
+<footer>
+  <p class="footer-left">Lens_FRD_001 · Lens Sentiment Engine · Hadi Mercer BA Portfolio 2026</p>
+  <div class="footer-right">
+    <a href="../lens.html">← Back to Project</a>
+    <a href="../../index.html#projects">All Projects</a>
+  </div>
+</footer>
+
+</body>
+</html>
