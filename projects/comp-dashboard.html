@@ -435,6 +435,14 @@
     .arch-block { white-space: pre-wrap; font-size: 10px; }
   }
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-38MGEGB275');
+</script>
 </head>
 <body>
 
@@ -654,5 +662,27 @@ pipeline/bls_pipeline.py      pipeline/csv_ingestion.py
   </div>
 </footer>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.demo-btn').forEach(function(el) {
+      el.addEventListener('click', function() {
+        gtag('event', 'demo_click', { project: 'comp-dashboard' });
+      });
+    });
+    document.querySelectorAll('.github-btn').forEach(function(el) {
+      el.addEventListener('click', function() {
+        gtag('event', 'github_click', { project: 'comp-dashboard' });
+      });
+    });
+    document.querySelectorAll('.artifact-link').forEach(function(el) {
+      el.addEventListener('click', function() {
+        var href = this.getAttribute('href') || '';
+        var parts = href.split('/');
+        var name = parts[parts.length - 1].replace(/\.html$/, '').replace(/\.md$/, '').replace(/\.yaml$/, '') || href;
+        gtag('event', 'artifact_click', { project: 'comp-dashboard', artifact: name });
+      });
+    });
+  });
+</script>
 </body>
 </html>

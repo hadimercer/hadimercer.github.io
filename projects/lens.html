@@ -123,6 +123,14 @@
   @media (max-width: 900px) { .detail-content { grid-template-columns: 1fr; } .detail-sidebar { position: static; } }
   @media (max-width: 768px) { nav { padding: 16px 20px; } .nav-links { display: none; } .detail-hero { padding: 100px 20px 40px; } .doc-meta-block { padding: 0 20px; } .detail-content { padding: 40px 20px; } .doc-meta-cell { flex: 1 1 100%; border-right: none; border-bottom: 1px solid var(--border2); } footer { padding: 32px 20px; } }
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-38MGEGB275');
+</script>
 </head>
 <body>
 
@@ -359,5 +367,27 @@
   </div>
 </footer>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.demo-btn').forEach(function(el) {
+      el.addEventListener('click', function() {
+        gtag('event', 'demo_click', { project: 'lens' });
+      });
+    });
+    document.querySelectorAll('.github-btn').forEach(function(el) {
+      el.addEventListener('click', function() {
+        gtag('event', 'github_click', { project: 'lens' });
+      });
+    });
+    document.querySelectorAll('.artifact-link').forEach(function(el) {
+      el.addEventListener('click', function() {
+        var href = this.getAttribute('href') || '';
+        var parts = href.split('/');
+        var name = parts[parts.length - 1].replace(/\.html$/, '').replace(/\.md$/, '').replace(/\.yaml$/, '') || href;
+        gtag('event', 'artifact_click', { project: 'lens', artifact: name });
+      });
+    });
+  });
+</script>
 </body>
 </html>
