@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FRD-MERIDIAN-001 — Functional Requirements Document | Hadi Mercer BA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f;
+    --surface: #111518;
+    --surface2: #181d21;
+    --border: #1f2629;
+    --border2: #2a3338;
+    --accent: #00c896;
+    --accent2: #0087ff;
+    --amber: #f5a623;
+    --red: #e8443a;
+    --text: #e8eaeb;
+    --text2: #8a9299;
+    --text3: #4a5560;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Epilogue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(10,13,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb-bar {
+    padding: 80px 40px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-top: 24px;
+  }
+
+  .breadcrumb a { color: var(--text3); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb-sep { color: var(--border2); }
+  .breadcrumb-current { color: var(--text2); }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 40px 0;
+  }
+
+  .artifact-type-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .page-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .page-subtitle {
+    font-size: 15px;
+    color: var(--text2);
+    font-weight: 300;
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  /* ── DOCUMENT METADATA ── */
+  .doc-meta-block {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 40px 0;
+  }
+
+  .doc-meta-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--border2);
+  }
+
+  .doc-meta-cell {
+    flex: 1 1 140px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border2);
+  }
+
+  .doc-meta-cell:last-child { border-right: none; }
+
+  .doc-meta-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .doc-meta-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .doc-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .doc-section {
+    margin-bottom: 56px;
+  }
+
+  .section-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+  }
+
+  .sub-heading {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 28px 0 12px;
+  }
+
+  /* ── PROSE ── */
+  .doc-prose {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.75;
+    margin-bottom: 16px;
+    max-width: 860px;
+  }
+
+  .doc-prose em { color: var(--text); font-style: italic; }
+
+  /* ── OBJECTIVES TABLE ── */
+  .obj-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+
+  .obj-table th {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .obj-table td {
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    color: var(--text2);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .obj-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    white-space: nowrap;
+    width: 72px;
+  }
+
+  .obj-table tr:hover td { background: var(--surface); }
+
+  /* ── STAKEHOLDER TABLE ── */
+  .stkh-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+
+  .stkh-table th {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .stkh-table td {
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    color: var(--text2);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .stkh-table tr:hover td { background: var(--surface); }
+
+  /* ── SCOPE TABLE ── */
+  .scope-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    margin-bottom: 24px;
+  }
+
+  .scope-col { background: var(--surface); }
+
+  .scope-col-header {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .scope-col-header.in { color: var(--accent); }
+  .scope-col-header.out { color: var(--red); }
+
+  .scope-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  .scope-item:last-child { border-bottom: none; }
+
+  .scope-item::before {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .scope-col.in .scope-item::before { content: '✓'; color: var(--accent); }
+  .scope-col.out .scope-item::before { content: '✕'; color: var(--red); }
+
+  /* ── OUT OF SCOPE TABLE ── */
+  .oos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+
+  .oos-table th {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .oos-table td {
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    color: var(--text2);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .oos-table tr:hover td { background: var(--surface); }
+
+  /* ── REQUIREMENTS TABLE ── */
+  .req-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    font-size: 13px;
+  }
+
+  .req-table th {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: sticky;
+    top: 60px;
+  }
+
+  .req-table td {
+    border: 1px solid var(--border);
+    padding: 11px 14px;
+    color: var(--text2);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .req-table td.fr-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    white-space: nowrap;
+    width: 76px;
+  }
+
+  .req-table td.fr-area {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    width: 100px;
+  }
+
+  .req-table tr:hover td { background: var(--surface); }
+
+  /* ── MOSCOW BADGES ── */
+  .badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 0;
+    white-space: nowrap;
+  }
+
+  .badge-must {
+    background: rgba(0, 200, 150, 0.12);
+    border: 1px solid rgba(0, 200, 150, 0.35);
+    color: var(--accent);
+  }
+
+  .badge-should {
+    background: rgba(0, 135, 255, 0.12);
+    border: 1px solid rgba(0, 135, 255, 0.35);
+    color: var(--accent2);
+  }
+
+  .badge-could {
+    background: rgba(74, 85, 96, 0.25);
+    border: 1px solid rgba(74, 85, 96, 0.5);
+    color: var(--text3);
+  }
+
+  .badge-wont {
+    background: rgba(42, 51, 56, 0.4);
+    border: 1px solid var(--border2);
+    color: var(--text3);
+    opacity: 0.6;
+  }
+
+  .badge-impl {
+    background: rgba(0, 200, 150, 0.06);
+    border: 1px solid rgba(0, 200, 150, 0.15);
+    color: rgba(0, 200, 150, 0.6);
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  /* ── AREA GROUP HEADER ── */
+  .req-area-header td {
+    background: var(--surface2) !important;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-color: var(--border2);
+  }
+
+  /* ── NFR BLOCKS ── */
+  .nfr-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+
+  .nfr-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .nfr-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .nfr-body {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  .nfr-rationale {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border2);
+    font-size: 12px;
+    color: var(--text3);
+    line-height: 1.65;
+  }
+
+  .nfr-rationale strong {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── SECTION RULE ── */
+  .section-rule { height: 1px; background: var(--border); margin: 48px 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; }
+  .footer-right { display: flex; gap: 24px; }
+  .footer-right a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .footer-right a:hover { color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .scope-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .breadcrumb-bar, .page-header, .doc-meta-block, .doc-body { padding-left: 20px; padding-right: 20px; }
+    .doc-meta-cell { flex: 1 1 100%; border-right: none; border-bottom: 1px solid var(--border2); }
+    footer { padding: 28px 20px; }
+    .req-table { font-size: 12px; }
+    .req-table th, .req-table td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../../index.html" class="nav-logo">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="../../index.html#about">About</a></li>
+    <li><a href="../../index.html#projects">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<!-- ── BREADCRUMB ── -->
+<div class="breadcrumb-bar">
+  <nav class="breadcrumb">
+    <a href="../../index.html">Portfolio</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="../../projects/meridian.html">Meridian</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Functional Requirements Document</span>
+  </nav>
+</div>
+
+<!-- ── PAGE HEADER ── -->
+<div class="page-header">
+  <p class="artifact-type-label">BA Artifact · Functional Requirements Document</p>
+  <h1 class="page-title">Meridian — Workstream Portfolio<br>Health Dashboard</h1>
+  <p class="page-subtitle">BABOK v3-aligned functional requirements covering authentication, workstream setup, the RAG scoring engine, dashboard, all six workstream tabs, team management, and documentation artifacts.</p>
+</div>
+
+<!-- ── DOCUMENT METADATA ── -->
+<div class="doc-meta-block">
+  <div class="doc-meta-inner">
+    <div class="doc-meta-cell"><div class="doc-meta-key">Document ID</div><div class="doc-meta-val">FRD-MERIDIAN-001</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">v1.0</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Status</div><div class="doc-meta-val">Baselined</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Project</div><div class="doc-meta-val">Meridian · S3</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Prepared By</div><div class="doc-meta-val">Hadi Mercer</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">2026</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">FR Count</div><div class="doc-meta-val">35</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">BABOK Ref</div><div class="doc-meta-val">v3 — Ch. 2, 4, 5</div></div>
+  </div>
+</div>
+
+<!-- ── DOCUMENT BODY ── -->
+<div class="doc-body">
+
+  <!-- 1. PURPOSE & CONTEXT -->
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">01</span> Purpose &amp; Context</h2>
+    <p class="doc-prose">This document defines the functional and non-functional requirements for Meridian, a full-stack multi-user SaaS application for workstream portfolio health tracking. It is produced as a BABOK v3-aligned BA artifact and serves as the primary requirements baseline for the build, test, and documentation phases of the project.</p>
+    <p class="doc-prose">Meridian addresses a specific failure mode: professionals who manage concurrent workstreams — business analysts, consultants, finance managers, HR leads — abandon structured project management tools (Jira, Asana) because those tools are designed for people who identify as project managers. The fallback is a spreadsheet with a manually updated RAG column. That spreadsheet cannot alert when a workstream is drifting; it shows whatever was last typed.</p>
+    <p class="doc-prose"><em>Meridian's central design principle:</em> health status is calculated, not declared. A 9-question context wizard tunes the scoring engine per workstream — a hard-deadline client engagement is scored differently from a self-imposed internal initiative. Requirements FR-07 through FR-10 define this engine in full.</p>
+  </div>
+
+  <!-- 2. OBJECTIVES -->
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">02</span> Objectives</h2>
+    <table class="obj-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Objective</th>
+          <th>Success Indicator</th>
+          <th>Primary Beneficiary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>OBJ-01</td>
+          <td>Provide calculated RAG health status without manual colour selection</td>
+          <td>No RAG field exists in any data entry form; all status values are derived from milestone, budget, and blocker data</td>
+          <td>All authenticated users</td>
+        </tr>
+        <tr>
+          <td>OBJ-02</td>
+          <td>Adapt scoring thresholds to workstream context via wizard configuration</td>
+          <td>At least 15 modifier combinations documented and verified — a hard-deadline workstream is scored more strictly than an informal one with the same underlying data</td>
+          <td>Workstream Owners</td>
+        </tr>
+        <tr>
+          <td>OBJ-03</td>
+          <td>Enable multi-user collaboration with role-based access control</td>
+          <td>Owner, Contributor, and Viewer roles each have distinct capabilities enforced at the data layer (RLS); no user can access a workstream they have not been invited to</td>
+          <td>Team Leads, Executive Reviewers</td>
+        </tr>
+        <tr>
+          <td>OBJ-04</td>
+          <td>Surface portfolio-level intelligence across all workstreams</td>
+          <td>Dashboard, Home page, and Analytics page each provide a distinct portfolio-level view; reviewer can triage all workstreams by RAG status in under 60 seconds</td>
+          <td>The Executive Reviewer persona</td>
+        </tr>
+        <tr>
+          <td>OBJ-05</td>
+          <td>Alert users when data is stale without requiring self-monitoring</td>
+          <td>Staleness flag fires automatically when update cadence exceeds the configured threshold; flag is visible on the dashboard card and workstream overview without any user action</td>
+          <td>The Independent Operator persona</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 3. STAKEHOLDER REGISTER -->
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">03</span> Stakeholder Register</h2>
+    <table class="stkh-table">
+      <thead>
+        <tr>
+          <th>Persona</th>
+          <th>Role in System</th>
+          <th>Primary Need</th>
+          <th>Key Requirements Driven</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>The Independent Operator</strong><br><span style="font-size:12px;color:var(--text3)">BA, consultant, 3–5 concurrent workstreams, no team</span></td>
+          <td>Owner (sole user)</td>
+          <td>Personal health signal and an honest prompt to act when a workstream drifts without self-monitoring</td>
+          <td>FR-04, FR-05, FR-07–FR-10, FR-32</td>
+        </tr>
+        <tr>
+          <td><strong>The Team Lead</strong><br><span style="font-size:12px;color:var(--text3)">Cross-functional manager, needs to delegate and communicate status</span></td>
+          <td>Owner or Contributor</td>
+          <td>Delegate data entry to team members, control role visibility, communicate status upward without manual aggregation</td>
+          <td>FR-03, FR-26–FR-31</td>
+        </tr>
+        <tr>
+          <td><strong>The Executive Reviewer</strong><br><span style="font-size:12px;color:var(--text3)">Senior stakeholder, no data entry, needs portfolio view</span></td>
+          <td>Viewer (invited via link)</td>
+          <td>Single-screen portfolio health view and trend line; disengages immediately if the tool requires any learning curve</td>
+          <td>FR-11–FR-14, FR-28, FR-30</td>
+        </tr>
+        <tr>
+          <td><strong>Hadi Mercer (Developer/BA)</strong></td>
+          <td>System Administrator</td>
+          <td>Demonstrated BA capability through the documented requirements, scoring engine design, and data model</td>
+          <td>FR-33, FR-34, FR-35</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. SCOPE -->
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">04</span> Scope</h2>
+
+    <p class="sub-heading">In Scope</p>
+    <div class="scope-grid">
+      <div class="scope-col in">
+        <div class="scope-col-header in">In Scope — v1.0</div>
+        <div class="scope-item">Email/password authentication and invite-link account creation</div>
+        <div class="scope-item">Workstream creation with 9-question context wizard</div>
+        <div class="scope-item">Calculated RAG scoring across three health dimensions with wizard modifier matrix</div>
+        <div class="scope-item">Staleness flag when update cadence exceeds configured threshold</div>
+        <div class="scope-item">Dashboard card grid with filter, RAG badge, and sub-scores</div>
+        <div class="scope-item">Milestone CRUD with completion percentage feeding Schedule Health</div>
+        <div class="scope-item">Budget spend log with planned vs actual feeding Budget Health</div>
+        <div class="scope-item">Blocker log with age tracking feeding Blocker Health</div>
+        <div class="scope-item">Structured Updates post feed with type badges and role restrictions</div>
+        <div class="scope-item">Team management — invite links, role changes, member removal</div>
+        <div class="scope-item">Analytics page — 30-day trend, scatter matrix, milestone velocity, blocker age</div>
+        <div class="scope-item">Workstream archiving with full history preserved</div>
+        <div class="scope-item">Row-level security enforced at database layer via Supabase RLS</div>
+      </div>
+      <div class="scope-col out">
+        <div class="scope-col-header out">Out of Scope — v1.0</div>
+        <div class="scope-item">Email or Slack/Teams notifications and alerts</div>
+        <div class="scope-item">File attachments to milestones, blockers, or updates</div>
+        <div class="scope-item">Gantt chart or timeline view</div>
+        <div class="scope-item">Public sharing — time-limited read-only link for external stakeholders</div>
+        <div class="scope-item">SSO or OAuth (Google, Microsoft) authentication</div>
+        <div class="scope-item">Organisation-level accounts with admin management</div>
+        <div class="scope-item">Exportable PDF or Word status reports</div>
+        <div class="scope-item">AI-generated status summaries or risk predictions</div>
+        <div class="scope-item">Custom scoring weight configuration by end user</div>
+        <div class="scope-item">Calendar integration for milestone due date sync</div>
+      </div>
+    </div>
+
+    <p class="sub-heading">Out of Scope — Rationale</p>
+    <table class="oos-table">
+      <thead>
+        <tr><th>Feature</th><th>Rationale for Exclusion</th><th>Future Phase</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Notifications (email/Slack)</td><td>Requires async infrastructure (email delivery, notification queues) that adds significant complexity without changing the core BA demonstration. The staleness flag serves the alerting intent at UI level.</td><td>Phase 2</td></tr>
+        <tr><td>File attachments</td><td>Introduces storage infrastructure and access control complexity disproportionate to their value for a v1 health-tracking tool.</td><td>Phase 4</td></tr>
+        <tr><td>Gantt / timeline view</td><td>Repositions the product identity toward project management tools — exactly the category Meridian replaces for non-PM users. Inclusion would undermine the core value proposition.</td><td>Phase 3</td></tr>
+        <tr><td>Public sharing</td><td>Conflicts with the data sensitivity model. Workstream data often contains budget figures and blocker details that should not be publicly accessible via an unauthenticated link.</td><td>Phase 4</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 5. FUNCTIONAL REQUIREMENTS -->
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">05</span> Functional Requirements</h2>
+    <p class="doc-prose" style="margin-bottom:24px;">All 35 functional requirements are implemented in v1.0. Priority is assigned using MoSCoW. Traceability links each requirement to a project objective.</p>
+
+    <table class="req-table">
+      <thead>
+        <tr>
+          <th style="width:76px;">ID</th>
+          <th style="width:100px;">Area</th>
+          <th style="width:110px;">Priority</th>
+          <th>Requirement</th>
+          <th style="width:90px;">Traces To</th>
+          <th style="width:80px;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- AUTH -->
+        <tr class="req-area-header"><td colspan="6">Authentication &amp; Access</td></tr>
+        <tr>
+          <td class="fr-id">FR-01</td>
+          <td class="fr-area">Auth</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall provide email and password registration with email verification before account activation.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-02</td>
+          <td class="fr-area">Auth</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall support login, logout, and persistent session management. Sessions shall expire after a configurable idle period.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-03</td>
+          <td class="fr-area">Auth</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall support invite-link account creation. A user who registers via an invite link shall be assigned the Viewer role on the inviting workstream automatically upon account creation.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- SETUP -->
+        <tr class="req-area-header"><td colspan="6">Workstream Setup</td></tr>
+        <tr>
+          <td class="fr-id">FR-04</td>
+          <td class="fr-area">Setup</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall allow authenticated users to create a workstream with core fields: name, description, start date, target end date, total budget (optional), phase, and primary domain.</td>
+          <td>OBJ-01, OBJ-02</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-05</td>
+          <td class="fr-area">Setup</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall present a 9-question context wizard at workstream creation, required before the workstream is saved. Wizard answers shall be stored as the workstream's scoring configuration and used by the RAG engine modifier matrix.</td>
+          <td>OBJ-02</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-06</td>
+          <td class="fr-area">Setup</td>
+          <td><span class="badge badge-should">Should Have</span></td>
+          <td>The system shall allow Owners to re-run the context wizard after initial setup. Each re-run shall create a log entry capturing the previous configuration, the new configuration, and the timestamp of the change.</td>
+          <td>OBJ-02</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- RAG ENGINE -->
+        <tr class="req-area-header"><td colspan="6">RAG Scoring Engine</td></tr>
+        <tr>
+          <td class="fr-id">FR-07</td>
+          <td class="fr-area">RAG Engine</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall automatically calculate three health dimension scores on any data change: Schedule Health (SV = Milestone Completion % − Time Elapsed %), Budget Health (BV = (Planned to Date − Actual) / Total Budget), and Blocker Health (derived from open blocker count and age thresholds).</td>
+          <td>OBJ-01, OBJ-02</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-08</td>
+          <td class="fr-area">RAG Engine</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall apply the wizard modifier matrix to adjust scoring thresholds per workstream. A minimum of 15 modifier rules shall be documented. Example: a workstream with a hard contractual deadline shall tighten the Schedule Amber threshold from −10% to −5% and the Red threshold from −25% to −15%.</td>
+          <td>OBJ-02</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-09</td>
+          <td class="fr-area">RAG Engine</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall calculate a composite RAG score as a weighted average of the three health dimensions: Schedule × 0.40 + Budget × 0.35 + Blockers × 0.25. Composite ≥ 70 = Green; 40–69 = Amber; &lt; 40 = Red. The composite score shall be recalculated on every relevant data mutation.</td>
+          <td>OBJ-01</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-10</td>
+          <td class="fr-area">RAG Engine</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall raise a staleness flag (is_stale = true) when the last data update to a workstream exceeds the configured cadence threshold. The flag shall be visible on the dashboard card and the workstream overview without user action.</td>
+          <td>OBJ-05</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- DASHBOARD -->
+        <tr class="req-area-header"><td colspan="6">Portfolio Dashboard</td></tr>
+        <tr>
+          <td class="fr-id">FR-11</td>
+          <td class="fr-area">Dashboard</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall display a card grid of all workstreams the authenticated user owns or has been invited to. Each card shall show the composite RAG badge, phase, role badge, days to deadline, and three sub-score progress bars (Schedule / Budget / Blockers).</td>
+          <td>OBJ-04</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-12</td>
+          <td class="fr-area">Dashboard</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall visually distinguish owned workstreams from invited workstreams on the dashboard card grid. Both types shall appear in the same view.</td>
+          <td>OBJ-04</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-13</td>
+          <td class="fr-area">Dashboard</td>
+          <td><span class="badge badge-should">Should Have</span></td>
+          <td>The system shall provide a filter bar on the dashboard allowing users to filter the card grid by RAG status, phase, and role. Filters shall apply in combination.</td>
+          <td>OBJ-04</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-14</td>
+          <td class="fr-area">Dashboard</td>
+          <td><span class="badge badge-should">Should Have</span></td>
+          <td>The system shall display a summary strip at the top of the dashboard showing: total active workstreams, count by RAG status (Green / Amber / Red), and count of stale workstreams.</td>
+          <td>OBJ-04</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- OVERVIEW -->
+        <tr class="req-area-header"><td colspan="6">Workstream Overview</td></tr>
+        <tr>
+          <td class="fr-id">FR-15</td>
+          <td class="fr-area">Overview</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The workstream Overview tab shall display: composite score card, individual dimension score cards, workstream details (name, dates, phase, owner), a scoring profile table showing all 9 wizard answers in human-readable form, and the team member list.</td>
+          <td>OBJ-01, OBJ-04</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-16</td>
+          <td class="fr-area">Overview</td>
+          <td><span class="badge badge-should">Should Have</span></td>
+          <td>The workstream Overview tab shall include a workstream-level comment thread visible to all members. Owners and Contributors shall be able to post; Viewers shall be able to read.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- MILESTONES -->
+        <tr class="req-area-header"><td colspan="6">Milestones</td></tr>
+        <tr>
+          <td class="fr-id">FR-17</td>
+          <td class="fr-area">Milestones</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall provide full CRUD for milestones within a workstream. Each milestone shall have a name, due date, and status (Not Started / In Progress / Complete). Milestone completion percentage shall feed directly into the Schedule Health calculation.</td>
+          <td>OBJ-01, OBJ-02</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-18</td>
+          <td class="fr-area">Milestones</td>
+          <td><span class="badge badge-should">Should Have</span></td>
+          <td>Each milestone shall have an individual comment thread and a pinned note field. Comment threads shall display author and timestamp. The pinned note shall support one active note per milestone, editable by Owners and Contributors.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-19</td>
+          <td class="fr-area">Milestones</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall visually flag milestones that are overdue and incomplete. Overdue milestones shall appear in a distinct colour (red) and shall be surfaced in the Home page overdue panel sorted by days overdue.</td>
+          <td>OBJ-04, OBJ-05</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- BUDGET -->
+        <tr class="req-area-header"><td colspan="6">Budget</td></tr>
+        <tr>
+          <td class="fr-id">FR-20</td>
+          <td class="fr-area">Budget</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The Budget tab shall display planned spend to date, actual spend to date, budget variance (£ and %), burn rate indicator, and the Budget Health dimension score. All values shall update in real time as new spend entries are added.</td>
+          <td>OBJ-01</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-21</td>
+          <td class="fr-area">Budget</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall maintain an auditable spend log. Each entry shall be stored individually with date, amount, category, and optional description. Entries shall not be deletable; corrections shall be made via a new offsetting entry.</td>
+          <td>OBJ-01</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-22</td>
+          <td class="fr-area">Budget</td>
+          <td><span class="badge badge-should">Should Have</span></td>
+          <td>When the context wizard indicates the workstream has no formal budget (informal or self-directed work), the Budget Health dimension shall be suppressed from display and excluded from the composite score calculation.</td>
+          <td>OBJ-02</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- BLOCKERS -->
+        <tr class="req-area-header"><td colspan="6">Blockers</td></tr>
+        <tr>
+          <td class="fr-id">FR-23</td>
+          <td class="fr-area">Blockers</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The system shall maintain an open blocker log with age tracking from the date raised. Open blocker count and age shall feed the Blocker Health calculation. Owners and Contributors shall be able to add and resolve blockers.</td>
+          <td>OBJ-01</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-24</td>
+          <td class="fr-area">Blockers</td>
+          <td><span class="badge badge-should">Should Have</span></td>
+          <td>Each blocker shall have an individual comment thread and a pinned note field. Resolved blockers shall be preserved in a collapsible history table with the resolution note and resolution timestamp.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-25</td>
+          <td class="fr-area">Blockers</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>Open blockers shall be age-colour-coded using wizard-adjusted thresholds (default: green &lt; 3 days, amber 3–7 days, red &gt; 7 days). When the wizard indicates external dependency, age thresholds shall be halved.</td>
+          <td>OBJ-02</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- UPDATES -->
+        <tr class="req-area-header"><td colspan="6">Updates Feed</td></tr>
+        <tr>
+          <td class="fr-id">FR-26</td>
+          <td class="fr-area">Updates</td>
+          <td><span class="badge badge-should">Should Have</span></td>
+          <td>The system shall provide a structured Updates post feed with typed post categories: Status Update (Owner only), Decision Made, Risk Raised, Milestone Reached, and General Announcement. Each post type shall display a distinct badge.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-27</td>
+          <td class="fr-area">Updates</td>
+          <td><span class="badge badge-should">Should Have</span></td>
+          <td>Updates posts shall display the post type badge, author name, and timestamp. Posts shall be editable by the author within 15 minutes of posting and locked thereafter. Deleted posts shall be replaced with a [deleted] placeholder retaining the timestamp.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-28</td>
+          <td class="fr-area">Updates</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>Viewers shall be able to read all Updates posts but shall not have access to the post creation form. This restriction shall be enforced at the UI level and at the database layer via RLS.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- TEAM -->
+        <tr class="req-area-header"><td colspan="6">Team Management</td></tr>
+        <tr>
+          <td class="fr-id">FR-29</td>
+          <td class="fr-area">Team</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The Team tab shall display all current members with their role badges and join dates. Owners shall be able to promote Contributors to co-Owner, promote Viewers to Contributor, and demote Contributors to Viewer. An Owner cannot demote themselves.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-30</td>
+          <td class="fr-area">Team</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>Owners shall be able to generate an invite link for a workstream. Any user who registers using the invite link shall join the workstream as a Viewer. Invite links shall be revocable by the Owner.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-31</td>
+          <td class="fr-area">Team</td>
+          <td><span class="badge badge-should">Should Have</span></td>
+          <td>Owners shall be able to remove a member from a workstream. Upon removal, the member loses access immediately. All historical contributions (comments, updates, spend entries) shall be retained and attributed to the member's name.</td>
+          <td>OBJ-03</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- ARCHIVING -->
+        <tr class="req-area-header"><td colspan="6">Archiving</td></tr>
+        <tr>
+          <td class="fr-id">FR-32</td>
+          <td class="fr-area">Archiving</td>
+          <td><span class="badge badge-could">Could Have</span></td>
+          <td>Owners shall be able to archive a workstream. Archived workstreams shall no longer appear in the active dashboard but shall be accessible via a separate archived view. All historical data — milestones, budget entries, blockers, score history — shall be fully preserved.</td>
+          <td>OBJ-04</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+        <!-- ARTIFACTS -->
+        <tr class="req-area-header"><td colspan="6">Documentation Artifacts</td></tr>
+        <tr>
+          <td class="fr-id">FR-33</td>
+          <td class="fr-area">Artifacts</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The project shall produce a BABOK v3-aligned Functional Requirements Document covering all requirements from FR-01 to FR-35, with MoSCoW prioritisation, stakeholder objectives with success indicators, scope in/out table with rationale, and a traceability matrix.</td>
+          <td>All OBJs</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-34</td>
+          <td class="fr-area">Artifacts</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The project shall produce a UML class diagram documenting the full data model — all tables, relationships, FK constraints, and cardinalities.</td>
+          <td>All OBJs</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+        <tr>
+          <td class="fr-id">FR-35</td>
+          <td class="fr-area">Artifacts</td>
+          <td><span class="badge badge-must">Must Have</span></td>
+          <td>The project shall produce a BPMN process diagram covering: the workstream lifecycle (creation → active → archived) and the invite sub-process (link generation → registration → role assignment).</td>
+          <td>All OBJs</td>
+          <td><span class="badge badge-impl">✓ Live</span></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 6. NON-FUNCTIONAL REQUIREMENTS -->
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">06</span> Non-Functional Requirements</h2>
+
+    <div class="nfr-block">
+      <div class="nfr-id">NFR-01a — Data Integrity: Staleness Tracking</div>
+      <div class="nfr-title">Score history shall be preserved as an immutable audit trail</div>
+      <div class="nfr-body">Every calculated composite score shall be written to <code style="font-family:'DM Mono',monospace;color:var(--accent)">rag_score_history</code> as a timestamped snapshot. Scores shall not be updated in place; each recalculation produces a new row. This preserves the full trend history visible on the Analytics page and prevents retroactive modification of health status records.</div>
+      <div class="nfr-rationale"><strong>Rationale:</strong> The trend line on the Analytics page is the primary evidence that a workstream's health moved over time. If scores were updated in place, the historical narrative would be lost and the analytics surface would be meaningless.</div>
+    </div>
+
+    <div class="nfr-block">
+      <div class="nfr-id">NFR-01b — Data Integrity: Audit Trail</div>
+      <div class="nfr-title">Wizard configuration changes shall be logged with before/after state</div>
+      <div class="nfr-body">When an Owner re-runs the context wizard (FR-06), the previous wizard configuration shall be preserved in a change log with timestamp and the identity of the user who made the change. The current active configuration is always the most recent record.</div>
+      <div class="nfr-rationale"><strong>Rationale:</strong> Wizard answers directly control scoring thresholds. A change to the wizard mid-workstream will change RAG status even without any change to milestone, budget, or blocker data. The audit trail makes this visible and prevents silent threshold changes.</div>
+    </div>
+
+    <div class="nfr-block">
+      <div class="nfr-id">NFR-02a — Security: Row-Level Security</div>
+      <div class="nfr-title">All workstream data shall be isolated at the database layer</div>
+      <div class="nfr-body">Row-level security (RLS) policies shall be applied to all user-scoped tables in Supabase. No authenticated user shall be able to read, write, or delete data belonging to a workstream they have not been explicitly invited to, regardless of how the application layer is accessed. RLS shall be enforced even if the Streamlit application layer is bypassed.</div>
+      <div class="nfr-rationale"><strong>Rationale:</strong> Application-layer access control alone is insufficient for a multi-user system handling professional workstream data. Database-level enforcement prevents any misconfiguration in the Streamlit layer from exposing cross-user data.</div>
+    </div>
+
+    <div class="nfr-block">
+      <div class="nfr-id">NFR-02b — Security: Credential Management</div>
+      <div class="nfr-title">No credentials shall appear in source code or version control</div>
+      <div class="nfr-body">All secrets (database host, password, Supabase URL, anon key) shall be managed via environment variables loaded from <code style="font-family:'DM Mono',monospace;color:var(--accent)">.env</code> locally and Streamlit Cloud secrets in deployment. The <code style="font-family:'DM Mono',monospace;color:var(--accent)">.env</code> file shall be listed in <code style="font-family:'DM Mono',monospace;color:var(--accent)">.gitignore</code>. No hardcoded credentials shall appear anywhere in the repository.</div>
+      <div class="nfr-rationale"><strong>Rationale:</strong> Publicly accessible GitHub repository. Any hardcoded credential would be immediately and permanently compromised.</div>
+    </div>
+
+    <div class="nfr-block">
+      <div class="nfr-id">NFR-03 — Performance: Database Connection</div>
+      <div class="nfr-title">Database connections shall use the Supabase transaction-mode pooler</div>
+      <div class="nfr-body">All PostgreSQL connections shall use the Supabase pooler endpoint on port 6543 rather than a direct connection on port 5432. The pooler username format shall be <code style="font-family:'DM Mono',monospace;color:var(--accent)">postgres.{project-ref}</code>. Read queries shall use <code style="font-family:'DM Mono',monospace;color:var(--accent)">@st.cache_data(ttl=300)</code> and cache shall be cleared immediately after any write operation.</div>
+      <div class="nfr-rationale"><strong>Rationale:</strong> Streamlit Cloud's serverless execution model cannot hold long-lived direct PostgreSQL connections. Direct connections fail intermittently in this environment. The pooler is the only reliable connection mode for Supabase on Streamlit Cloud.</div>
+    </div>
+
+    <div class="nfr-block">
+      <div class="nfr-id">NFR-04 — Usability: Cold Start Transparency</div>
+      <div class="nfr-title">Cold start delay shall be documented in the README</div>
+      <div class="nfr-body">Streamlit Community Cloud on the free tier may take up to 30 seconds to initialise after a period of inactivity. This delay shall be documented in the repository README so that portfolio reviewers are not misled into thinking the application is broken.</div>
+      <div class="nfr-rationale"><strong>Rationale:</strong> Portfolio reviewers encountering a 30-second blank screen without explanation will form a negative impression of the application's reliability. Transparent documentation prevents this misattribution.</div>
+    </div>
+  </div>
+
+  <!-- 7. CONSTRAINTS & ASSUMPTIONS -->
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">07</span> Constraints &amp; Assumptions</h2>
+
+    <p class="sub-heading">Constraints</p>
+    <table class="oos-table">
+      <thead>
+        <tr><th>ID</th><th>Constraint</th><th>Impact</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>CON-01</td><td>Deployment platform is Streamlit Community Cloud (free tier)</td><td>Cold starts up to 30 seconds; memory limits apply; no background processing; session state lost on hard refresh</td></tr>
+        <tr><td>CON-02</td><td>Database is Supabase free tier (PostgreSQL)</td><td>Limited to 500MB storage; connection pooler required on port 6543; direct connections unreliable in serverless environment</td></tr>
+        <tr><td>CON-03</td><td>No shared layout abstraction in Streamlit multi-page apps</td><td>Sidebar must be duplicated in every page file; helper function abstraction causes rerun issues</td></tr>
+        <tr><td>CON-04</td><td>Portfolio project — not production-hardened</td><td>No SLAs, no uptime guarantees, no disaster recovery; documentation and BA quality are the primary deliverable</td></tr>
+      </tbody>
+    </table>
+
+    <p class="sub-heading">Assumptions</p>
+    <table class="oos-table">
+      <thead>
+        <tr><th>ID</th><th>Assumption</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ASM-01</td><td>Users have a reliable internet connection and a modern browser. The application does not need to support offline use.</td></tr>
+        <tr><td>ASM-02</td><td>Demo account credentials (demo@meridian.app / meridian2026) will remain valid and the demo account will not be deleted for the duration of the portfolio review period.</td></tr>
+        <tr><td>ASM-03</td><td>The 9-question wizard covers the primary axes of workstream variability. Edge cases not covered by the wizard modifier matrix default to the standard scoring thresholds.</td></tr>
+        <tr><td>ASM-04</td><td>Score history is retained indefinitely on the free tier within storage constraints. If storage limits are reached, the oldest score history rows may need to be pruned.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 8. TRACEABILITY MATRIX -->
+  <div class="doc-section">
+    <h2 class="section-heading"><span class="section-num">08</span> Traceability Matrix</h2>
+    <table class="req-table">
+      <thead>
+        <tr>
+          <th>Objective</th>
+          <th>Functional Requirements</th>
+          <th>NFRs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fr-id">OBJ-01</td>
+          <td>FR-04, FR-07, FR-08, FR-09, FR-11, FR-15, FR-17, FR-20, FR-21, FR-23</td>
+          <td>NFR-01a, NFR-03</td>
+        </tr>
+        <tr>
+          <td class="fr-id">OBJ-02</td>
+          <td>FR-05, FR-06, FR-08, FR-22, FR-25</td>
+          <td>NFR-01b</td>
+        </tr>
+        <tr>
+          <td class="fr-id">OBJ-03</td>
+          <td>FR-01, FR-02, FR-03, FR-16, FR-18, FR-24, FR-26, FR-27, FR-28, FR-29, FR-30, FR-31</td>
+          <td>NFR-02a, NFR-02b</td>
+        </tr>
+        <tr>
+          <td class="fr-id">OBJ-04</td>
+          <td>FR-11, FR-12, FR-13, FR-14, FR-15, FR-19, FR-32</td>
+          <td>NFR-03</td>
+        </tr>
+        <tr>
+          <td class="fr-id">OBJ-05</td>
+          <td>FR-10, FR-19</td>
+          <td>NFR-01a</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- end doc-body -->
+
+<footer>
+  <p class="footer-left">FRD-MERIDIAN-001 · v1.0 · Baselined · Hadi Mercer BA Portfolio 2026</p>
+  <div class="footer-right">
+    <a href="../../projects/meridian.html">← Meridian</a>
+    <a href="../../index.html">Portfolio</a>
+  </div>
+</footer>
+
+</body>
+</html>
