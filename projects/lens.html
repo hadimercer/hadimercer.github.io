@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lens — Sentiment & Text Analytics Tool | Hadi Mercer BA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f;
+    --surface: #111518;
+    --surface2: #181d21;
+    --border: #1f2629;
+    --border2: #2a3338;
+    --accent: #00c896;
+    --accent2: #0087ff;
+    --amber: #f5a623;
+    --red: #e8443a;
+    --text: #e8eaeb;
+    --text2: #8a9299;
+    --text3: #4a5560;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body { font-family: 'Epilogue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; background: rgba(10,13,15,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  .detail-hero { background: var(--surface); border-bottom: 1px solid var(--border); padding: 120px 40px 60px; }
+  .detail-hero-inner { max-width: 1200px; margin: 0 auto; }
+  .back-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; margin-bottom: 40px; transition: color 0.2s; }
+  .back-btn:hover { color: var(--text); }
+  .detail-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+  .detail-title { font-family: 'DM Serif Display', serif; font-size: clamp(36px, 5vw, 64px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .detail-tagline { font-size: 18px; color: var(--text2); font-weight: 300; max-width: 700px; line-height: 1.7; margin-bottom: 36px; }
+  .detail-meta-row { display: flex; gap: 48px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; }
+  .meta-value { font-size: 14px; color: var(--text); font-weight: 500; }
+
+  .doc-meta-block { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  .doc-meta-inner { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--border2); margin-top: 40px; }
+  .doc-meta-cell { flex: 1 1 160px; padding: 14px 20px; border-right: 1px solid var(--border2); }
+  .doc-meta-cell:last-child { border-right: none; }
+  .doc-meta-key { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .doc-meta-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
+
+  .detail-content { max-width: 1200px; margin: 0 auto; padding: 64px 40px; display: grid; grid-template-columns: 1fr 340px; gap: 64px; align-items: start; }
+
+  .detail-main h2 { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text); margin: 52px 0 16px; letter-spacing: -0.01em; }
+  .detail-main h2:first-child { margin-top: 0; }
+  .detail-main h3 { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin: 28px 0 12px; }
+  .detail-main p { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 16px; }
+  .detail-main p em { color: var(--text); font-style: italic; }
+
+  .capability-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .capability-list li { display: flex; gap: 12px; font-size: 14px; color: var(--text2); line-height: 1.6; }
+  .capability-list li::before { content: '→'; font-family: 'DM Mono', monospace; color: var(--accent); flex-shrink: 0; font-size: 13px; margin-top: 2px; }
+
+  .pipeline-steps { display: flex; flex-direction: column; gap: 2px; margin-bottom: 24px; }
+  .pipeline-step { display: flex; gap: 0; background: var(--border); }
+  .ps-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); background: var(--surface); padding: 16px 18px; flex-shrink: 0; width: 44px; display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--border2); }
+  .ps-body { background: var(--surface); padding: 14px 18px; flex: 1; }
+  .ps-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .ps-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  .detail-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13px; }
+  .detail-table th { background: var(--surface2); border: 1px solid var(--border2); padding: 10px 14px; text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; }
+  .detail-table td { border: 1px solid var(--border); padding: 10px 14px; color: var(--text2); vertical-align: top; line-height: 1.5; }
+  .detail-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); white-space: nowrap; }
+  .detail-table tr:hover td { background: var(--surface); }
+
+  .section-rule { height: 1px; background: var(--border); margin: 48px 0; }
+
+  .detail-sidebar { position: sticky; top: 100px; }
+  .sidebar-card { background: var(--surface); border: 1px solid var(--border); padding: 28px; margin-bottom: 16px; }
+  .sidebar-card h3 { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+
+  .demo-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px; background: var(--accent); color: #000; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; margin-bottom: 12px; }
+  .demo-btn:hover { background: #00e0a8; }
+
+  .github-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; background: transparent; color: var(--text2); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+  .github-btn:hover { border-color: var(--text2); color: var(--text); }
+
+  .demo-instructions { margin-top: 16px; }
+  .demo-step { display: flex; gap: 10px; margin-bottom: 10px; font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .step-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); background: rgba(0, 200, 150, 0.08); border: 1px solid rgba(0, 200, 150, 0.2); padding: 2px 7px; flex-shrink: 0; height: fit-content; margin-top: 2px; }
+
+  .artifact-link { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); text-decoration: none; transition: gap 0.2s; }
+  .artifact-link:last-child { border-bottom: none; }
+  .artifact-link:hover { gap: 14px; }
+  .artifact-link .aicon { font-size: 14px; flex-shrink: 0; }
+  .artifact-link .atext { font-size: 13px; color: var(--text2); flex: 1; }
+  .artifact-link .aarrow { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); transition: color 0.2s; }
+  .artifact-link:hover .aarrow { color: var(--accent); }
+
+  .status-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--accent); color: var(--accent); margin-bottom: 24px; }
+  .status-badge::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  footer { border-top: 1px solid var(--border); padding: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 20px; }
+  .footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; }
+  .footer-right { display: flex; gap: 24px; }
+  .footer-right a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .footer-right a:hover { color: var(--accent); }
+
+  @media (max-width: 900px) { .detail-content { grid-template-columns: 1fr; } .detail-sidebar { position: static; } }
+  @media (max-width: 768px) { nav { padding: 16px 20px; } .nav-links { display: none; } .detail-hero { padding: 100px 20px 40px; } .doc-meta-block { padding: 0 20px; } .detail-content { padding: 40px 20px; } .doc-meta-cell { flex: 1 1 100%; border-right: none; border-bottom: 1px solid var(--border2); } footer { padding: 32px 20px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<div class="detail-hero">
+  <div class="detail-hero-inner">
+    <a href="../index.html#projects" class="back-btn">← Back to Portfolio</a>
+    <div class="status-badge">Live</div>
+    <p class="detail-eyebrow">Sentiment &amp; Text Analytics · LLM Pipeline · NLP · S4</p>
+    <h1 class="detail-title">Lens — Sentiment &amp;<br>Text Analytics Tool</h1>
+    <p class="detail-tagline">A general-purpose text analysis platform that accepts batches of business text — customer feedback, employee surveys, support tickets, NPS comments — runs them through an OpenAI-backed NLP pipeline, persists results to PostgreSQL, and makes historical runs fully reviewable without re-calling the model.</p>
+    <div class="detail-meta-row">
+      <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
+      <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · OpenAI API · PostgreSQL · Streamlit</span></div>
+      <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · DFD · ERD · Use Case Diagram · Schema</span></div>
+      <div class="meta-item"><span class="meta-label">Portfolio Ref</span><span class="meta-value">Smaller Project 4 (S4)</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-meta-block">
+  <div class="doc-meta-inner">
+    <div class="doc-meta-cell"><div class="doc-meta-key">Document ID</div><div class="doc-meta-val">Lens FRD 001</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">v1.0</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Status</div><div class="doc-meta-val">Baselined</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Project</div><div class="doc-meta-val">Lens · S4</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Prepared By</div><div class="doc-meta-val">Hadi Mercer</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">2026</div></div>
+  </div>
+</div>
+
+<div class="detail-content">
+  <div class="detail-main">
+
+    <h2>The Problem</h2>
+    <p>Teams regularly collect large volumes of qualitative text — customer comments, engagement survey responses, support notes, incident narratives, implementation feedback — but the analysis workflow breaks down in one of three places: the incoming text is messy, the interpretation lacks business context, or the results aren't stored in a way that supports historical comparison.</p>
+    <p><em>Lens treats text analysis as an operational workflow, not a one-off prompt.</em> Analysts validate a batch, attach business context, compare it against prior cycles, persist the run, and reopen it later without re-calling the model. The second design problem Lens addresses is governance: a public app that can call a paid API needs controls. Lens separates public review access from live execution through runtime mode detection, admin gating, and explicit model selection controls.</p>
+
+    <h2>What It Does</h2>
+    <ul class="capability-list">
+      <li>Accepts CSV uploads or pasted text, runs UTF-8 validation, detects text columns and timestamps, enforces batch limits, and gates execution behind a 5-row preview confirmation — no model calls until the analyst confirms the batch</li>
+      <li>Runs an OpenAI-backed pipeline: record-level sentiment scoring, theme extraction, executive summary generation, and anomaly detection — with retry handling on malformed model output</li>
+      <li>Supports named longitudinal series — retrieves the most recent prior cycle and injects that context into each new run so the model's summary is aware of what changed since last time</li>
+      <li>Persists all results to PostgreSQL: analysis runs, normalised batch records, context profiles, pipeline run log — results are queryable and durable</li>
+      <li>Runs in Demo Mode when no API key is present — seeded historical analyses load from the database so the app is fully reviewable without live execution</li>
+      <li>Gates live execution behind an admin password on the New Analysis page — public users can browse the Analysis Library without triggering any API cost</li>
+    </ul>
+
+    <h2>What This Demonstrates</h2>
+    <ul class="capability-list">
+      <li>LLM workflow design: sentiment scoring, theme extraction, structured summary generation, retry handling — treating the model as a component in a pipeline, not a chat interface</li>
+      <li>Data validation and ingestion engineering: text-column detection, timestamp detection, empty-row rejection, preview gating, and batch size enforcement before any API call is made</li>
+      <li>Longitudinal analysis design: named series, prior-cycle retrieval, run sequencing, and historical comparison context — qualitative data treated as a repeatable operational workflow</li>
+      <li>Five-table PostgreSQL schema with FK chains, helper functions, indexes, and idempotent bootstrap logic — schema and seed data run automatically on first deploy</li>
+      <li>Governance for public AI demos: Demo/Live mode split, admin password gate, model allowlist, safe public browsing without API exposure</li>
+      <li>BA artifact depth: FRD, Data Flow Diagram, Entity Relationship Diagram, Use Case Diagram, schema SQL, and seed SQL — six distinct artifacts covering requirements, data, and system boundaries</li>
+    </ul>
+
+    <div class="section-rule"></div>
+
+    <h2>Pipeline Architecture</h2>
+    <p>Six sequential stages from source text to stored results. Each stage has defined inputs, outputs, and failure modes documented in the DFD artifact.</p>
+
+    <div class="pipeline-steps">
+      <div class="pipeline-step">
+        <div class="ps-num">1</div>
+        <div class="ps-body">
+          <div class="ps-title">Ingestion &amp; Validation</div>
+          <div class="ps-desc">UTF-8 validation, text-column detection, timestamp detection, empty-row rejection, 5-row preview generation, batch size enforcement</div>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">2</div>
+        <div class="ps-body">
+          <div class="ps-title">Context &amp; Series Resolution</div>
+          <div class="ps-desc">Analyst adds batch label, domain tag, and optional context profile. If a series name is supplied, prior-cycle run is retrieved and injected as context</div>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">3</div>
+        <div class="ps-body">
+          <div class="ps-title">Admin Gate &amp; Confirmation</div>
+          <div class="ps-desc">In Live Mode, execution requires admin password unlock. API footprint is displayed before confirmation. In Demo Mode this stage is skipped</div>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">4</div>
+        <div class="ps-body">
+          <div class="ps-title">OpenAI Pipeline Execution</div>
+          <div class="ps-desc">Record-level sentiment scoring → theme extraction → structured summary generation → key takeaways + priority actions → anomaly detection. Retry on malformed output</div>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">5</div>
+        <div class="ps-body">
+          <div class="ps-title">Persistence</div>
+          <div class="ps-desc">Upsert series registry, assign run_sequence, persist analysis_results + normalised batch_records + context_profiles + pipeline_run_log. Runtime migration guard runs here</div>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="ps-num">6</div>
+        <div class="ps-body">
+          <div class="ps-title">Dashboard Render &amp; Historical Review</div>
+          <div class="ps-desc">Executive summary, ordered takeaways, priority actions, sentiment split, theme heatmap, anomaly flags, optional sentiment-over-time view, prior-cycle comparison</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-rule"></div>
+
+    <h2>Database Schema</h2>
+    <p>Five-table PostgreSQL schema. FK chains enforce the relationship between series, runs, and records. Idempotent bootstrap applies schema and loads seed data on first deploy without manual intervention.</p>
+
+    <table class="detail-table">
+      <thead>
+        <tr><th>Table</th><th>Purpose</th><th>Key Fields</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>series_index</td><td>Named longitudinal series registry — groups related runs together</td><td>series_name, created_at, run_count</td></tr>
+        <tr><td>analysis_results</td><td>One row per analysis run — summary, themes, takeaways, sentiment aggregate, run metadata</td><td>run_id, series_id, run_sequence, batch_label, domain, executive_summary</td></tr>
+        <tr><td>batch_records</td><td>Normalised individual records per run — one row per text unit with per-record sentiment score</td><td>run_id, record_index, text_content, sentiment_score, sentiment_label</td></tr>
+        <tr><td>context_profiles</td><td>Optional business context attached to a run — audience, purpose, prior context injected into model</td><td>run_id, audience, purpose, prior_context_summary</td></tr>
+        <tr><td>pipeline_run_log</td><td>Audit trail — every execution attempt logged with status, record counts, model used, duration</td><td>run_id, status, records_processed, model_name, duration_seconds, error_message</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-rule"></div>
+
+    <h2>BA Process</h2>
+
+    <h3>Problem Framing</h3>
+    <p>The problem was framed around three specific failure modes in qualitative analysis workflows: messy input, missing business context, and no historical record. Each failure mode drove a specific design requirement — validation gates for the first, context profiles for the second, named longitudinal series and persistent storage for the third.</p>
+    <p>The secondary problem — governance for a public demo — was treated as a first-class design requirement rather than a deployment afterthought. Demo Mode and the admin password gate were specified in the FRD before the first line of code was written.</p>
+
+    <h3>Design Decisions</h3>
+    <table class="detail-table">
+      <thead>
+        <tr><th>Decision</th><th>Rationale</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>PostgreSQL as system of record (not session state)</td><td>Analysis results must be durable and queryable independently of the session. A reviewer should be able to close the tab and reopen the same analysis days later without re-running the model</td></tr>
+        <tr><td>Demo Mode as a first-class path</td><td>The app must be reviewable without an API key. Seed data bootstrapped on first deploy means the app is immediately useful to any portfolio reviewer regardless of credentials</td></tr>
+        <tr><td>Short-lived psycopg2 connections</td><td>Supabase free tier drops idle sessions. Per-request connection factory avoids connection pool exhaustion on a long-lived Streamlit session</td></tr>
+        <tr><td>Prior-cycle context injected at model call time</td><td>The model's summary is meaningfully different when it knows what was observed in the prior cycle. This requires retrieving and formatting the prior run before the API call, not after</td></tr>
+        <tr><td>Retry on malformed model output</td><td>LLM output is probabilistically structured. A retry on parse failure — without re-calling for valid records — is cheaper than failing the whole batch</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Scope Decisions</h3>
+    <table class="detail-table">
+      <thead>
+        <tr><th>Excluded Feature</th><th>Rationale</th><th>Future Phase</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Multi-user accounts / auth</td><td>Single-analyst workflow for v1; admin password gate provides sufficient access control for portfolio demonstration without auth infrastructure</td><td>Phase 2</td></tr>
+        <tr><td>Real-time streaming analysis</td><td>Batch processing is the right fit for the stated problem (survey cycles, support batches) — streaming adds infrastructure complexity without changing the analytical model</td><td>Phase 3</td></tr>
+        <tr><td>Custom model fine-tuning</td><td>Prompted base models are sufficient for the accuracy level required in business text analysis; fine-tuning requires labelled training data not available for synthetic demonstrations</td><td>Phase 3</td></tr>
+      </tbody>
+    </table>
+
+  </div><!-- end detail-main -->
+
+  <div class="detail-sidebar">
+    <div class="sidebar-card">
+      <h3>Try the Application</h3>
+      <a href="https://lens-sentiment-engine.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
+      <a href="https://github.com/hadimercer/Lens_Sentiment_Engine" target="_blank" class="github-btn">View on GitHub</a>
+      <div class="demo-instructions">
+        <div class="demo-step"><span class="step-num">Mode</span><span>App launches in Demo Mode — seeded historical analyses are pre-loaded, no credentials needed</span></div>
+        <div class="demo-step"><span class="step-num">1</span><span>Start at Overview to understand the workflow and runtime mode</span></div>
+        <div class="demo-step"><span class="step-num">2</span><span>Open Analysis Library to explore stored runs — filter by series, domain, or date</span></div>
+        <div class="demo-step"><span class="step-num">3</span><span>Reopen any stored analysis to view the full dashboard without re-calling the model</span></div>
+        <div class="demo-step"><span class="step-num">Live</span><span>App launches in Demo Mode. To run a live analysis, request the API password via the contact email on the portfolio.</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>BA Artifacts</h3>
+      <a href="../artifacts/lens/frd.html" class="artifact-link">
+        <span class="aicon">📄</span><span class="atext">FRD — Lens Functional Requirements</span><span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/lens/dfd.html" class="artifact-link">
+        <span class="aicon">🔀</span><span class="atext">Data Flow Diagram — End-to-End Pipeline</span><span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/lens/erd.html" class="artifact-link">
+        <span class="aicon">📐</span><span class="atext">Entity Relationship Diagram — Schema</span><span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/lens/ucd.html" class="artifact-link">
+        <span class="aicon">👤</span><span class="atext">Use Case Diagram — Analyst Workflows</span><span class="aarrow">→</span>
+      </a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>Project Metadata</h3>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Type</span>
+        <span style="font-size:13px;color:var(--text2);">LLM analytics pipeline</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">FR Areas</span>
+        <span style="font-size:13px;color:var(--text2);">FR-01 to FR-04</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">DB Tables</span>
+        <span style="font-size:13px;color:var(--text2);">5</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Pipeline</span>
+        <span style="font-size:13px;color:var(--text2);">6 stages</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Model</span>
+        <span style="font-size:13px;color:var(--text2);">OpenAI (gpt-4o-mini)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-left">© 2026 Hadi Mercer · BA Portfolio</p>
+  <div class="footer-right">
+    <a href="../index.html">Portfolio</a>
+    <a href="https://github.com/hadimercer" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>

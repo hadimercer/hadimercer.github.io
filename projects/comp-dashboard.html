@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compensation & Market Benchmarking Dashboard | Hadi Mercer BA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f;
+    --surface: #111518;
+    --surface2: #181d21;
+    --border: #1f2629;
+    --border2: #2a3338;
+    --accent: #00c896;
+    --accent2: #0087ff;
+    --amber: #f5a623;
+    --red: #e8443a;
+    --text: #e8eaeb;
+    --text2: #8a9299;
+    --text3: #4a5560;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Epilogue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(10,13,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .detail-hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 120px 40px 60px;
+  }
+
+  .detail-hero-inner { max-width: 1200px; margin: 0 auto; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-bottom: 40px;
+    transition: color 0.2s;
+  }
+
+  .back-btn:hover { color: var(--text); }
+
+  .detail-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .detail-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .detail-tagline {
+    font-size: 18px;
+    color: var(--text2);
+    font-weight: 300;
+    max-width: 700px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  .detail-meta-row { display: flex; gap: 48px; flex-wrap: wrap; }
+
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .meta-value { font-size: 14px; color: var(--text); font-weight: 500; }
+
+  .doc-meta-block { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+  .doc-meta-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--border2);
+    margin-top: 40px;
+  }
+
+  .doc-meta-cell {
+    flex: 1 1 160px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border2);
+  }
+
+  .doc-meta-cell:last-child { border-right: none; }
+
+  .doc-meta-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .doc-meta-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  .detail-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 40px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .detail-main h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--text);
+    margin: 52px 0 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .detail-main h2:first-child { margin-top: 0; }
+
+  .detail-main h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 28px 0 12px;
+  }
+
+  .detail-main p {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .detail-main p em { color: var(--text); font-style: italic; }
+
+  .capability-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .capability-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .capability-list li::before {
+    content: '→';
+    font-family: 'DM Mono', monospace;
+    color: var(--accent);
+    flex-shrink: 0;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+
+  .detail-table th {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .detail-table td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    color: var(--text2);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .detail-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .detail-table tr:hover td { background: var(--surface); }
+
+  .arch-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-bottom: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 2;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  .section-rule { height: 1px; background: var(--border); margin: 48px 0; }
+
+  .detail-sidebar { position: sticky; top: 100px; }
+
+  .sidebar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+
+  .sidebar-card h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .demo-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    color: #000;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+  }
+
+  .demo-btn:hover { background: #00e0a8; }
+
+  .github-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    color: var(--text2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border2);
+    transition: all 0.2s;
+  }
+
+  .github-btn:hover { border-color: var(--text2); color: var(--text); }
+
+  .demo-instructions { margin-top: 16px; }
+
+  .demo-step {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    background: rgba(0, 200, 150, 0.08);
+    border: 1px solid rgba(0, 200, 150, 0.2);
+    padding: 2px 7px;
+    flex-shrink: 0;
+    height: fit-content;
+    margin-top: 2px;
+  }
+
+  .artifact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+
+  .artifact-link:last-child { border-bottom: none; }
+  .artifact-link:hover { gap: 14px; }
+  .artifact-link .aicon { font-size: 14px; flex-shrink: 0; }
+  .artifact-link .atext { font-size: 13px; color: var(--text2); flex: 1; }
+  .artifact-link .aarrow { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); transition: color 0.2s; }
+  .artifact-link:hover .aarrow { color: var(--accent); }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .status-badge::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; }
+  .footer-right { display: flex; gap: 24px; }
+  .footer-right a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .footer-right a:hover { color: var(--accent); }
+
+  @media (max-width: 900px) { .detail-content { grid-template-columns: 1fr; } .detail-sidebar { position: static; } }
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .detail-hero { padding: 100px 20px 40px; }
+    .doc-meta-block { padding: 0 20px; }
+    .detail-content { padding: 40px 20px; }
+    .doc-meta-cell { flex: 1 1 100%; border-right: none; border-bottom: 1px solid var(--border2); }
+    footer { padding: 32px 20px; }
+    .arch-block { white-space: pre-wrap; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<div class="detail-hero">
+  <div class="detail-hero-inner">
+    <a href="../index.html#projects" class="back-btn">← Back to Portfolio</a>
+    <div class="status-badge">Live</div>
+    <p class="detail-eyebrow">Compensation Analytics · BLS Data Pipeline · S2</p>
+    <h1 class="detail-title">Compensation &amp; Market<br>Benchmarking Dashboard</h1>
+    <p class="detail-tagline">An end-to-end data pipeline and 8-page analytics dashboard that pulls real BLS OEWS wage data, maps it to internal job families via a custom SOC crosswalk, and surfaces compensation gaps, pay equity flags, and geographic differentials across 5 US metros.</p>
+    <div class="detail-meta-row">
+      <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
+      <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · PostgreSQL · Streamlit · BLS API</span></div>
+      <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · UML Sequence · OpenAPI Spec · SOC Crosswalk</span></div>
+      <div class="meta-item"><span class="meta-label">Portfolio Ref</span><span class="meta-value">Smaller Project 2 (S2)</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-meta-block">
+  <div class="doc-meta-inner">
+    <div class="doc-meta-cell"><div class="doc-meta-key">Document ID</div><div class="doc-meta-val">FRD-COMP-001</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">v1.0</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Status</div><div class="doc-meta-val">Baselined</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Project</div><div class="doc-meta-val">TechNova Comp · S2</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Prepared By</div><div class="doc-meta-val">Hadi Mercer</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">2026</div></div>
+  </div>
+</div>
+
+<div class="detail-content">
+  <div class="detail-main">
+
+    <h2>The Problem</h2>
+    <p>Compensation teams at mid-market companies rely on manual exports from commercial survey vendors and static spreadsheets to benchmark roles. These snapshots age quickly, don't connect to internal salary data automatically, and give no systematic view of where pay gaps or equity issues exist.</p>
+    <p>This project simulates TechNova, a fictional 500-person US healthcare technology company operating across five metros, and builds the analytics infrastructure that answers: <em>are we paying competitively, and where are our equity risks?</em></p>
+    <p>TechNova is a realistic fictional entity — all 800 employee records, salary figures, and job grade bands are synthetic. The BLS OEWS market data is real, pulled live from the public API.</p>
+
+    <h2>What It Does</h2>
+    <ul class="capability-list">
+      <li>Pulls live BLS OEWS wage data via API — P25, P50, P75 percentiles for all roles across 5 US MSAs (Austin, New York, San Francisco, Washington DC, Denver), batched in groups of 50 series IDs per registered-key request</li>
+      <li>Loads internal salary and job grade data via validated CSV upload, mapping roles through a 38-role custom SOC crosswalk with match quality metadata</li>
+      <li>Displays internal vs. market side-by-side with percentile toggle and colour-coded gap KPIs — target: defensible market position in under 2 minutes (OBJ-01)</li>
+      <li>Surfaces market position flags — roles where TechNova's midpoint falls below BLS P25 (below market) or above BLS P75 (above market) — with severity distribution chart</li>
+      <li>Runs pay equity gap analysis by job family and level, flagging gender gaps exceeding 5% for Total Rewards review (framed as monitoring, not legal compliance determination)</li>
+      <li>Shows geographic pay differentials across all 5 cities for any selected role, with vs-average and vs-TechNova-midpoint comparisons in $ and %</li>
+      <li>Logs all pipeline runs with status, record counts, duration, and error detection — full audit trail on the Data Management page</li>
+    </ul>
+
+    <h2>What This Demonstrates</h2>
+    <ul class="capability-list">
+      <li>BABOK v3-aligned FRD with 18 functional requirements, MoSCoW prioritisation, stakeholder map, and traceability matrix covering all FR-01 to FR-18</li>
+      <li>API integration engineering: BLS OEWS REST API — 600+ series per run, batched requests, registered key, error handling, and rate-limit response documented in OpenAPI/Swagger spec (FR-17)</li>
+      <li>UML sequence diagram covering three distinct flows — BLS pipeline, CSV ingestion, and dashboard read path — with actors, error branches, and data store annotations (FR-18)</li>
+      <li>Data modelling: 8-table PostgreSQL schema with FK constraints, unique constraints, and controlled crosswalk artifact with change log (NFR-01c)</li>
+      <li>Technology decision transparency: FRD specifies Power BI; implementation uses Streamlit with full rationale documented (cost, accessibility, chart capability)</li>
+      <li>BA scoping discipline: explicit in-scope/out-of-scope decisions (no HRIS integration, no offer workflow, US-only in v1) each with documented rationale</li>
+    </ul>
+
+    <div class="section-rule"></div>
+
+    <h2>Pipeline Architecture</h2>
+    <p>Two write paths feed one read path. The BLS pipeline and CSV ingestion write to PostgreSQL independently; the Streamlit dashboard reads from both. All writes are logged to <code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);">pipeline_run_log</code>.</p>
+
+    <div class="arch-block">BLS Public API (OEWS)          Internal CSVs
+        │                               │
+        ▼                               ▼
+pipeline/bls_pipeline.py      pipeline/csv_ingestion.py
+  ├── Reads SOC codes from       ├── Schema validation
+  │   job_soc_crosswalk          │   (rejects on any error)
+  ├── Builds series IDs          └── Upserts employees +
+  │   (5 MSAs × 20 SOC ×              internal_job_grades
+  │    6 data types)
+  ├── Batches 50/request
+  └── Upserts bls_wage_data
+
+              PostgreSQL (Supabase · 8 tables)
+              ├── employees           (800 synthetic rows)
+              ├── internal_job_grades (150 salary bands)
+              ├── bls_wage_data       (market wages by SOC+MSA+year)
+              ├── soc_code_reference  (20 SOC codes)
+              ├── job_soc_crosswalk   (38 role mappings)
+              ├── pipeline_run_log    (audit trail)
+              ├── crosswalk_change_log
+              └── job_families
+                        │
+                        ▼
+              Streamlit Dashboard — 8 pages</div>
+
+    <div class="section-rule"></div>
+
+    <h2>Functional Requirements</h2>
+    <table class="detail-table">
+      <thead>
+        <tr><th>FR ID</th><th>Requirement</th><th>MoSCoW</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>FR-01</td><td>BLS API pull — wage percentiles (P25, P50, P75) with MSA filter</td><td>Must Have</td></tr>
+        <tr><td>FR-02</td><td>Manual pipeline refresh trigger from dashboard browser UI</td><td>Must Have</td></tr>
+        <tr><td>FR-03</td><td>Pipeline run log — every run recorded with status, record count, duration</td><td>Must Have</td></tr>
+        <tr><td>FR-04</td><td>Error detection — log warning and skip batch on API failure; preserve existing data</td><td>Must Have</td></tr>
+        <tr><td>FR-05</td><td>CSV upload and load to PostgreSQL for employee and job grade data</td><td>Must Have</td></tr>
+        <tr><td>FR-06</td><td>Schema validation before any write — reject entire file on failure (NFR-01a)</td><td>Must Have</td></tr>
+        <tr><td>FR-07</td><td>CSV template download for employee and job grade formats</td><td>Should Have</td></tr>
+        <tr><td>FR-08</td><td>Job-to-SOC crosswalk — 38 role mappings with match quality metadata (controlled artifact)</td><td>Must Have</td></tr>
+        <tr><td>FR-09</td><td>MSA-level geographic wage storage — separate rows per SOC + MSA + year + data type</td><td>Must Have</td></tr>
+        <tr><td>FR-10</td><td>Data dictionary — all tables, columns, types, and plain-language definitions</td><td>Should Have</td></tr>
+        <tr><td>FR-11</td><td>Benchmarking view — filter by job family + level + city to see internal range vs BLS range</td><td>Must Have</td></tr>
+        <tr><td>FR-12</td><td>Internal vs market side-by-side view with gap $ and gap % KPIs</td><td>Must Have</td></tr>
+        <tr><td>FR-13</td><td>Percentile toggle — switch between P25, P50, and P75 market reference</td><td>Should Have</td></tr>
+        <tr><td>FR-14</td><td>Below-market flags view — all roles where midpoint falls below BLS P25</td><td>Must Have</td></tr>
+        <tr><td>FR-15</td><td>Pay equity gap flags — gender pay gap analysis by family and level; flag gaps &gt; 5%</td><td>Should Have</td></tr>
+        <tr><td>FR-16</td><td>Data freshness indicator — last BLS refresh and last CSV upload visible in sidebar</td><td>Should Have</td></tr>
+        <tr><td>FR-17</td><td>OpenAPI/Swagger specification documenting the BLS OEWS API integration</td><td>Should Have</td></tr>
+        <tr><td>FR-18</td><td>UML sequence diagram — end-to-end data flow from BLS API to dashboard render</td><td>Should Have</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-rule"></div>
+
+    <h2>BA Process</h2>
+
+    <h3>Problem Framing</h3>
+    <p>The starting point was a recurring problem observed in mid-market HR teams: compensation data becomes stale between annual survey vendor cycles, but internal salary data is updated continuously (new hires, promotions, merit increases). The gap between when market data was collected and when a pay decision is made creates systematic risk — particularly for fast-growing job families where market rates move quickly.</p>
+    <p>The BLS OEWS is published annually and is free — making it a viable substitute for commercial survey data for roles where precision matters less than directional accuracy.</p>
+
+    <h3>Scope Decisions</h3>
+    <table class="detail-table">
+      <thead>
+        <tr><th>Excluded Feature</th><th>Rationale</th><th>Future Phase</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>HRIS direct integration</td><td>API connectivity to Workday or BambooHR adds integration complexity without changing the BA demonstration. CSV ingestion is structurally equivalent for portfolio purposes</td><td>Phase 2</td></tr>
+        <tr><td>Offer simulation workflow</td><td>Offer decisions require approval workflows and candidate data — adding those would shift the scope from compensation analytics to HRIS functionality</td><td>Phase 2</td></tr>
+        <tr><td>International pay modelling</td><td>Non-US MSA data requires different API endpoints, exchange rate handling, and different regulatory framing — separate scope item</td><td>Phase 2</td></tr>
+        <tr><td>Commercial survey integration</td><td>Requires data licencing (Radford, Mercer) — excluded for portfolio; BLS data is publicly available without licencing</td><td>Phase 2</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Technology Decision — Power BI to Streamlit</h3>
+    <p>The original FRD specifies a Power BI dashboard as the v1 front-end. During the build phase, the decision was made to implement in Streamlit instead. This is documented explicitly — not as an oversight, but as a deliberate trade-off with recorded rationale: Power BI Service requires a paid Pro licence for external sharing; Streamlit Community Cloud provides free, permanent public deployment. All FR-11 through FR-16 dashboard requirements are fully implemented in Streamlit. In a real project context, this change would be captured in a formal change request.</p>
+
+  </div><!-- end detail-main -->
+
+  <div class="detail-sidebar">
+    <div class="sidebar-card">
+      <h3>Try the Application</h3>
+      <a href="https://comp-benchmarking-hadimercer-ps2.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
+      <a href="https://github.com/hadimercer/Comp-Benchmarking" target="_blank" class="github-btn">View on GitHub</a>
+      <div class="demo-instructions">
+        <div class="demo-step"><span class="step-num">1</span><span>Filter by job family, level, and location to see internal vs BLS market ranges</span></div>
+        <div class="demo-step"><span class="step-num">2</span><span>Toggle between P25 / P50 / P75 percentile views</span></div>
+        <div class="demo-step"><span class="step-num">3</span><span>Check Market Position Flags for roles needing attention</span></div>
+        <div class="demo-step"><span class="step-num">4</span><span>Explore Pay Equity for within-family gender distribution gaps</span></div>
+        <div class="demo-step"><span class="step-num">5</span><span>Open Geographic Differentials to compare the same role across all 5 cities</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>BA Artifacts</h3>
+      <a href="../artifacts/comp-dashboard/frd.html" class="artifact-link">
+        <span class="aicon">📄</span><span class="atext">FRD — 18 Functional Requirements (BABOK v3)</span><span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/comp-dashboard/uml.html" class="artifact-link">
+        <span class="aicon">🔀</span><span class="atext">UML Sequence Diagram — End-to-End Data Flow</span><span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/comp-dashboard/data-dictionary.html" class="artifact-link">
+        <span class="aicon">🗂</span><span class="atext">Data Dictionary &amp; SOC Crosswalk</span><span class="aarrow">→</span>
+      </a>
+      <a href="https://raw.githubusercontent.com/hadimercer/Comp-Benchmarking/main/docs/bls_oews_api.yaml" target="_blank" class="artifact-link">
+        <span class="aicon">📡</span><span class="atext">OpenAPI Spec — BLS OEWS Integration</span><span class="aarrow">↗</span>
+      </a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>Project Metadata</h3>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Type</span>
+        <span style="font-size:13px;color:var(--text2);">Data pipeline + analytics</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">FRs</span>
+        <span style="font-size:13px;color:var(--text2);">18 (FR-01 to FR-18)</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">DB Tables</span>
+        <span style="font-size:13px;color:var(--text2);">8</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Dashboard</span>
+        <span style="font-size:13px;color:var(--text2);">8 pages</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">MSAs</span>
+        <span style="font-size:13px;color:var(--text2);">5 US cities</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-left">© 2026 Hadi Mercer · BA Portfolio</p>
+  <div class="footer-right">
+    <a href="../index.html">Portfolio</a>
+    <a href="https://github.com/hadimercer" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>

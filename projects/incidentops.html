@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IncidentOps — Process Mining Insights Hub | Hadi Mercer BA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f;
+    --surface: #111518;
+    --surface2: #181d21;
+    --border: #1f2629;
+    --border2: #2a3338;
+    --accent: #00c896;
+    --accent2: #0087ff;
+    --amber: #f5a623;
+    --red: #e8443a;
+    --text: #e8eaeb;
+    --text2: #8a9299;
+    --text3: #4a5560;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Epilogue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(10,13,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  .detail-hero { background: var(--surface); border-bottom: 1px solid var(--border); padding: 120px 40px 60px; }
+  .detail-hero-inner { max-width: 1200px; margin: 0 auto; }
+
+  .back-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; margin-bottom: 40px; transition: color 0.2s; }
+  .back-btn:hover { color: var(--text); }
+
+  .detail-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+
+  .detail-title { font-family: 'DM Serif Display', serif; font-size: clamp(36px, 5vw, 64px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px; }
+
+  .detail-tagline { font-size: 18px; color: var(--text2); font-weight: 300; max-width: 700px; line-height: 1.7; margin-bottom: 36px; }
+
+  .detail-meta-row { display: flex; gap: 48px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; }
+  .meta-value { font-size: 14px; color: var(--text); font-weight: 500; }
+
+  .doc-meta-block { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  .doc-meta-inner { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--border2); margin-top: 40px; }
+  .doc-meta-cell { flex: 1 1 160px; padding: 14px 20px; border-right: 1px solid var(--border2); }
+  .doc-meta-cell:last-child { border-right: none; }
+  .doc-meta-key { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .doc-meta-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
+
+  .detail-content { max-width: 1200px; margin: 0 auto; padding: 64px 40px; display: grid; grid-template-columns: 1fr 340px; gap: 64px; align-items: start; }
+
+  .detail-main h2 { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text); margin: 52px 0 16px; letter-spacing: -0.01em; }
+  .detail-main h2:first-child { margin-top: 0; }
+  .detail-main h3 { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin: 28px 0 12px; }
+  .detail-main p { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 16px; }
+  .detail-main p em { color: var(--text); font-style: italic; }
+
+  .capability-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .capability-list li { display: flex; gap: 12px; font-size: 14px; color: var(--text2); line-height: 1.6; }
+  .capability-list li::before { content: '→'; font-family: 'DM Mono', monospace; color: var(--accent); flex-shrink: 0; font-size: 13px; margin-top: 2px; }
+
+  .detail-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13px; }
+  .detail-table th { background: var(--surface2); border: 1px solid var(--border2); padding: 10px 14px; text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; }
+  .detail-table td { border: 1px solid var(--border); padding: 10px 14px; color: var(--text2); vertical-align: top; line-height: 1.5; }
+  .detail-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); white-space: nowrap; }
+  .detail-table tr:hover td { background: var(--surface); }
+
+  .workstream-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); margin-bottom: 24px; }
+  .workstream-card { background: var(--surface); padding: 20px; }
+  .ws-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .ws-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .ws-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  .section-rule { height: 1px; background: var(--border); margin: 48px 0; }
+
+  .detail-sidebar { position: sticky; top: 100px; }
+  .sidebar-card { background: var(--surface); border: 1px solid var(--border); padding: 28px; margin-bottom: 16px; }
+  .sidebar-card h3 { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+
+  .demo-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px; background: var(--accent); color: #000; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: all 0.2s; margin-bottom: 12px; }
+  .demo-btn:hover { background: #00e0a8; }
+
+  .github-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; background: transparent; color: var(--text2); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+  .github-btn:hover { border-color: var(--text2); color: var(--text); }
+
+  .demo-instructions { margin-top: 16px; }
+  .demo-step { display: flex; gap: 10px; margin-bottom: 10px; font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .step-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); background: rgba(0, 200, 150, 0.08); border: 1px solid rgba(0, 200, 150, 0.2); padding: 2px 7px; flex-shrink: 0; height: fit-content; margin-top: 2px; }
+
+  .artifact-link { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); text-decoration: none; transition: gap 0.2s; }
+  .artifact-link:last-child { border-bottom: none; }
+  .artifact-link:hover { gap: 14px; }
+  .artifact-link .aicon { font-size: 14px; flex-shrink: 0; }
+  .artifact-link .atext { font-size: 13px; color: var(--text2); flex: 1; }
+  .artifact-link .aarrow { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); transition: color 0.2s; }
+  .artifact-link:hover .aarrow { color: var(--accent); }
+
+  .status-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--accent); color: var(--accent); margin-bottom: 24px; }
+  .status-badge::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  footer { border-top: 1px solid var(--border); padding: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 20px; }
+  .footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; }
+  .footer-right { display: flex; gap: 24px; }
+  .footer-right a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .footer-right a:hover { color: var(--accent); }
+
+  @media (max-width: 900px) { .detail-content { grid-template-columns: 1fr; } .detail-sidebar { position: static; } .workstream-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 768px) { nav { padding: 16px 20px; } .nav-links { display: none; } .detail-hero { padding: 100px 20px 40px; } .doc-meta-block { padding: 0 20px; } .detail-content { padding: 40px 20px; } .doc-meta-cell { flex: 1 1 100%; border-right: none; border-bottom: 1px solid var(--border2); } footer { padding: 32px 20px; } .workstream-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<div class="detail-hero">
+  <div class="detail-hero-inner">
+    <a href="../index.html#projects" class="back-btn">← Back to Portfolio</a>
+    <div class="status-badge">Live</div>
+    <p class="detail-eyebrow">Process Analytics · IT Service Management · Process Mining</p>
+    <h1 class="detail-title">IncidentOps —<br>Process Mining Insights Hub</h1>
+    <p class="detail-tagline">A process mining analytics platform built on a real-world-shaped IT service desk event log. Surfaces how incidents actually flow, where time is lost, and which patterns drive escalation churn, premature closure, and poor customer outcomes.</p>
+    <div class="detail-meta-row">
+      <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
+      <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · PostgreSQL · Streamlit · Process Mining</span></div>
+      <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · Architecture Flow · KPI Dictionary · Product Brief</span></div>
+      <div class="meta-item"><span class="meta-label">Portfolio Ref</span><span class="meta-value">Standalone Project</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-meta-block">
+  <div class="doc-meta-inner">
+    <div class="doc-meta-cell"><div class="doc-meta-key">Document ID</div><div class="doc-meta-val">FRD-PMI-001</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">v1.0</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Status</div><div class="doc-meta-val">Baselined</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Project</div><div class="doc-meta-val">IncidentOps PMI Hub</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Prepared By</div><div class="doc-meta-val">Hadi Mercer</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">2026</div></div>
+  </div>
+</div>
+
+<div class="detail-content">
+  <div class="detail-main">
+
+    <h2>The Problem</h2>
+    <p>A fictional mid-market enterprise IT service desk captures detailed event logs — ticket creation, assignments, escalations, resolution, closure, and customer feedback. But leadership relies on manual exports and surface-level averages, with no consistent view of how incidents actually flow end-to-end.</p>
+    <p>The primary failure mode is <em>decision-making without process visibility</em>. The same incident type can follow materially different paths (variants) with different cycle times, escalation patterns, and customer satisfaction outcomes. Without a process mining lens, teams cannot distinguish healthy flow from costly patterns like escalation ping-pong or premature closure.</p>
+    <p>Operational decision-making without process visibility means that improvement efforts target the wrong bottlenecks, escalation capacity is allocated by instinct rather than evidence, and the same quality failures recur cycle after cycle.</p>
+
+    <h2>What It Does</h2>
+    <ul class="capability-list">
+      <li>Discovers and visualises the top process variants — how incidents actually travel through the service desk vs. the intended path, with frequency and cost weighting per variant</li>
+      <li>Quantifies step-level dwell time and waiting time to pinpoint true bottlenecks vs. active work time — the distinction between "long queue" and "slow work" is critical for the right intervention</li>
+      <li>Measures escalation and handoff churn — detecting ping-pong patterns (repeated back-and-forth reassignments) that consume L2/L3 specialist capacity without improving outcomes</li>
+      <li>Monitors closure governance — captures premature closures leading to reopens and correlates with customer satisfaction signals</li>
+      <li>Surfaces FCR (First Contact Resolution) proxy and enablement candidates — cohorts where low L1 resolution rate signals knowledge or training investment opportunities</li>
+      <li>Generates ranked problem candidates from repeat incident themes — volume, cycle time, and quality signals combined to feed problem management intake</li>
+      <li>Provides one-click CSV exports for high-value follow-up lists: ping-pong cases, closure exceptions, and enablement/problem backlogs</li>
+    </ul>
+
+    <h2>What This Demonstrates</h2>
+    <ul class="capability-list">
+      <li>Process mining thinking: going beyond averages to variant analysis, bottleneck quantification, and pattern distinction — the analytical approach a senior BA applies to process evidence</li>
+      <li>Requirements-driven delivery grounded in a formal product brief with five structured objectives, stakeholder archetypes, and full scope definition with constraints documented</li>
+      <li>Analytics-only scope explicitly bounded — no ticket actions, no live ITSM integration — with rationale documented (descriptive analytics vs. operational system scope)</li>
+      <li>PostgreSQL schema design and analytical view modelling for process mining metrics — business logic lives in SQL views, keeping the UI thin and the analytical contracts explicit</li>
+      <li>Operational thinking: outputs designed for three distinct stakeholder audiences — Process Owner, Operations Manager, and Quality/CX Lead — each with different analytical needs</li>
+      <li>Idempotent data engineering: CSV ingestion with canonical event mapping, event key hashing for duplicate protection, and repeatable load behaviour</li>
+    </ul>
+
+    <div class="section-rule"></div>
+
+    <h2>Six Analytical Workstreams</h2>
+    <div class="workstream-grid">
+      <div class="workstream-card">
+        <div class="ws-label">Workstream 1</div>
+        <div class="ws-title">Command Center</div>
+        <div class="ws-desc">Executive summary surface — portfolio-level KPIs, SLA compliance, volume trends, and RAG status overview</div>
+      </div>
+      <div class="workstream-card">
+        <div class="ws-label">Workstream 2</div>
+        <div class="ws-title">Flow</div>
+        <div class="ws-desc">Process variant analysis, step-level dwell time, cycle time distribution, and routing bottleneck identification</div>
+      </div>
+      <div class="workstream-card">
+        <div class="ws-label">Workstream 3</div>
+        <div class="ws-title">Handoffs</div>
+        <div class="ws-desc">Escalation count analysis, resolver change tracking, ping-pong case detection, and handoff churn cost quantification</div>
+      </div>
+      <div class="workstream-card">
+        <div class="ws-label">Workstream 4</div>
+        <div class="ws-title">Quality</div>
+        <div class="ws-desc">Closure governance — reopen rates, reject rates, premature closure detection, and customer satisfaction correlation</div>
+      </div>
+      <div class="workstream-card">
+        <div class="ws-label">Workstream 5</div>
+        <div class="ws-title">Intake</div>
+        <div class="ws-desc">Channel analysis, issue type distribution, volume trends, and intake-level signal quality review</div>
+      </div>
+      <div class="workstream-card">
+        <div class="ws-label">Workstream 6</div>
+        <div class="ws-title">Enablement</div>
+        <div class="ws-desc">FCR proxy, L1 resolution rate by issue type, enablement candidate identification, and problem management backlog generation</div>
+      </div>
+    </div>
+
+    <div class="section-rule"></div>
+
+    <h2>Objectives &amp; Stakeholder Register</h2>
+
+    <h3>Objectives</h3>
+    <table class="detail-table">
+      <thead>
+        <tr><th>Objective</th><th>Success Indicator</th><th>Primary Beneficiary</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>OBJ-01</td><td>Make incident flow visible through variants and transition analysis — reviewer can identify top 5 variants and their frequency within 5 minutes of opening the app</td><td>Process Owner / ITSM Director</td></tr>
+        <tr><td>OBJ-02</td><td>Reduce cycle time by surfacing dwell-time bottlenecks — step-level wait time is quantified and sortable by impact</td><td>Operations Manager</td></tr>
+        <tr><td>OBJ-03</td><td>Measure escalation and handoff churn — ping-pong cases identified and quantified with resolver change count per case</td><td>L2/L3 Team Leads</td></tr>
+        <tr><td>OBJ-04</td><td>Improve closure governance — reopen rate, reject rate, and closed-without-feedback rate all visible and filterable</td><td>Quality / CX Lead</td></tr>
+        <tr><td>OBJ-05</td><td>Produce repeatable exports for weekly ops review — CSV exports available for ping-pong cases, closure exceptions, and problem candidates</td><td>Process Owner, Problem Manager</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Primary Stakeholders</h3>
+    <table class="detail-table">
+      <thead>
+        <tr><th>Stakeholder</th><th>Role</th><th>Primary Need</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Service Owner / ITSM Director</td><td>Sponsor</td><td>Outcome KPIs and improvement visibility at portfolio level</td></tr>
+        <tr><td>Process Owner / Operations Manager</td><td>Primary User</td><td>Bottleneck, handoff, and routing signals for operational intervention</td></tr>
+        <tr><td>L1/L2/L3 Team Leads</td><td>Secondary User</td><td>Exception queues and operational drilldowns for their tier</td></tr>
+        <tr><td>Quality / CX Lead</td><td>Secondary User</td><td>Closure compliance monitoring and customer outcome review</td></tr>
+        <tr><td>Problem / Knowledge Manager</td><td>Consumer</td><td>Evidence-based problem candidates and enablement opportunity lists</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-rule"></div>
+
+    <h2>KPI Framework</h2>
+    <table class="detail-table">
+      <thead>
+        <tr><th>KPI</th><th>Definition</th><th>Primary Use</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cycle Time</td><td>Elapsed time from earliest creation signal to final close signal per case</td><td>Flow variant comparison, bottleneck quantification</td></tr>
+        <tr><td>SLA Met</td><td>Whether cycle time falls within the priority-based SLA target threshold</td><td>Service-level compliance tracking by issue type and variant</td></tr>
+        <tr><td>Reopen Rate</td><td>Share of cases that include a reopen signal after an earlier closure</td><td>Premature closure detection, resolution quality assessment</td></tr>
+        <tr><td>Reject Rate</td><td>Share of cases that include a reject signal in the lifecycle</td><td>Low-confidence resolution monitoring, closure governance</td></tr>
+        <tr><td>Escalation Count</td><td>Count of escalation or higher-tier assignment events within a case</td><td>Specialist capacity demand measurement</td></tr>
+        <tr><td>Resolver Changes</td><td>Count of ownership changes across the case lifecycle</td><td>Handoff churn detection, routing quality review</td></tr>
+        <tr><td>Ping-Pong Cases</td><td>Cases with repeated back-and-forth movement — high resolver churn + escalation</td><td>Avoidable operational churn identification</td></tr>
+        <tr><td>Customer Satisfaction</td><td>Case-level satisfaction outcome from available customer feedback values</td><td>Outcome quality evaluation, speed vs. experience trade-off analysis</td></tr>
+        <tr><td>FCR Proxy</td><td>L1 resolution without escalation and without reopen — proxy for first contact resolution</td><td>Enablement gap identification, KB and training investment targeting</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-rule"></div>
+
+    <h2>BA Process</h2>
+
+    <h3>Problem Framing</h3>
+    <p>The starting point was a specific failure mode observed across IT service desk operations: teams know their aggregate metrics (average cycle time, total ticket volume, SLA percentage) but cannot explain why those metrics are what they are. The analytical gap is between the <em>number</em> and the <em>pattern</em>. Process mining addresses this by treating the event log as a structured process record rather than a transaction log.</p>
+
+    <h3>Scope Constraints</h3>
+    <table class="detail-table">
+      <thead>
+        <tr><th>Constraint</th><th>Rationale</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>CSV input only — no live ITSM integration</td><td>Live integration requires API access, authentication, and data contract agreements with the source ITSM platform — disproportionate for an analytics demonstration</td></tr>
+        <tr><td>Analytics-only — no ticket actions</td><td>Writing back to the ITSM system introduces operational risk; the product is a decision-support tool, not an operational system</td></tr>
+        <tr><td>Descriptive outputs — not causal proof</td><td>Correlation between process patterns and outcomes is presented as evidence for investigation, not as causal determination</td></tr>
+        <tr><td>SLA compliance is policy-based</td><td>SLA targets are configured, not sourced from an authoritative ITSM flag — keeps the tool independent of any specific platform's SLA definition</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Design Decisions</h3>
+    <p>Business logic lives primarily in SQL analytical views rather than in the Streamlit application code. This keeps the UI thin, makes the analytical contracts explicit and auditable, and allows the dashboard to change without touching the underlying metric definitions. Each workstream queries a defined view — the view is the contract.</p>
+    <p>Idempotent loading was treated as a non-negotiable requirement from the start. The <code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);">event_key</code> hash computed per row ensures that re-loading the same CSV produces no duplicate records — a critical property for a tool that will be run repeatedly across review cycles.</p>
+
+  </div><!-- end detail-main -->
+
+  <div class="detail-sidebar">
+    <div class="sidebar-card">
+      <h3>Try the Application</h3>
+      <a href="https://incidentopspmi-hadimercer.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
+      <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub" target="_blank" class="github-btn">View on GitHub</a>
+      <div class="demo-instructions">
+        <div class="demo-step"><span class="step-num">1</span><span>Start at Command Center for the executive summary and portfolio-level KPIs</span></div>
+        <div class="demo-step"><span class="step-num">2</span><span>Open Flow to see process variants and step-level dwell time bottlenecks</span></div>
+        <div class="demo-step"><span class="step-num">3</span><span>Check Handoffs for ping-pong patterns and escalation churn cost</span></div>
+        <div class="demo-step"><span class="step-num">4</span><span>Review Quality for reopen rates and customer satisfaction correlation</span></div>
+        <div class="demo-step"><span class="step-num">5</span><span>Open Enablement for FCR analysis and the problem management backlog</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>BA Artifacts</h3>
+      <a href="../artifacts/incidentops/frd.html" class="artifact-link">
+        <span class="aicon">📄</span><span class="atext">FRD — Objectives, Stakeholders &amp; Requirements</span><span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/incidentops/architecture.html" class="artifact-link">
+        <span class="aicon">🔀</span><span class="atext">Architecture Flow — System &amp; Data Pipeline</span><span class="aarrow">→</span>
+      </a>
+      <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub/blob/main/docs/kpi-dictionary.md" target="_blank" class="artifact-link">
+        <span class="aicon">📊</span><span class="atext">KPI Dictionary — All Metrics Defined</span><span class="aarrow">↗</span>
+      </a>
+      <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub/blob/main/docs/product-brief.md" target="_blank" class="artifact-link">
+        <span class="aicon">📋</span><span class="atext">Product Brief — Problem Statement &amp; Scope</span><span class="aarrow">↗</span>
+      </a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>Project Metadata</h3>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Type</span>
+        <span style="font-size:13px;color:var(--text2);">Process mining analytics</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Workstreams</span>
+        <span style="font-size:13px;color:var(--text2);">6 analytical views</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Scope</span>
+        <span style="font-size:13px;color:var(--text2);">Analytics only</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Input</span>
+        <span style="font-size:13px;color:var(--text2);">CSV event log</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-left">© 2026 Hadi Mercer · BA Portfolio</p>
+  <div class="footer-right">
+    <a href="../index.html">Portfolio</a>
+    <a href="https://github.com/hadimercer" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>

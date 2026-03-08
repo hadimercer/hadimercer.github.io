@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian — Workstream Portfolio Health Dashboard | Hadi Mercer BA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f;
+    --surface: #111518;
+    --surface2: #181d21;
+    --border: #1f2629;
+    --border2: #2a3338;
+    --accent: #00c896;
+    --accent2: #0087ff;
+    --amber: #f5a623;
+    --red: #e8443a;
+    --text: #e8eaeb;
+    --text2: #8a9299;
+    --text3: #4a5560;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Epilogue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(10,13,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── DETAIL HERO ── */
+  .detail-hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 120px 40px 60px;
+  }
+
+  .detail-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-bottom: 40px;
+    transition: color 0.2s;
+  }
+
+  .back-btn:hover { color: var(--text); }
+
+  .detail-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .detail-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .detail-tagline {
+    font-size: 18px;
+    color: var(--text2);
+    font-weight: 300;
+    max-width: 700px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  .detail-meta-row {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .meta-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ── DOC METADATA BLOCK ── */
+  .doc-meta-block {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .doc-meta-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--border2);
+    margin-top: 40px;
+  }
+
+  .doc-meta-cell {
+    flex: 1 1 160px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border2);
+  }
+
+  .doc-meta-cell:last-child { border-right: none; }
+
+  .doc-meta-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .doc-meta-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .detail-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 40px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* ── MAIN BODY ── */
+  .detail-main h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--text);
+    margin: 52px 0 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .detail-main h2:first-child { margin-top: 0; }
+
+  .detail-main h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 28px 0 12px;
+  }
+
+  .detail-main p {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .detail-main p em {
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .capability-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .capability-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .capability-list li::before {
+    content: '→';
+    font-family: 'DM Mono', monospace;
+    color: var(--accent);
+    flex-shrink: 0;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  /* ── SCORING ENGINE BLOCK ── */
+  .score-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .score-block-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .score-formula {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    padding: 16px 18px;
+    line-height: 1.8;
+    margin-bottom: 14px;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* ── TABLE ── */
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+
+  .detail-table th {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .detail-table td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    color: var(--text2);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .detail-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .detail-table tr:hover td { background: var(--surface); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-rule {
+    height: 1px;
+    background: var(--border);
+    margin: 48px 0;
+  }
+
+  /* ── SIDEBAR ── */
+  .detail-sidebar {
+    position: sticky;
+    top: 100px;
+  }
+
+  .sidebar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+
+  .sidebar-card h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .demo-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    color: #000;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+  }
+
+  .demo-btn:hover { background: #00e0a8; }
+
+  .github-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    color: var(--text2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border2);
+    transition: all 0.2s;
+  }
+
+  .github-btn:hover { border-color: var(--text2); color: var(--text); }
+
+  .demo-instructions { margin-top: 16px; }
+
+  .demo-step {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    background: rgba(0, 200, 150, 0.08);
+    border: 1px solid rgba(0, 200, 150, 0.2);
+    padding: 2px 7px;
+    flex-shrink: 0;
+    height: fit-content;
+    margin-top: 2px;
+  }
+
+  .artifact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+
+  .artifact-link:last-child { border-bottom: none; }
+  .artifact-link:hover { gap: 14px; }
+
+  .artifact-link .aicon { font-size: 14px; flex-shrink: 0; }
+  .artifact-link .atext { font-size: 13px; color: var(--text2); flex: 1; }
+  .artifact-link .aarrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    transition: color 0.2s;
+  }
+
+  .artifact-link:hover .aarrow { color: var(--accent); }
+
+  /* ── STATUS BADGE ── */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .status-badge::before {
+    content: '●';
+    font-size: 8px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-right {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-right a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-right a:hover { color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .detail-content { grid-template-columns: 1fr; }
+    .detail-sidebar { position: static; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .detail-hero { padding: 100px 20px 40px; }
+    .doc-meta-block { padding: 0 20px; }
+    .detail-content { padding: 40px 20px; }
+    .doc-meta-cell { flex: 1 1 100%; border-right: none; border-bottom: 1px solid var(--border2); }
+    footer { padding: 32px 20px; }
+    .score-formula { white-space: pre-wrap; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="detail-hero">
+  <div class="detail-hero-inner">
+    <a href="../index.html#projects" class="back-btn">← Back to Portfolio</a>
+    <div class="status-badge">Live</div>
+    <p class="detail-eyebrow">Portfolio Health · SaaS Application · S3</p>
+    <h1 class="detail-title">Meridian — Workstream<br>Portfolio Health Dashboard</h1>
+    <p class="detail-tagline">A full-stack multi-user SaaS application where professionals track concurrent workstreams and receive a calculated RAG health status — derived automatically from milestone completion, budget burn rate, and blocker age. No manual colour-picking. The scoring engine reads the data and decides.</p>
+    <div class="detail-meta-row">
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value" style="color:var(--accent)">Live</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Tech Stack</span>
+        <span class="meta-value">Python · Supabase Auth · PostgreSQL RLS · Streamlit</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">BA Artifacts</span>
+        <span class="meta-value">35-FR FRD · UML Class Diagram · BPMN · Data Dictionary</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Portfolio Ref</span>
+        <span class="meta-value">Smaller Project 3 (S3)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DOCUMENT METADATA ── -->
+<div class="doc-meta-block">
+  <div class="doc-meta-inner">
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Document ID</div>
+      <div class="doc-meta-val">FRD-MERIDIAN-001</div>
+    </div>
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Version</div>
+      <div class="doc-meta-val">v1.0</div>
+    </div>
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Status</div>
+      <div class="doc-meta-val">Baselined</div>
+    </div>
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Project</div>
+      <div class="doc-meta-val">Meridian · S3</div>
+    </div>
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Prepared By</div>
+      <div class="doc-meta-val">Hadi Mercer</div>
+    </div>
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Date</div>
+      <div class="doc-meta-val">2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="detail-content">
+
+  <!-- ── LEFT: MAIN ── -->
+  <div class="detail-main">
+
+    <h2>The Problem</h2>
+    <p>Project managers have Jira and Asana. But business analysts, consultants, finance managers, and HR leads who manage work as a by-product of doing their job don't think of themselves as project managers — those tools are alienating and abandoned within weeks.</p>
+    <p>The fallback is a spreadsheet with a RAG column updated when there's time on a Friday afternoon. That spreadsheet doesn't alert when a workstream is drifting. It shows whatever was last typed.</p>
+    <p><em>Meridian's central design principle: health status is calculated, not declared.</em> A user never selects a RAG colour. They enter objective data — milestone completions, spend figures, open blockers — and Meridian calculates what the data means. A 9-question context wizard at workstream creation tunes the scoring engine so a hard-deadline client engagement is scored differently from a self-imposed internal initiative.</p>
+
+    <h2>What It Does</h2>
+    <ul class="capability-list">
+      <li>Calculates composite RAG from three weighted dimensions: Schedule Health (milestone pace vs. elapsed time), Budget Health (planned vs. actual burn), and Blocker Health (unresolved blocker age)</li>
+      <li>9-question context wizard at setup tunes scoring thresholds — 15 modifier rules document every combination and its effect on the three health dimensions</li>
+      <li>Multi-user collaboration with role-based access (Owner / Contributor / Viewer), invite link system, and per-entity comment threads</li>
+      <li>Staleness flag fires when update cadence exceeds the configured threshold — the system alerts the user when their own data has gone stale</li>
+      <li>Portfolio analytics: health trend over 30 days, schedule vs. budget scatter matrix, milestone velocity table, blocker age analysis</li>
+      <li>Six-page workstream view: Overview, Milestones, Budget, Blockers, Updates (typed post feed), Team management</li>
+    </ul>
+
+    <h2>What This Demonstrates</h2>
+    <ul class="capability-list">
+      <li>Full product thinking: problem statement, stakeholder personas, scoping decisions, and design rationale all documented before a line of code was written</li>
+      <li>35-requirement BABOK-aligned FRD with MoSCoW prioritisation, stakeholder objectives, and full traceability matrix</li>
+      <li>Scoring engine designed as a requirements problem first — the modifier matrix in the FRD precedes the code in <code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);">pipeline/scoring.py</code></li>
+      <li>PostgreSQL schema with 15+ tables, FK constraints, and row-level security via Supabase — no user can read another user's workstream data without explicit invitation</li>
+      <li>Auth and security: Supabase Auth, RLS on all user-scoped tables, zero credentials in source code (NFR-02b)</li>
+      <li>UML class diagram documenting the full data model (FR-34); BPMN covering workstream lifecycle and invite sub-process (FR-35)</li>
+    </ul>
+
+    <div class="section-rule"></div>
+
+    <!-- SCORING ENGINE -->
+    <h2>RAG Scoring Engine</h2>
+    <p>The scoring engine is Meridian's core differentiator. RAG status is never a manually selectable field — it is recalculated from source data on every relevant change. Three health dimensions feed a weighted composite score.</p>
+
+    <h3>Schedule Health</h3>
+    <div class="score-block">
+      <div class="score-block-label">Formula</div>
+      <div class="score-formula">SV = Milestone Completion % − Time Elapsed %
+
+Green:  SV ≥ −10%        (on track)
+Amber: −25% ≤ SV &lt; −10%  (lagging)
+Red:    SV &lt; −25%         (at risk)</div>
+    </div>
+
+    <h3>Budget Health</h3>
+    <div class="score-block">
+      <div class="score-block-label">Formula</div>
+      <div class="score-formula">BV = (Planned Spend to Date − Actual Spend) / Total Budget
+
+Green:  BV ≥ −5%          (on budget)
+Amber: −15% ≤ BV &lt; −5%   (over plan)
+Red:    BV &lt; −15%          (budget at risk)</div>
+    </div>
+
+    <h3>Blocker Health</h3>
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>Score</th>
+          <th>Default Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>No open blockers</td><td>100</td><td>Green</td></tr>
+        <tr><td>1 blocker, &lt; 3 days</td><td>80</td><td>Green</td></tr>
+        <tr><td>1 blocker, 3–7 days</td><td>55</td><td>Amber</td></tr>
+        <tr><td>1 blocker, &gt; 7 days</td><td>25</td><td>Red</td></tr>
+        <tr><td>2+ blockers (any age)</td><td>40 max</td><td>Amber+</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Composite Score</h3>
+    <div class="score-block">
+      <div class="score-block-label">Weighted Average</div>
+      <div class="score-formula">Composite = (Schedule × 0.40) + (Budget × 0.35) + (Blockers × 0.25)
+
+Green ≥ 70  |  Amber 40–69  |  Red &lt; 40</div>
+    </div>
+
+    <h3>Wizard Modifier Examples</h3>
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th>Wizard Answer</th>
+          <th>Effect on Scoring Thresholds</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Hard / contractual deadline</td><td>Schedule Amber tightens: −10% → −5%; Red: −25% → −15%</td></tr>
+        <tr><td>Client-billable budget</td><td>Budget weight increases 35% → 45%; Amber at −3%, Red at −10%</td></tr>
+        <tr><td>Blocked by external party</td><td>Blocker age thresholds halved — risk accumulates faster</td></tr>
+        <tr><td>High / Critical risk rating</td><td>Amber-to-Red band compressed 5–10% across all dimensions</td></tr>
+        <tr><td>Review / Closing phase</td><td>Any incomplete milestone &gt; 2 days past due triggers Amber</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-rule"></div>
+
+    <!-- BA PROCESS -->
+    <h2>BA Process</h2>
+
+    <h3>1. Problem Discovery → Target User Definition</h3>
+    <p>The problem statement did not start as a feature list. It started with a single observation: professionals who manage parallel workstreams abandon structured tools quickly, then revert to spreadsheets with manually updated RAG columns. The core question was not "what should the tool do?" but "why do existing tools fail this user?"</p>
+    <p>Three stakeholder archetypes were defined before any functional requirements were written:</p>
+    <ul class="capability-list">
+      <li><em>The Independent Operator</em> — a BA or consultant managing 3–5 concurrent engagements with no team, primarily needs a personal health signal and an honest prompt to act. Drove the staleness flag (FR-10)</li>
+      <li><em>The Team Lead</em> — manages a cross-functional team, needs to delegate data entry and control role-based visibility. Drove the invite-link flow (FR-03, FR-30) and role system (FR-29)</li>
+      <li><em>The Executive Reviewer</em> — no data entry, needs a single-screen portfolio view and will disengage immediately if the tool requires any learning curve. Drove the Viewer role (FR-28, FR-30)</li>
+    </ul>
+
+    <h3>2. Scoring Engine as a Requirements Problem</h3>
+    <p>The most consequential design decision was treating the scoring engine as a requirements problem before a technical one. Letting users set their own RAG colour was explicitly rejected in the FRD — it reproduces the exact failure mode of the spreadsheet. The modifier matrix documents every wizard combination and its downstream effect on scoring thresholds, and was written before the first line of <code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);">scoring.py</code> was produced.</p>
+
+    <h3>3. Scope Discipline — What Was Deliberately Left Out</h3>
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th>Excluded Feature</th>
+          <th>Rationale</th>
+          <th>Future Phase</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Email / Slack notifications</td><td>Requires async infrastructure (queues, delivery) disproportionate to v1 BA demonstration scope</td><td>Phase 2</td></tr>
+        <tr><td>File attachments</td><td>Introduces storage and access-control complexity; staleness flag covers the alerting intent at UI level</td><td>Phase 4</td></tr>
+        <tr><td>Gantt / timeline view</td><td>Repositions product identity toward project management tools — exactly the category Meridian replaces for non-PM users</td><td>Phase 3</td></tr>
+        <tr><td>Public sharing</td><td>Conflicts with data sensitivity model; workstream data often contains budget figures and blocker details</td><td>Phase 4</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-rule"></div>
+
+    <!-- DATABASE SCHEMA -->
+    <h2>Database Schema</h2>
+    <p>PostgreSQL via Supabase. 15+ tables with FK constraints and row-level security policies. No user can read another user's workstream data without explicit invitation.</p>
+
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th>Table</th>
+          <th>Purpose</th>
+          <th>Key Relationships</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>users</td><td>Supabase Auth managed — identity source of truth</td><td>Referenced by workstream_members</td></tr>
+        <tr><td>workstreams</td><td>Core entity — name, dates, budget, phase, owner</td><td>Parent to all workstream-scoped tables</td></tr>
+        <tr><td>workstream_members</td><td>Role-based membership: Owner / Contributor / Viewer</td><td>FK to users + workstreams; RLS enforced</td></tr>
+        <tr><td>wizard_config</td><td>9 wizard answers per workstream; drives modifier matrix</td><td>FK to workstreams; read by scoring engine</td></tr>
+        <tr><td>rag_scores</td><td>Current calculated scores per dimension + composite; is_stale flag</td><td>FK to workstreams; recalculated on data change</td></tr>
+        <tr><td>rag_score_history</td><td>Daily snapshots of composite score for trend analytics</td><td>FK to workstreams; powers analytics page</td></tr>
+        <tr><td>milestones</td><td>Status: not_started / in_progress / complete; feeds Schedule Health</td><td>FK to workstreams; completion % drives SV</td></tr>
+        <tr><td>spend_entries</td><td>Auditable spend log — each entry individual with date, category, description</td><td>FK to workstreams; sum drives BV</td></tr>
+        <tr><td>blockers</td><td>Open/resolved, age tracked from date raised; feeds Blocker Health</td><td>FK to workstreams; open count + age drives score</td></tr>
+        <tr><td>updates</td><td>Typed post feed: Status Update, Decision Made, Risk Raised, etc.</td><td>FK to workstreams; restricted by role</td></tr>
+        <tr><td>comments</td><td>Per entity_type + entity_id — milestones, blockers, workstream</td><td>Polymorphic FK pattern</td></tr>
+        <tr><td>notes</td><td>Pinned notes — one per entity</td><td>FK to workstreams</td></tr>
+        <tr><td>invite_links</td><td>Token-based invite system; new users join as Viewer on accept</td><td>FK to workstreams; token validated on registration</td></tr>
+        <tr><td>user_workstream_last_seen</td><td>Unread activity tracking per user per workstream</td><td>FK to users + workstreams</td></tr>
+      </tbody>
+    </table>
+
+  </div><!-- end detail-main -->
+
+  <!-- ── RIGHT: SIDEBAR ── -->
+  <div class="detail-sidebar">
+    <div class="sidebar-card">
+      <h3>Try the Application</h3>
+      <a href="https://meridian-hadimercer.streamlit.app/home" target="_blank" class="demo-btn">Open Live Demo ↗</a>
+      <a href="https://github.com/hadimercer/Meridian_Workstream" target="_blank" class="github-btn">View on GitHub</a>
+      <div class="demo-instructions">
+        <div class="demo-step"><span class="step-num">Login</span><span>To access App request test credentials from the contact email on the portfolio.</span></div>
+        <div class="demo-step"><span class="step-num">1</span><span>Explore the 6 pre-seeded workstreams with 30 days of RAG history</span></div>
+        <div class="demo-step"><span class="step-num">2</span><span>Open any workstream and review score cards and wizard profile</span></div>
+        <div class="demo-step"><span class="step-num">3</span><span>Check Milestones and Blockers tabs to see how data feeds the RAG engine</span></div>
+        <div class="demo-step"><span class="step-num">4</span><span>Open Analytics for the portfolio health trend and scatter matrix</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>BA Artifacts</h3>
+      <a href="../artifacts/meridian/frd.html" class="artifact-link">
+        <span class="aicon">📄</span>
+        <span class="atext">FRD — 35 Functional Requirements (BABOK v3)</span>
+        <span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/meridian/uml.html" class="artifact-link">
+        <span class="aicon">📐</span>
+        <span class="atext">UML Class Diagram — Data Model</span>
+        <span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/meridian/bpmn.html" class="artifact-link">
+        <span class="aicon">🔄</span>
+        <span class="atext">BPMN — Workstream Lifecycle &amp; Invite Sub-Process</span>
+        <span class="aarrow">→</span>
+      </a>
+      <a href="https://github.com/hadimercer/Meridian_Workstream/blob/main/docs/meridian_schema.sql" target="_blank" class="artifact-link">
+        <span class="aicon">🗄</span>
+        <span class="atext">Schema SQL — Full Database Definition</span>
+        <span class="aarrow">↗</span>
+      </a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>Project Metadata</h3>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:80px;">Type</span>
+        <span style="font-size:13px;color:var(--text2);">Full-stack SaaS</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:80px;">FRs</span>
+        <span style="font-size:13px;color:var(--text2);">35 (FR-01 to FR-35)</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:80px;">DB Tables</span>
+        <span style="font-size:13px;color:var(--text2);">15+</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:80px;">Auth</span>
+        <span style="font-size:13px;color:var(--text2);">Supabase Auth + RLS</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end detail-content -->
+
+<footer>
+  <p class="footer-left">© 2026 Hadi Mercer · BA Portfolio</p>
+  <div class="footer-right">
+    <a href="../index.html">Portfolio</a>
+    <a href="https://github.com/hadimercer" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>

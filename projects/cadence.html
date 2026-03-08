@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadence — HR Process Automation Hub | Hadi Mercer BA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f;
+    --surface: #111518;
+    --surface2: #181d21;
+    --border: #1f2629;
+    --border2: #2a3338;
+    --accent: #00c896;
+    --accent2: #0087ff;
+    --amber: #f5a623;
+    --red: #e8443a;
+    --text: #e8eaeb;
+    --text2: #8a9299;
+    --text3: #4a5560;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Epilogue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(10,13,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── DETAIL HERO ── */
+  .detail-hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 120px 40px 60px;
+  }
+
+  .detail-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-bottom: 40px;
+    transition: color 0.2s;
+  }
+
+  .back-btn:hover { color: var(--text); }
+
+  .detail-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .detail-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .detail-tagline {
+    font-size: 18px;
+    color: var(--text2);
+    font-weight: 300;
+    max-width: 700px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  .detail-meta-row {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .meta-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ── DOC METADATA BLOCK ── */
+  .doc-meta-block {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .doc-meta-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--border2);
+    margin-top: 40px;
+  }
+
+  .doc-meta-cell {
+    flex: 1 1 160px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border2);
+  }
+
+  .doc-meta-cell:last-child { border-right: none; }
+
+  .doc-meta-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .doc-meta-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .detail-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 40px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* ── MAIN BODY ── */
+  .detail-main h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--text);
+    margin: 52px 0 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .detail-main h2:first-child { margin-top: 0; }
+
+  .detail-main h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 28px 0 12px;
+  }
+
+  .detail-main p {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .detail-main p em {
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .capability-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .capability-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .capability-list li::before {
+    content: '→';
+    font-family: 'DM Mono', monospace;
+    color: var(--accent);
+    flex-shrink: 0;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  /* ── WORKFLOW CARDS ── */
+  .workflow-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    margin-bottom: 24px;
+  }
+
+  .workflow-card {
+    background: var(--surface);
+    padding: 24px;
+  }
+
+  .workflow-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .workflow-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .workflow-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* ── TABLE ── */
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+
+  .detail-table th {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .detail-table td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    color: var(--text2);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .detail-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .detail-table tr:hover td { background: var(--surface); }
+
+  /* ── ARCHITECTURE BLOCK ── */
+  .arch-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-bottom: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 2;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .section-rule {
+    height: 1px;
+    background: var(--border);
+    margin: 48px 0;
+  }
+
+  /* ── SIDEBAR ── */
+  .detail-sidebar {
+    position: sticky;
+    top: 100px;
+  }
+
+  .sidebar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+
+  .sidebar-card h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .demo-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    color: #000;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+  }
+
+  .demo-btn:hover { background: #00e0a8; }
+
+  .github-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    color: var(--text2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border2);
+    transition: all 0.2s;
+  }
+
+  .github-btn:hover { border-color: var(--text2); color: var(--text); }
+
+  .demo-instructions { margin-top: 16px; }
+
+  .demo-step {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    background: rgba(0, 200, 150, 0.08);
+    border: 1px solid rgba(0, 200, 150, 0.2);
+    padding: 2px 7px;
+    flex-shrink: 0;
+    height: fit-content;
+    margin-top: 2px;
+  }
+
+  .artifact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+
+  .artifact-link:last-child { border-bottom: none; }
+  .artifact-link:hover { gap: 14px; }
+
+  .artifact-link .aicon { font-size: 14px; flex-shrink: 0; }
+  .artifact-link .atext { font-size: 13px; color: var(--text2); flex: 1; }
+  .artifact-link .aarrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    transition: color 0.2s;
+  }
+
+  .artifact-link:hover .aarrow { color: var(--accent); }
+
+  /* ── STATUS BADGE ── */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .status-badge::before {
+    content: '●';
+    font-size: 8px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-right {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-right a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-right a:hover { color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .detail-content { grid-template-columns: 1fr; }
+    .detail-sidebar { position: static; }
+    .workflow-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .detail-hero { padding: 100px 20px 40px; }
+    .doc-meta-block { padding: 0 20px; }
+    .detail-content { padding: 40px 20px; }
+    .doc-meta-cell { flex: 1 1 100%; border-right: none; border-bottom: 1px solid var(--border2); }
+    footer { padding: 32px 20px; }
+    .arch-block { white-space: pre-wrap; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">HM / BA Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
+    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="detail-hero">
+  <div class="detail-hero-inner">
+    <a href="../index.html#projects" class="back-btn">← Back to Portfolio</a>
+    <div class="status-badge">Live</div>
+    <p class="detail-eyebrow">HR Workflow Automation · Four Connected Workflows · S1</p>
+    <h1 class="detail-title">Cadence — HR Process<br>Automation Hub</h1>
+    <p class="detail-tagline">Four connected HR workflows on a shared data foundation. Headcount intelligence, performance management, compensation review, and attrition risk scoring — each workflow's output becomes the next workflow's input.</p>
+    <div class="detail-meta-row">
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value" style="color:var(--accent)">Live</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Tech Stack</span>
+        <span class="meta-value">Python · PostgreSQL · Streamlit · Supabase</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">BA Artifacts</span>
+        <span class="meta-value">FRD · BPMN · UML · Data Dictionary</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Portfolio Ref</span>
+        <span class="meta-value">Smaller Project 1 (S1)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DOCUMENT METADATA ── -->
+<div class="doc-meta-block">
+  <div class="doc-meta-inner">
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Document ID</div>
+      <div class="doc-meta-val">Cadence_FRD_001</div>
+    </div>
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Version</div>
+      <div class="doc-meta-val">v1.0</div>
+    </div>
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Status</div>
+      <div class="doc-meta-val">Baselined</div>
+    </div>
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Project</div>
+      <div class="doc-meta-val">Cadence · S1</div>
+    </div>
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Prepared By</div>
+      <div class="doc-meta-val">Hadi Mercer</div>
+    </div>
+    <div class="doc-meta-cell">
+      <div class="doc-meta-key">Date</div>
+      <div class="doc-meta-val">2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="detail-content">
+
+  <!-- ── LEFT: MAIN ── -->
+  <div class="detail-main">
+
+    <h2>The Problem</h2>
+    <p>HR teams running manual workflows carry a hidden tax. A monthly headcount report takes hours of spreadsheet work. Merit reviews require someone to manually check six eligibility rules per employee. Performance conversations go undocumented and have to be reconstructed from memory at review time. And attrition risk — the signal that someone is about to leave — is only ever identified after they have already gone.</p>
+    <p>None of these problems is hard in isolation. What makes them costly is that they are solved separately, in different tools, by different people, with no shared data layer. Performance ratings that should influence merit eligibility live in one spreadsheet. Pay position data that should inform attrition risk lives in another.</p>
+    <p><em>Cadence treats the four HR workflows as a single connected system.</em> Each workflow produces outputs that become inputs for the next. The result is not four tools — it is one platform where the work of each workflow compounds into better decisions in the next.</p>
+
+    <h2>The Four Workflows</h2>
+    <div class="workflow-grid">
+      <div class="workflow-card">
+        <div class="workflow-num">Workflow 1</div>
+        <div class="workflow-title">Workforce Intelligence</div>
+        <div class="workflow-desc">Monthly headcount CSV ingestion with schema validation, KPI calculation, and pipeline run logging. Outputs: active count, attrition rate, compa-ratio by grade, headcount vs budget variance.</div>
+      </div>
+      <div class="workflow-card">
+        <div class="workflow-num">Workflow 2</div>
+        <div class="workflow-title">Performance Management</div>
+        <div class="workflow-desc">Weekly 1:1 capture → monthly check-in tracking → quarterly review aggregation → formal performance rating. Ratings feed directly into merit eligibility and attrition scoring.</div>
+      </div>
+      <div class="workflow-card">
+        <div class="workflow-num">Workflow 3</div>
+        <div class="workflow-title">Compensation Review</div>
+        <div class="workflow-desc">Six-gate eligibility engine → budget pool management → manager recommendation forms → HR approval workflow. Real-time budget utilisation tracking as recommendations are submitted.</div>
+      </div>
+      <div class="workflow-card">
+        <div class="workflow-num">Workflow 4</div>
+        <div class="workflow-title">Attrition Risk</div>
+        <div class="workflow-desc">Seven-factor configurable scoring engine → RAG status → ranked risk register → retention action logging. Weights are adjustable by HR admins without a code change.</div>
+      </div>
+    </div>
+
+    <h2>What It Does</h2>
+    <ul class="capability-list">
+      <li>Accepts monthly headcount CSV exports — validates against required column schema, reports row-level errors, persists validated records, and calculates computed columns (compa-ratio, headcount delta, new hire flag)</li>
+      <li>Captures weekly 1:1 records and monthly check-ins; auto-aggregates them into a quarterly review summary the manager edits, rates, and submits for HR approval</li>
+      <li>Runs the six-gate merit eligibility engine — active status, minimum tenure, no PIP, rating threshold, time since last increase, budget confirmed — and shows per-gate results per employee</li>
+      <li>Scores each active employee across seven attrition risk factors: compa-ratio position, rating trend, time since merit, time in role, sentiment signal from 1:1 notes, check-in frequency, and role market risk</li>
+      <li>Provides a configurable weight table for the attrition scoring engine — HR can tune factor weights via the UI without a developer, with every change written to an audit log</li>
+      <li>Connects analytically to the companion S2 Comp Dashboard — TechNova identifies which job families are below market; Cadence identifies which individuals in those roles score highest on attrition risk</li>
+    </ul>
+
+    <h2>What This Demonstrates</h2>
+    <ul class="capability-list">
+      <li>End-to-end business analysis: four workflows, each with a defined business problem, requirements document, and working implementation — 45 functional requirements across WF1–WF4</li>
+      <li>Cross-workflow data integration: performance ratings feed merit eligibility; headcount and pay data feed attrition risk scoring — the analytical dependencies are enforced by FK constraints in the schema</li>
+      <li>Rules-based decision engine design: the six-gate eligibility engine and seven-factor attrition scoring are documented as requirements before any code was written</li>
+      <li>Process improvement discipline: as-is process documented in BPMN before any solution was designed — 10 years of HR operations translated into formal process requirements</li>
+      <li>Data modelling: 13-table PostgreSQL schema designed to support audit trail integrity, process state management, and the analytical connections between workflows</li>
+      <li>BA framing of an operational domain — not an HR tool built by an HR professional, but a process solution designed by an analyst who happens to know the domain deeply</li>
+    </ul>
+
+    <div class="section-rule"></div>
+
+    <!-- DATA FLOW ARCHITECTURE -->
+    <h2>Data Flow Architecture</h2>
+    <p>Workflows are built in dependency order: headcount first, then performance, then compensation review, then attrition risk. This reflects the actual data dependency chain — attrition risk scoring cannot produce meaningful output without headcount data, performance ratings, and pay position all present and structured.</p>
+
+    <div class="arch-block">WF1 Headcount Upload (CSV → Validated → PostgreSQL)
+      │
+      ├──► Workforce KPI Dashboard (attrition rate, compa-ratio, headcount vs budget)
+      │
+      └──► WF2 Performance Management
+              │  Weekly 1:1 capture → Monthly check-ins → Quarterly review → Rating
+              │
+              └──► WF3 Compensation Review
+                      │  6-gate eligibility → Budget management → Manager recommendations
+                      │
+                      └──► WF4 Attrition Risk
+                              7-factor scoring → RAG status → Risk register → Retention actions
+
+              PostgreSQL · 13 tables · port 6543 pooler
+                         Streamlit + Plotly</div>
+
+    <div class="section-rule"></div>
+
+    <!-- ELIGIBILITY ENGINE -->
+    <h2>Merit Eligibility Engine</h2>
+    <p>Six sequential gates — an employee must pass all six to be eligible for the merit cycle. Each gate result is displayed individually, so managers can see exactly why an employee is ineligible and when they will next qualify.</p>
+
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th>FR ID</th>
+          <th>Gate</th>
+          <th>Condition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>WF2-FR-004</td><td>Gate 1 — Employment Status</td><td>Employee must be in active status at the cycle open date</td></tr>
+        <tr><td>WF2-FR-005</td><td>Gate 2 — Minimum Tenure</td><td>Must have completed the configured minimum months of employment</td></tr>
+        <tr><td>WF2-FR-006</td><td>Gate 3 — No Active PIP</td><td>Must not have an active performance improvement plan on record</td></tr>
+        <tr><td>WF2-FR-007</td><td>Gate 4 — Rating Threshold</td><td>Most recent formal performance rating must meet or exceed the configured minimum</td></tr>
+        <tr><td>WF2-FR-008</td><td>Gate 5 — Merit Recency</td><td>Minimum elapsed time since last merit increase must be satisfied</td></tr>
+        <tr><td>WF2-FR-009</td><td>Gate 6 — Budget Confirmed</td><td>Headcount budget for the role must be confirmed for the cycle</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ATTRITION SCORING -->
+    <h2>Attrition Risk Scoring Engine</h2>
+    <p>Seven-factor scoring model with configurable weights. Each factor is scored independently, weighted, and summed to a composite risk score. Scores map to RAG status. The weight configuration is adjustable via the app — no code change required — with every configuration change audited.</p>
+
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th>FR ID</th>
+          <th>Factor</th>
+          <th>Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>WF3-FR-002</td><td>Compa-ratio position</td><td>Pay relative to grade band midpoint — lower compa-ratio = higher risk</td></tr>
+        <tr><td>WF3-FR-003</td><td>Rating trend</td><td>Performance rating direction over rolling window — declining trend = higher risk</td></tr>
+        <tr><td>WF3-FR-004</td><td>Time since merit</td><td>Elapsed months since last merit increase — longer elapsed = higher risk</td></tr>
+        <tr><td>WF3-FR-005</td><td>Time in role</td><td>Tenure in current position — plateau signal combined with other factors</td></tr>
+        <tr><td>WF3-FR-006</td><td>Sentiment signal</td><td>Concern flags and tone in weekly 1:1 notes — negative pattern = higher risk</td></tr>
+        <tr><td>WF3-FR-007</td><td>Check-in frequency</td><td>Compliance rate for monthly check-ins — low compliance = disengagement signal</td></tr>
+        <tr><td>WF3-FR-008</td><td>Role market risk</td><td>Manually flagged indicator for high-demand roles where external pull is elevated</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-rule"></div>
+
+    <!-- BA PROCESS -->
+    <h2>BA Process</h2>
+
+    <h3>Problem Discovery</h3>
+    <p>The starting point was not "build an HR system." It was observing that most HR operational work fails at the data handoff — not at the task itself. A performance rating is completed correctly but never makes it into the merit eligibility calculation. A headcount figure is accurate in the HRIS but has to be re-extracted manually for every reporting cycle. The analytical question driving this project was: what is the minimum data architecture that would allow these four workflows to talk to each other?</p>
+
+    <h3>Stakeholder Personas</h3>
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th>Persona</th>
+          <th>Core Frustration</th>
+          <th>Requirements Driven</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>HR Analyst</td><td>Data arrives in one format and must be transformed before use — every cycle</td><td>WF1 ingestion pipeline, schema validation, computed columns, pipeline run log</td></tr>
+        <tr><td>Manager</td><td>HR asks for documentation that no tool makes easy to produce</td><td>Structured 1:1 forms, quarterly review auto-aggregation, recommendation UI</td></tr>
+        <tr><td>HR Business Partner</td><td>By the time the attrition signal is visible, it is too late</td><td>Seven-factor risk scoring, ranked register, retention action logging</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Scope Decisions</h3>
+    <table class="detail-table">
+      <thead>
+        <tr>
+          <th>Decision</th>
+          <th>Rationale</th>
+          <th>Future Phase</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Rules-based scoring over ML model</td><td>A rules engine is auditable, configurable without engineering support, and produces explainable outputs. Predictive models require historical resignation data that most mid-market organisations lack in structured form</td><td>Phase 2 — once 12+ months of structured data exists</td></tr>
+        <tr><td>No role-scoped views in v1</td><td>The data architecture supports it (every record carries employee ID and manager ID) but auth and authorisation adds risk without proportionate value before core workflows are validated</td><td>Phase 1 Polish</td></tr>
+        <tr><td>No HRIS direct integration</td><td>CSV upload provides the same structured input without integration complexity; removes dependency on HRIS API availability and auth for a portfolio demonstration</td><td>Phase 3 Scale</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Design Decision — Build Order</h3>
+    <p>The four workflows were built in dependency order: headcount first, then performance management, then compensation review, then attrition risk. This was not a convenience decision — it reflects the actual data dependency chain. Attrition risk scoring cannot produce meaningful output without headcount data, performance ratings, and pay position all present. Building in this order kept the data model honest and prevented shortcuts that would have required later refactoring.</p>
+
+    <h3>Cross-Portfolio Connection</h3>
+    <p>Cadence (S1) and the Comp Dashboard (S2) are analytically connected. S2 operates at role level — identifying which job families are below the BLS market benchmark. Cadence operates at employee level — identifying which individuals in those underpaid roles score highest on attrition risk. Together they answer the question a CHRO actually asks: <em>which people are we most likely to lose, and is compensation the reason?</em></p>
+
+  </div><!-- end detail-main -->
+
+  <!-- ── RIGHT: SIDEBAR ── -->
+  <div class="detail-sidebar">
+    <div class="sidebar-card">
+      <h3>Try the Application</h3>
+      <a href="https://cadence-hr-workflow.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
+      <a href="https://github.com/hadimercer/Cadence_HR_HUB" target="_blank" class="github-btn">View on GitHub</a>
+      <div class="demo-instructions">
+        <div class="demo-step"><span class="step-num">1</span><span>Start at the Data Upload page — upload a headcount CSV to populate the KPI dashboard</span></div>
+        <div class="demo-step"><span class="step-num">2</span><span>Open the Workforce KPI Dashboard to see attrition rate, compa-ratio by grade, and headcount variance</span></div>
+        <div class="demo-step"><span class="step-num">3</span><span>Visit Weekly 1:1s → Monthly Check-ins → Quarterly Reviews to walk the performance workflow</span></div>
+        <div class="demo-step"><span class="step-num">4</span><span>Open Merit Cycle and Eligibility to see the six-gate engine in action</span></div>
+        <div class="demo-step"><span class="step-num">5</span><span>Check the Attrition Risk Register for the ranked risk view with per-factor score breakdown</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>BA Artifacts</h3>
+      <a href="../artifacts/cadence/frd.html" class="artifact-link">
+        <span class="aicon">📄</span>
+        <span class="atext">FRD — 45 Functional Requirements (4 Workflows)</span>
+        <span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/cadence/bpmn.html" class="artifact-link">
+        <span class="aicon">🔄</span>
+        <span class="atext">BPMN — HR Process Flows (As-Is &amp; To-Be)</span>
+        <span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/cadence/uml.html" class="artifact-link">
+        <span class="aicon">📐</span>
+        <span class="atext">UML Class Diagram — Data Model</span>
+        <span class="aarrow">→</span>
+      </a>
+      <a href="../artifacts/cadence/data-dictionary.html" class="artifact-link">
+        <span class="aicon">🗂</span>
+        <span class="atext">Data Dictionary — 13 Tables</span>
+        <span class="aarrow">→</span>
+      </a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>Project Metadata</h3>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Type</span>
+        <span style="font-size:13px;color:var(--text2);">HR automation platform</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Workflows</span>
+        <span style="font-size:13px;color:var(--text2);">4 connected workflows</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">FRs</span>
+        <span style="font-size:13px;color:var(--text2);">45 (WF1–WF3 FR series)</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">DB Tables</span>
+        <span style="font-size:13px;color:var(--text2);">13</span>
+      </div>
+      <div class="demo-step" style="padding:6px 0;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:90px;">Connects to</span>
+        <span style="font-size:13px;color:var(--text2);">S2 Comp Dashboard</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end detail-content -->
+
+<footer>
+  <p class="footer-left">© 2026 Hadi Mercer · BA Portfolio</p>
+  <div class="footer-right">
+    <a href="../index.html">Portfolio</a>
+    <a href="https://github.com/hadimercer" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>
