@@ -425,22 +425,6 @@
     transform: translate(3px, -3px);
   }
 
-  /* ── PROJECT DETAIL PAGES ── */
-  .detail-page {
-    display: none;
-    animation: fadeIn 0.3s ease;
-  }
-
-  .detail-page.active { display: block; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .main-content { display: block; }
-  .main-content.hidden { display: none; }
-
   .detail-hero {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -816,17 +800,17 @@
 <body>
 
 <nav>
-  <a href="#" class="nav-logo" onclick="showHome()">HM / BA Portfolio</a>
+  <a href="/" class="nav-logo">HM / BA Portfolio</a>
   <ul class="nav-links">
-    <li><a href="#about" onclick="showHome()">About</a></li>
-    <li><a href="#projects" onclick="showHome()">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
     <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
     <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
   </ul>
 </nav>
 
 <!-- ════════════════════ MAIN HOME ════════════════════ -->
-<div id="main-content" class="main-content">
+<div id="main-content">
 
   <!-- HERO -->
   <div class="hero" id="top">
@@ -972,7 +956,7 @@
     <div class="projects-grid">
 
       <!-- S2: Comp Dashboard -->
-      <a class="project-card" href="#" onclick="showDetail('s2'); return false;">
+      <a class="project-card" href="projects/comp-dashboard.html">
         <span class="card-arrow">↗</span>
         <div class="card-badge badge-live">Live</div>
         <h3 class="card-title">Compensation & Market Benchmarking Dashboard</h3>
@@ -987,7 +971,7 @@
       </a>
 
       <!-- IncidentOps -->
-      <a class="project-card" href="#" onclick="showDetail('incidentops'); return false;">
+      <a class="project-card" href="projects/incidentops.html">
         <span class="card-arrow">↗</span>
         <div class="card-badge badge-live">Live</div>
         <h3 class="card-title">IncidentOps — Process Mining Insights Hub</h3>
@@ -1002,7 +986,7 @@
       </a>
 
       <!-- S3: Meridian -->
-      <a class="project-card" href="#" onclick="showDetail('meridian'); return false;">
+      <a class="project-card" href="projects/meridian.html">
         <span class="card-arrow">↗</span>
         <div class="card-badge badge-live">Live</div>
         <h3 class="card-title">Meridian — Workstream Portfolio Health Dashboard</h3>
@@ -1017,7 +1001,7 @@
       </a>
 
       <!-- S1: Cadence -->
-      <a class="project-card" href="#" onclick="showDetail('cadence'); return false;">
+      <a class="project-card" href="projects/cadence.html">
         <span class="card-arrow">↗</span>
         <div class="card-badge badge-live">Live</div>
         <h3 class="card-title">Cadence — HR Process Automation Hub</h3>
@@ -1032,7 +1016,7 @@
       </a>
 
       <!-- S4: Lens -->
-      <a class="project-card" href="#" onclick="showDetail('lens'); return false;">
+      <a class="project-card" href="projects/lens.html">
         <span class="card-arrow">↗</span>
         <div class="card-badge badge-live">Live</div>
         <h3 class="card-title">Lens — Sentiment & Text Analytics Tool</h3>
@@ -1082,388 +1066,10 @@
   </footer>
 
 </div><!-- end main-content -->
-
-<!-- ════════════════════ DETAIL: S2 COMP DASHBOARD ════════════════════ -->
-<div id="detail-s2" class="detail-page">
-  <div class="detail-hero">
-    <div class="detail-hero-inner">
-      <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
-      <p class="detail-eyebrow">Compensation Analytics</p>
-      <h1 class="detail-title">Compensation & Market<br>Benchmarking Dashboard</h1>
-      <p class="detail-tagline">An end-to-end data pipeline and analytics dashboard that pulls live BLS wage data, maps it to internal job families, and surfaces pay equity gaps and market positioning for HR and compensation teams.</p>
-      <div class="detail-meta-row">
-        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
-        <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · PostgreSQL · Streamlit · BLS API</span></div>
-        <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · UML Sequence · Data Dictionary · SOC Crosswalk</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="detail-content">
-    <div class="detail-main">
-      <h2>The Problem</h2>
-      <p>Compensation teams at mid-market companies rely on manual exports from commercial survey vendors and static spreadsheets to benchmark roles. These snapshots age quickly, don't connect to internal salary data automatically, and give no systematic view of where pay gaps or equity issues exist.</p>
-      <p>This project simulates TechNova, a fictional 500-person US tech company operating across five metros, and builds the analytics infrastructure that answers: <em>are we paying competitively, and where are our equity risks?</em></p>
-
-      <h2>What It Does</h2>
-      <ul class="capability-list">
-        <li>Pulls live BLS OEWS wage data via API — P25, P50, P75 percentiles for all roles across 5 US MSAs (Austin, New York, San Francisco, Washington DC, Denver)</li>
-        <li>Loads internal salary data via validated CSV upload, mapping roles through a custom SOC crosswalk</li>
-        <li>Displays internal vs. market side-by-side with percentile toggle and below-market flags</li>
-        <li>Surfaces pay equity gap flags based on statistical analysis of salary distribution within job families</li>
-        <li>Logs all pipeline runs with error detection and data freshness indicator</li>
-      </ul>
-
-      <h2>What This Demonstrates</h2>
-      <ul class="capability-list">
-        <li>End-to-end requirements: BABOK-aligned FRD covering 18 functional requirements with MoSCoW prioritisation and traceability</li>
-        <li>API integration: OpenAPI/Swagger spec documented for the BLS OEWS data feed</li>
-        <li>Data modelling: PostgreSQL schema with validated ingestion pipeline and schema-level checks before any write operation</li>
-        <li>UML: Sequence diagram documenting the full data flow from BLS API to dashboard render</li>
-        <li>BA scoping discipline: explicit in-scope and out-of-scope decisions documented (no HRIS integration, no offer workflow, US-only)</li>
-      </ul>
-    </div>
-
-    <div class="detail-sidebar">
-      <div class="sidebar-card">
-        <h3>Try the Application</h3>
-        <a href="https://comp-benchmarking-hadimercer-ps2.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
-        <a href="https://github.com/hadimercer/Comp-Benchmarking" target="_blank" class="github-btn">View on GitHub</a>
-        <div class="demo-instructions">
-          <div class="demo-step"><span class="step-num">1</span><span>Filter by job family, level, and location to see market ranges</span></div>
-          <div class="demo-step"><span class="step-num">2</span><span>Toggle between P25 / P50 / P75 percentile views</span></div>
-          <div class="demo-step"><span class="step-num">3</span><span>Check the Below-Market Flags tab for roles needing attention</span></div>
-          <div class="demo-step"><span class="step-num">4</span><span>Explore the Pay Equity view for within-family distribution gaps</span></div>
-        </div>
-      </div>
-      <div class="sidebar-card">
-        <h3>BA Artifacts</h3>
-        <a href="https://github.com/hadimercer/Comp-Benchmarking/tree/main/docs" target="_blank" class="artifact-link">
-          <span class="aicon">📄</span><span class="atext">Functional Requirements Document</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Comp-Benchmarking/tree/main/docs" target="_blank" class="artifact-link">
-          <span class="aicon">🔀</span><span class="atext">UML Sequence Diagram</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Comp-Benchmarking/tree/main/docs" target="_blank" class="artifact-link">
-          <span class="aicon">📊</span><span class="atext">BLS OpenAPI Specification</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Comp-Benchmarking/tree/main/docs" target="_blank" class="artifact-link">
-          <span class="aicon">🗂</span><span class="atext">SOC Crosswalk & Data Dictionary</span><span class="aarrow">→</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════ DETAIL: INCIDENTOPS ════════════════════ -->
-<div id="detail-incidentops" class="detail-page">
-  <div class="detail-hero">
-    <div class="detail-hero-inner">
-      <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
-      <p class="detail-eyebrow">Standalone Project · Process Analytics · IT Service Management</p>
-      <h1 class="detail-title">IncidentOps —<br>Process Mining Insights Hub</h1>
-      <p class="detail-tagline">A process mining analytics platform built on a real-world-shaped IT service desk event log. Surfaces how incidents actually flow, where time is lost, and which patterns drive poor customer outcomes.</p>
-      <div class="detail-meta-row">
-        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
-        <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · PostgreSQL · Streamlit · Process Mining</span></div>
-        <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · BPMN · Stakeholder Map · Constraints Log</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="detail-content">
-    <div class="detail-main">
-      <h2>The Problem</h2>
-      <p>A fictional mid-market enterprise IT service desk captures detailed event logs — ticket creation, assignments, escalations, resolution, closure, and customer feedback. But leadership relies on manual exports and surface-level averages, with no consistent view of how incidents actually flow end-to-end.</p>
-      <p>The primary failure mode is decision-making without process visibility. The same incident type can follow materially different paths (variants) with different cycle times, escalation patterns, and customer satisfaction outcomes. Without a process mining lens, teams cannot distinguish healthy flow from costly patterns like escalation ping-pong or premature closure.</p>
-
-      <h2>What It Does</h2>
-      <ul class="capability-list">
-        <li>Discovers and visualises the top process variants — how incidents actually travel through the service desk vs. the intended path</li>
-        <li>Quantifies step-level dwell time and waiting time to pinpoint true bottlenecks vs. active work time</li>
-        <li>Measures escalation and handoff churn, detecting ping-pong patterns that consume L2/L3 specialist capacity</li>
-        <li>Monitors closure governance — captures premature closures leading to reopens and correlates with customer satisfaction</li>
-        <li>Generates a repeatable KPI pack with one-click export for weekly ops review and problem management intake</li>
-      </ul>
-
-      <h2>What This Demonstrates</h2>
-      <ul class="capability-list">
-        <li>Process mining thinking: going beyond averages to variant analysis and bottleneck quantification</li>
-        <li>BABOK-aligned FRD with 5 structured objectives, stakeholder archetypes, and full scope definition</li>
-        <li>BPMN: observed flow mapped against recommended process controls — both as-is and to-be perspectives</li>
-        <li>BA scoping rigour: analytics-only scope explicitly bounded (no ticket actions, no live ITSM integration) with rationale documented</li>
-        <li>Operational thinking: outputs designed for three distinct stakeholder audiences — Process Owner, Operations Manager, and Quality/CX Lead</li>
-      </ul>
-    </div>
-
-    <div class="detail-sidebar">
-      <div class="sidebar-card">
-        <h3>Try the Application</h3>
-        <a href="https://incidentopspmi-hadimercer.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
-        <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub" target="_blank" class="github-btn">View on GitHub</a>
-        <div class="demo-instructions">
-          <div class="demo-step"><span class="step-num">1</span><span>Start at the Process Variants tab — see which incident paths are most and least efficient</span></div>
-          <div class="demo-step"><span class="step-num">2</span><span>Open Bottleneck Analysis to find where time is actually lost</span></div>
-          <div class="demo-step"><span class="step-num">3</span><span>Check Escalation & Handoffs for ping-pong patterns and churn cost</span></div>
-          <div class="demo-step"><span class="step-num">4</span><span>Review Closure Governance for reopen rates and satisfaction correlation</span></div>
-        </div>
-      </div>
-      <div class="sidebar-card">
-        <h3>BA Artifacts</h3>
-        <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub" target="_blank" class="artifact-link">
-          <span class="aicon">📄</span><span class="atext">Functional Requirements Document (FRD-PMI-001)</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub" target="_blank" class="artifact-link">
-          <span class="aicon">🔄</span><span class="atext">BPMN — Incident Lifecycle & Controls</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub" target="_blank" class="artifact-link">
-          <span class="aicon">👥</span><span class="atext">Stakeholder Map & Objective Traceability</span><span class="aarrow">→</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════ DETAIL: MERIDIAN ════════════════════ -->
-<div id="detail-meridian" class="detail-page">
-  <div class="detail-hero">
-    <div class="detail-hero-inner">
-      <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
-      <p class="detail-eyebrow">Portfolio Health · SaaS Application</p>
-      <h1 class="detail-title">Meridian — Workstream<br>Portfolio Health Dashboard</h1>
-      <p class="detail-tagline">A full-stack multi-user SaaS application where professionals track concurrent workstreams and receive calculated RAG health status — derived automatically from milestone data, budget burn, and blocker age. No manual colour-picking.</p>
-      <div class="detail-meta-row">
-        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
-        <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · Supabase Auth · PostgreSQL RLS · Streamlit</span></div>
-        <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">35-FR FRD · UML · BPMN · Data Dictionary</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="detail-content">
-    <div class="detail-main">
-      <h2>The Problem</h2>
-      <p>Project managers have Jira and Asana. But business analysts, consultants, and professionals who manage work as a by-product of doing their job don't think of themselves as project managers — those tools are abandoned within weeks.</p>
-      <p>The fallback is a spreadsheet with a RAG column updated when there's time on Friday afternoon. That spreadsheet doesn't alert when a workstream is drifting. It shows whatever was last typed.</p>
-      <p>Meridian's central design principle: health status is <em>calculated</em>, not declared. A 9-question context wizard tunes the scoring engine per workstream — a hard-deadline client engagement is scored differently from a self-imposed internal initiative.</p>
-
-      <h2>What It Does</h2>
-      <ul class="capability-list">
-        <li>Calculates composite RAG from three weighted dimensions: Schedule Health (milestone pace vs. elapsed time), Budget Health (planned vs. actual burn), and Blocker Health (unresolved blocker age)</li>
-        <li>9-question context wizard at setup tunes scoring thresholds — 15 modifier rules documented in the FRD</li>
-        <li>Multi-user collaboration with role-based access (Owner / Contributor / Viewer), invite link system, and per-entity comment threads</li>
-        <li>Staleness flag fires when update cadence exceeds the configured threshold</li>
-        <li>Portfolio analytics: health trend over time, scatter matrix across workstreams, milestone velocity</li>
-      </ul>
-
-      <h2>What This Demonstrates</h2>
-      <ul class="capability-list">
-        <li>Full product thinking: problem statement, stakeholder personas, scoping decisions, and design rationale all documented before a line of code was written</li>
-        <li>35-requirement BABOK-aligned FRD with MoSCoW prioritisation and traceability matrix</li>
-        <li>Database design: PostgreSQL schema with 15+ tables, FK constraints, and row-level security via Supabase</li>
-        <li>Auth and security: Supabase Auth, RLS on all user-scoped tables, no credentials in source code</li>
-        <li>UML class diagram documenting the full data model; BPMN covering workstream lifecycle and invite sub-process</li>
-      </ul>
-    </div>
-
-    <div class="detail-sidebar">
-      <div class="sidebar-card">
-        <h3>Try the Application</h3>
-        <a href="https://meridian-hadimercer.streamlit.app/home" target="_blank" class="demo-btn">Open Live Demo ↗</a>
-        <a href="https://github.com/hadimercer/Meridian_Workstream" target="_blank" class="github-btn">View on GitHub</a>
-        <div class="demo-instructions">
-          <div class="demo-step"><span class="step-num">Demo</span><span>Email: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e48c85808d86898196878196a48389858d88ca878b89">[email&#160;protected]</a></strong> · Password: <strong>meridian2026</strong></span></div>
-          <div class="demo-step"><span class="step-num">1</span><span>Log in and explore the 6 pre-seeded workstreams with 30 days of RAG history</span></div>
-          <div class="demo-step"><span class="step-num">2</span><span>Open any workstream and review the score cards and wizard profile</span></div>
-          <div class="demo-step"><span class="step-num">3</span><span>Check the Milestones and Blockers tabs to see how data feeds the RAG engine</span></div>
-          <div class="demo-step"><span class="step-num">4</span><span>Open Analytics to see the portfolio health trend and scatter matrix</span></div>
-        </div>
-      </div>
-      <div class="sidebar-card">
-        <h3>BA Artifacts</h3>
-        <a href="https://github.com/hadimercer/Meridian_Workstream/tree/main/docs" target="_blank" class="artifact-link">
-          <span class="aicon">📄</span><span class="atext">FRD — 35 Functional Requirements (BABOK v3)</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Meridian_Workstream/tree/main/docs" target="_blank" class="artifact-link">
-          <span class="aicon">📐</span><span class="atext">UML Class Diagram — Data Model</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Meridian_Workstream/tree/main/docs" target="_blank" class="artifact-link">
-          <span class="aicon">🔄</span><span class="atext">BPMN — Workstream Lifecycle & Invite Sub-Process</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Meridian_Workstream/tree/main/docs" target="_blank" class="artifact-link">
-          <span class="aicon">🗂</span><span class="atext">Data Dictionary</span><span class="aarrow">→</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════ DETAIL: CADENCE ════════════════════ -->
-<div id="detail-cadence" class="detail-page">
-  <div class="detail-hero">
-    <div class="detail-hero-inner">
-      <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
-      <p class="detail-eyebrow">HR Workflow Automation</p>
-      <h1 class="detail-title">Cadence — HR Process<br>Automation Hub</h1>
-      <p class="detail-tagline">A structured workflow automation tool for common HR processes — onboarding, offboarding, leave management, and policy acknowledgements — replacing ad-hoc email chains with auditable, traceable task flows.</p>
-      <div class="detail-meta-row">
-        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
-        <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · PostgreSQL · Streamlit · Supabase</span></div>
-        <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · BPMN · UML · Data Dictionary</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="detail-content">
-    <div class="detail-main">
-      <h2>The Problem</h2>
-      <p>HR teams in mid-market organizations run their core processes — onboarding, offboarding, leave approvals — through email chains, shared spreadsheets, and institutional memory. There's no audit trail, no consistent handoff, and no visibility into where a process currently stands.</p>
-      <p>When processes are invisible, they're unimprovable. Cadence creates structured intake, automated task routing, and a full audit trail for the processes HR runs most frequently.</p>
-
-      <h2>What It Does</h2>
-      <ul class="capability-list">
-        <li>Structured intake forms for onboarding, offboarding, leave requests, and policy acknowledgements — each mapped to a defined process flow</li>
-        <li>Automated task generation and routing based on process type and role configuration</li>
-        <li>Full audit trail — every status change, approval, and action timestamped and attributed</li>
-        <li>Process visibility dashboard showing in-flight cases, overdue tasks, and completion rates by process type</li>
-        <li>BPMN-documented process flows for each HR workflow — as-is and to-be modelled before build</li>
-      </ul>
-
-      <h2>What This Demonstrates</h2>
-      <ul class="capability-list">
-        <li>Process improvement discipline: as-is process documented in BPMN before any solution was designed</li>
-        <li>Domain expertise applied analytically: 10 years of HR operations translated into formal process requirements</li>
-        <li>Requirements engineering: FRD with stakeholder objectives, MoSCoW prioritisation, and NFR coverage</li>
-        <li>Data modelling: schema designed to support audit trail integrity and process state management</li>
-        <li>BA framing of an operational domain — not an HR tool built by an HR professional, but a process solution designed by an analyst who happens to know the domain</li>
-      </ul>
-    </div>
-
-    <div class="detail-sidebar">
-      <div class="sidebar-card">
-        <h3>Try the Application</h3>
-        <a href="https://cadence-hr-workflow.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
-        <a href="https://github.com/hadimercer/Cadence_HR_HUB" target="_blank" class="github-btn">View on GitHub</a>
-        <div class="demo-instructions">
-          <div class="demo-step"><span class="step-num">1</span><span>Start a new Onboarding request and complete the structured intake form</span></div>
-          <div class="demo-step"><span class="step-num">2</span><span>See the auto-generated task list and routing based on your inputs</span></div>
-          <div class="demo-step"><span class="step-num">3</span><span>Work through tasks and observe the audit trail building</span></div>
-          <div class="demo-step"><span class="step-num">4</span><span>Check the Dashboard for a portfolio view of all in-flight processes</span></div>
-        </div>
-      </div>
-      <div class="sidebar-card">
-        <h3>BA Artifacts</h3>
-        <a href="https://github.com/hadimercer/Cadence_HR_HUB/tree/main/docs/artifacts" target="_blank" class="artifact-link">
-          <span class="aicon">📄</span><span class="atext">Functional Requirements Document</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Cadence_HR_HUB/tree/main/docs/artifacts" target="_blank" class="artifact-link">
-          <span class="aicon">🔄</span><span class="atext">BPMN — HR Process Flows (As-Is & To-Be)</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Cadence_HR_HUB/tree/main/docs/artifacts" target="_blank" class="artifact-link">
-          <span class="aicon">📐</span><span class="atext">UML Class Diagram</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Cadence_HR_HUB/tree/main/docs/artifacts" target="_blank" class="artifact-link">
-          <span class="aicon">🗂</span><span class="atext">Data Dictionary</span><span class="aarrow">→</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><!-- ════════════════════ DETAIL: LENS ════════════════════ -->
-<div id="detail-lens" class="detail-page">
-  <div class="detail-hero">
-    <div class="detail-hero-inner">
-      <button class="back-btn" onclick="showHome()">← Back to Portfolio</button>
-      <p class="detail-eyebrow">Sentiment & Text Analytics · LLM Pipeline · NLP</p>
-      <h1 class="detail-title">Lens — Sentiment &<br>Text Analytics Tool</h1>
-      <p class="detail-tagline">A general-purpose text analysis platform that takes batches of business text — customer feedback, employee surveys, support tickets, NPS comments — runs them through an OpenAI-backed NLP pipeline, stores results in PostgreSQL, and makes historical runs reviewable without re-calling the model.</p>
-      <div class="detail-meta-row">
-        <div class="meta-item"><span class="meta-label">Status</span><span class="meta-value" style="color:var(--accent)">Live</span></div>
-        <div class="meta-item"><span class="meta-label">Tech Stack</span><span class="meta-value">Python · OpenAI API · PostgreSQL · Streamlit</span></div>
-        <div class="meta-item"><span class="meta-label">BA Artifacts</span><span class="meta-value">FRD · DFD · ERD · UCD · Schema · Seed Data</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="detail-content">
-    <div class="detail-main">
-      <h2>The Problem</h2>
-      <p>Teams regularly collect large volumes of qualitative text — customer comments, engagement survey responses, support notes, incident narratives — but the analysis workflow breaks down in one of three places: the incoming text is messy, the interpretation lacks business context, or the results aren't stored in a way that supports historical comparison.</p>
-      <p>Lens addresses that gap by treating text analysis as an operational workflow rather than a one-off prompt. Analysts validate a batch, attach business context, compare against prior cycles, persist the run, and reopen it later — without re-calling the model.</p>
-
-      <h2>What It Does</h2>
-      <ul class="capability-list">
-        <li>Accepts CSV uploads or pasted text, runs UTF-8 validation, detects text columns and timestamps, enforces batch limits, and gates execution behind a 5-row preview confirmation</li>
-        <li>Runs an OpenAI-backed pipeline: record-level sentiment scoring, theme extraction, executive summary generation, and anomaly detection — with retry handling on malformed model output</li>
-        <li>Supports named longitudinal series — retrieves the most recent prior cycle and injects that context into each new run for trend comparison</li>
-        <li>Persists all results to PostgreSQL: analysis runs, normalised batch records, context profiles, and a full pipeline run log</li>
-        <li>Runs in Demo Mode when no API key is present — seeded historical analyses load from the database so the app is fully reviewable without live execution</li>
-      </ul>
-
-      <h2>What This Demonstrates</h2>
-      <ul class="capability-list">
-        <li>LLM workflow design: prompted sentiment scoring, theme extraction, summary generation, retry handling — treating the model as a component in a pipeline, not a chat interface</li>
-        <li>Data validation and ingestion engineering: text-column detection, timestamp detection, empty-row rejection, preview gating, and batch size enforcement before any API call is made</li>
-        <li>Longitudinal analysis design: named series, prior-cycle retrieval, run sequencing, and historical comparison context — qualitative data treated as a repeatable operational workflow</li>
-        <li>Five-table PostgreSQL schema with FK chains, helper functions, indexes, and idempotent bootstrap logic — schema and seed run automatically on first deploy</li>
-        <li>BA artifact depth: FRD, Data Flow Diagram, Entity Relationship Diagram, Use Case Diagram, schema SQL, and seed SQL — six distinct artifacts covering requirements, data, and system boundaries</li>
-      </ul>
-    </div>
-
-    <div class="detail-sidebar">
-      <div class="sidebar-card">
-        <h3>Try the Application</h3>
-        <a href="https://lens-sentiment-engine.streamlit.app/" target="_blank" class="demo-btn">Open Live Demo ↗</a>
-        <a href="https://github.com/hadimercer/Lens_Sentiment_Engine" target="_blank" class="github-btn">View on GitHub</a>
-        <div class="demo-instructions">
-          <div class="demo-step"><span class="step-num">Demo</span><span>App launches in Demo Mode — seeded historical analyses are pre-loaded, no credentials needed</span></div>
-          <div class="demo-step"><span class="step-num">1</span><span>Start at the Overview page to understand the workflow and runtime mode</span></div>
-          <div class="demo-step"><span class="step-num">2</span><span>Open Analysis Library to explore stored runs — filter by series, domain, or date</span></div>
-          <div class="demo-step"><span class="step-num">3</span><span>Reopen any stored analysis to view the full dashboard without re-calling the model</span></div>
-          <div class="demo-step"><span class="step-num">Live</span><span>To run a live analysis, request the API password via the contact email at the bottom of this page</span></div>
-        </div>
-      </div>
-      <div class="sidebar-card">
-        <h3>BA Artifacts</h3>
-        <a href="https://github.com/hadimercer/Lens_Sentiment_Engine/tree/main/docs/artifacts" target="_blank" class="artifact-link">
-          <span class="aicon">📄</span><span class="atext">Functional Requirements Document (Lens FRD 001)</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Lens_Sentiment_Engine/tree/main/docs/artifacts" target="_blank" class="artifact-link">
-          <span class="aicon">🔀</span><span class="atext">Data Flow Diagram — End-to-End Pipeline</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Lens_Sentiment_Engine/tree/main/docs/artifacts" target="_blank" class="artifact-link">
-          <span class="aicon">📐</span><span class="atext">Entity Relationship Diagram — Schema & Relationships</span><span class="aarrow">→</span>
-        </a>
-        <a href="https://github.com/hadimercer/Lens_Sentiment_Engine/tree/main/docs/artifacts" target="_blank" class="artifact-link">
-          <span class="aicon">👤</span><span class="atext">Use Case Diagram — Analyst Workflows & System Boundaries</span><span class="aarrow">→</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-  function showHome() {
-    document.getElementById('main-content').classList.remove('hidden');
-    document.querySelectorAll('.detail-page').forEach(p => p.classList.remove('active'));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function showDetail(id) {
-    document.getElementById('main-content').classList.add('hidden');
-    document.querySelectorAll('.detail-page').forEach(p => p.classList.remove('active'));
-    const target = document.getElementById('detail-' + id);
-    if (target) {
-      target.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-  }
-
-  // Smooth scroll for anchor links — skip cards that use onclick
+  // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-      if (this.hasAttribute('onclick')) return;
       const href = this.getAttribute('href');
       if (href === '#') return;
       const target = document.querySelector(href);
