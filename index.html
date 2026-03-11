@@ -722,6 +722,45 @@
   .timeline-item.complete .timeline-item-label { color: var(--text2); }
   .timeline-item.flagship .timeline-item-label { color: var(--amber); opacity: 0.7; }
 
+  /* ── BA PROCESS STRIP ── */
+  .process-strip {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px;
+  }
+  .process-inner { max-width: 1200px; margin: 0 auto; }
+  .process-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; color: var(--text3);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px;
+  }
+  .process-track { display: flex; align-items: stretch; gap: 0; }
+  .process-step { flex: 1; min-width: 0; padding: 0 20px 0 0; position: relative; }
+  .process-step:not(:last-child)::after {
+    content: '→'; position: absolute; right: 2px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3);
+  }
+  .process-step-num {
+    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--accent);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; opacity: 0.7;
+  }
+  .process-step-title {
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text);
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; font-weight: 500;
+  }
+  .process-step-desc {
+    font-family: 'Epilogue', sans-serif; font-size: 12px;
+    color: var(--text3); line-height: 1.6;
+  }
+  @media (max-width: 768px) {
+    .process-strip { padding: 32px 20px; }
+    .process-track { flex-direction: column; gap: 24px; }
+    .process-step { padding: 0; }
+    .process-step:not(:last-child)::after { display: none; }
+  }
+
   /* ── FOOTER ── */
   footer {
     border-top: 1px solid var(--border);
@@ -831,13 +870,13 @@
     </h1>
 
     <p class="hero-subtitle fade-up">
-      10 years of HR operations,analytics and process engineering, formalized into a business analysis skill set. Six projects spanning requirements engineering, data pipelines, full-stack applications, and AI-assisted tooling.
+      Operational complexity at scale teaches you where requirements fail before a line of code is written. Each project here starts with a defined problem, documented requirements, and a measurable outcome — not a feature list.
     </p>
 
     <div class="hero-meta fade-up">
       <div class="meta-item">
         <span class="meta-label">Background</span>
-        <span class="meta-value">HR Analytics & Operations</span>
+        <span class="meta-value">HR Analytics · Operations · PMO</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">Transitioning To</span>
@@ -897,6 +936,40 @@
     </div>
   </div>
 
+  <!-- BA METHODOLOGY STRIP -->
+  <div class="process-strip">
+    <div class="process-inner">
+      <p class="process-label">Methodology applied to every project</p>
+      <div class="process-track">
+        <div class="process-step">
+          <p class="process-step-num">01</p>
+          <p class="process-step-title">Problem Discovery</p>
+          <p class="process-step-desc">Define the current-state pain, identify who it affects, and establish what measurable improvement looks like.</p>
+        </div>
+        <div class="process-step">
+          <p class="process-step-num">02</p>
+          <p class="process-step-title">Requirements Engineering</p>
+          <p class="process-step-desc">Elicit, prioritise (MoSCoW), and document functional and non-functional requirements against a BABOK-aligned FRD.</p>
+        </div>
+        <div class="process-step">
+          <p class="process-step-num">03</p>
+          <p class="process-step-title">Solution Scoping</p>
+          <p class="process-step-desc">Draw explicit in/out-of-scope boundaries with rationale. Document technology decisions and trace each to a requirement.</p>
+        </div>
+        <div class="process-step">
+          <p class="process-step-num">04</p>
+          <p class="process-step-title">Build &amp; Document</p>
+          <p class="process-step-desc">Implement the solution alongside its artifacts — architecture diagrams, data dictionary, UML, and deployment documentation.</p>
+        </div>
+        <div class="process-step">
+          <p class="process-step-num">05</p>
+          <p class="process-step-title">Validate Outcome</p>
+          <p class="process-step-desc">Map each delivered feature to its originating requirement. Confirm success indicators from the objectives section are met.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ABOUT SECTION -->
   <section id="about">
     <div class="section-header">
@@ -904,49 +977,72 @@
       <h2 class="section-title">About</h2>
     </div>
 
+    <p style="font-family:'Epilogue',sans-serif;font-size:15px;color:var(--text2);line-height:1.75;max-width:760px;margin-bottom:40px;">
+      The case for this transition is built on complexity, not proximity. Managing workforce analytics across thousands of employees, running PMO reporting cycles, and designing HR processes at scale all require the same discipline that defines good BA work: structured thinking about requirements, stakeholders, and scope before anything gets built. The five projects below apply that discipline in new domains — compensation strategy, process mining, SaaS portfolio management, automation, and NLP — each with a documented requirements foundation.
+    </p>
+
     <div class="skills-grid">
       <div class="skill-cell">
         <p class="skill-cell-label">Core Competencies</p>
         <div class="skill-tags">
-          <span class="tag">Requirements Elicitation</span>
-          <span class="tag">Process Mapping</span>
-          <span class="tag">Data Analysis</span>
+          <span class="tag">Requirements Elicitation & Documentation</span>
+          <span class="tag">BABOK v3</span>
+          <span class="tag">BPMN 2.0</span>
+          <span class="tag">Process Design</span>
+          <span class="tag">OKR/KPI Framework Design</span>
           <span class="tag">Stakeholder Management</span>
-          <span class="tag">Continuous Improvement</span>
-          <span class="tag">Large Dataset Reporting</span>
+          <span class="tag">Change Management</span>
+          <span class="tag">Lean & Continuous Improvement</span>
+          <span class="tag">Cross-functional Collaboration</span>
+          <span class="tag">Agile/Scrum</span>
         </div>
       </div>
       <div class="skill-cell">
         <p class="skill-cell-label">Technical — Established</p>
         <div class="skill-tags">
-          <span class="tag">Excel (Advanced)</span>
-          <span class="tag">PostgreSQL / Supabase</span>
-          <span class="tag">Python</span>
-          <span class="tag">Streamlit</span>
-          <span class="tag">Plotly</span>
-          <span class="tag">Git / GitHub</span>
+          <span class="tag">SQL · PostgreSQL</span>
+          <span class="tag">Python (Pandas · Plotly · Streamlit)</span>
+          <span class="tag">Excel (Advanced) · Power Query</span>
+          <span class="tag">Amazon QuickSight</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Git/GitHub</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">HRIS Platforms</span>
+          <span class="tag">Workflow Automation</span>
+          <span class="tag">FRD Documentation (BABOK-aligned)</span>
+          <span class="tag">Traceability Matrix Design</span>
         </div>
       </div>
       <div class="skill-cell">
         <p class="skill-cell-label">Technical — In Progress</p>
         <div class="skill-tags">
-          <span class="tag learning">SQL (Advanced)</span>
-          <span class="tag learning">Power BI</span>
           <span class="tag learning">REST APIs</span>
-          <span class="tag learning">BABOK v3</span>
-          <span class="tag learning">BPMN 2.0</span>
+          <span class="tag learning">OpenAI API</span>
+          <span class="tag learning">Simulation Modelling</span>
           <span class="tag learning">UML</span>
+          <span class="tag learning">Advanced Process Mining</span>
+          <span class="tag learning">OpenAPI Specification Design</span>
         </div>
       </div>
       <div class="skill-cell">
-        <p class="skill-cell-label">BA Artifacts Produced</p>
-        <div class="skill-tags">
-          <span class="tag">FRD (BABOK-aligned)</span>
-          <span class="tag">BPMN Diagrams</span>
-          <span class="tag">UML Class Diagrams</span>
-          <span class="tag">Sequence Diagrams</span>
-          <span class="tag">Data Dictionaries</span>
-          <span class="tag">Traceability Matrix</span>
+        <p class="skill-cell-label">Languages & Domain</p>
+        <div style="margin-bottom: 12px;">
+          <p class="meta-label" style="margin-bottom: 8px;">Languages</p>
+          <div class="skill-tags">
+            <span class="tag">English (Fluent)</span>
+            <span class="tag">French (Fluent)</span>
+            <span class="tag">Arabic (Native)</span>
+          </div>
+        </div>
+        <div style="border-top: 1px solid var(--border2); padding-top: 12px;">
+          <p class="meta-label" style="margin-bottom: 8px;">Domain</p>
+          <div class="skill-tags">
+            <span class="tag">Regulatory Compliance</span>
+            <span class="tag">Workforce Analytics</span>
+            <span class="tag">IT Service Management</span>
+            <span class="tag">Compensation Analytics</span>
+            <span class="tag">HR Process Automation</span>
+          </div>
         </div>
       </div>
     </div>
@@ -959,6 +1055,7 @@
     <div class="section-header">
       <span class="section-num">02</span>
       <h2 class="section-title">Projects</h2>
+      <p class="meta-label" style="margin-left:auto;align-self:center;letter-spacing:0.08em;">Defined problem → documented requirements → working application</p>
     </div>
 
     <div class="projects-grid">
@@ -968,7 +1065,7 @@
         <span class="card-arrow">↗</span>
         <div class="card-badge badge-live">Live</div>
         <h3 class="card-title">Compensation & Market Benchmarking Dashboard</h3>
-        <p class="card-desc">End-to-end BLS data pipeline feeding a real-time compensation analysis tool. Internal salary vs. market benchmarks, pay equity flags, and geographic differentials across 5 US metros.</p>
+        <p class="card-desc">Compensation decisions made without current market data create pay equity risk and retention exposure. This tool translates raw BLS survey data into position-by-position benchmarks, flags where internal salaries fall outside defensible ranges, and surfaces geographic differentials across 5 US metros — turning an annual spreadsheet exercise into a live analytical capability.</p>
         <div class="card-tech">
           <span class="tech-tag">Python</span>
           <span class="tech-tag">PostgreSQL</span>
@@ -983,7 +1080,7 @@
         <span class="card-arrow">↗</span>
         <div class="card-badge badge-live">Live</div>
         <h3 class="card-title">IncidentOps — Process Mining Insights Hub</h3>
-        <p class="card-desc">Process mining analytics on an IT service desk event log. Surfaces cycle time bottlenecks, escalation patterns, closure governance gaps, and customer satisfaction drivers across incident variants.</p>
+        <p class="card-desc">IT service desks accumulate process debt silently — tickets take longer than expected, escalations follow no consistent pattern, and closure compliance erodes without anyone seeing the aggregate picture. IncidentOps applies process mining to a real event log, surfaces where the actual incident lifecycle diverges from the intended process, and identifies the variant patterns responsible for the longest cycle times.</p>
         <div class="card-tech">
           <span class="tech-tag">Python</span>
           <span class="tech-tag">Process Mining</span>
@@ -998,7 +1095,7 @@
         <span class="card-arrow">↗</span>
         <div class="card-badge badge-live">Live</div>
         <h3 class="card-title">Meridian — Workstream Portfolio Health Dashboard</h3>
-        <p class="card-desc">Full-stack multi-user SaaS application. Calculated RAG health scoring engine derived from milestone completion, budget burn, and blocker age — no manual colour-picking. Role-based collaboration built in.</p>
+        <p class="card-desc">Portfolio managers reporting RAG status manually introduce subjective bias — the same workstream gets rated differently depending on who completes the update. Meridian replaces manual status judgement with a calculated health score derived from milestone completion, budget burn rate, and blocker age, applied consistently across all workstreams with role-based access for multi-user collaboration.</p>
         <div class="card-tech">
           <span class="tech-tag">Python</span>
           <span class="tech-tag">Supabase Auth</span>
@@ -1013,7 +1110,7 @@
         <span class="card-arrow">↗</span>
         <div class="card-badge badge-live">Live</div>
         <h3 class="card-title">Cadence — HR Process Automation Hub</h3>
-        <p class="card-desc">Workflow automation tool for common HR processes — onboarding, offboarding, leave management, and policy acknowledgements. Structured intake forms feeding automated task routing and audit trails.</p>
+        <p class="card-desc">Manual HR process coordination creates compliance gaps: tasks missed during onboarding, no audit trail for policy acknowledgements, and no visibility into where a request is stalled. Cadence replaces ad-hoc coordination with structured intake, automated task routing, and a complete audit trail — turning four high-frequency HR processes into governed, repeatable workflows.</p>
         <div class="card-tech">
           <span class="tech-tag">Python</span>
           <span class="tech-tag">Streamlit</span>
@@ -1028,7 +1125,7 @@
         <span class="card-arrow">↗</span>
         <div class="card-badge badge-live">Live</div>
         <h3 class="card-title">Lens — Sentiment & Text Analytics Tool</h3>
-        <p class="card-desc">LLM-assisted text analysis pipeline for business text at scale. Uploads, validates, and analyses batches of customer feedback, survey responses, or support tickets — then stores results for historical comparison across cycles.</p>
+        <p class="card-desc">Organisations collect customer feedback at scale but lack a consistent method for turning unstructured text into comparable, longitudinal insight. Lens provides a structured intake, validation, and LLM-assisted sentiment analysis pipeline — producing categorised results that persist across cycles so trend analysis is possible rather than one-off interpretation.</p>
         <div class="card-tech">
           <span class="tech-tag">Python</span>
           <span class="tech-tag">OpenAI API</span>
