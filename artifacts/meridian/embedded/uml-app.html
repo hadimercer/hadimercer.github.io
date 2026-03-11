@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian UML — Embedded</title>
+<link rel="stylesheet" href="../../shared/diagram-shell.css">
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body style="padding: 20px; background: var(--bg);">
+
+  <div class="diagram-card">
+    <div class="diagram-header">
+      <h3>Full Data Model</h3>
+      <p>12 tables across 4 entity groups: Identity &amp; Access, Workstream Core, RAG Scoring, and Collaboration Layer.</p>
+    </div>
+    <div class="diagram-panels">
+      <div class="diagram-panel">
+        <div style="display:flex;gap:8px;padding:0 0 12px;align-items:center;">
+          <button onclick="zoomDiag(-0.15)" class="source-chip">− Zoom Out</button>
+          <button onclick="resetZoom()" class="source-chip">Reset</button>
+          <button onclick="zoomDiag(0.15)" class="source-chip">+ Zoom In</button>
+          <span id="zoom-label" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-left:4px;">100%</span>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:900px;">
+classDiagram
+  direction TB
+
+  class users {
+    +UUID id PK
+    +TEXT email UNIQUE
+    +TEXT display_name
+    +TIMESTAMPTZ created_at
+  }
+
+  class workstreams {
+    +UUID id PK
+    +TEXT name
+    +TEXT description
+    +DATE start_date
+    +DATE end_date
+    +NUMERIC planned_budget nullable
+    +UUID owner_id FK
+    +TEXT phase
+    +BOOL is_archived
+    +TIMESTAMPTZ archived_at nullable
+    +TIMESTAMPTZ created_at
+    +TIMESTAMPTZ updated_at
+  }
+
+  class wizard_config {
+    +UUID id PK
+    +UUID workstream_id FK UNIQUE
+    +TEXT q1_work_type
+    +TEXT q2_deadline_nature
+    +TEXT q3_deliverable_type
+    +TEXT q4_budget_exposure
+    +TEXT q5_dependency_level
+    +TEXT q6_risk_level
+    +TEXT q7_phase
+    +TEXT q8_update_frequency
+    +TEXT q9_audience
+    +UUID configured_by FK
+    +TIMESTAMPTZ configured_at
+  }
+
+  class workstream_members {
+    +UUID id PK
+    +UUID workstream_id FK
+    +UUID user_id FK
+    +TEXT role
+    +BOOL is_former_member
+    +TIMESTAMPTZ joined_at
+  }
+
+  class invite_links {
+    +UUID id PK
+    +UUID workstream_id FK
+    +TEXT token UNIQUE
+    +UUID created_by FK
+    +TIMESTAMPTZ created_at
+    +BOOL is_active
+  }
+
+  class milestones {
+    +UUID id PK
+    +UUID workstream_id FK
+    +TEXT name
+    +DATE due_date
+    +TEXT status
+    +UUID created_by FK
+    +TIMESTAMPTZ created_at
+    +TIMESTAMPTZ updated_at
+  }
+
+  class spend_entries {
+    +UUID id PK
+    +UUID workstream_id FK
+    +NUMERIC amount
+    +DATE entry_date
+    +TEXT category
+    +TEXT description nullable
+    +UUID created_by FK
+    +TIMESTAMPTZ created_at
+  }
+
+  class blockers {
+    +UUID id PK
+    +UUID workstream_id FK
+    +TEXT description
+    +DATE date_raised
+    +TEXT status
+    +TEXT resolution_note nullable
+    +TIMESTAMPTZ resolved_at nullable
+    +UUID created_by FK
+    +TIMESTAMPTZ created_at
+  }
+
+  class updates {
+    +UUID id PK
+    +UUID workstream_id FK
+    +TEXT post_type
+    +TEXT title
+    +TEXT body
+    +UUID author_id FK
+    +TIMESTAMPTZ created_at
+    +TIMESTAMPTZ edited_at nullable
+    +BOOL is_locked
+  }
+
+  class comments {
+    +UUID id PK
+    +TEXT entity_type
+    +UUID entity_id
+    +TEXT body
+    +UUID author_id FK
+    +BOOL is_former_member
+    +TIMESTAMPTZ created_at
+  }
+
+  class notes {
+    +UUID id PK
+    +TEXT entity_type
+    +UUID entity_id
+    +TEXT body
+    +UUID author_id FK
+    +TIMESTAMPTZ created_at
+    +TIMESTAMPTZ updated_at
+  }
+
+  class rag_scores {
+    +UUID id PK
+    +UUID workstream_id FK UNIQUE
+    +NUMERIC schedule_score
+    +NUMERIC budget_score
+    +NUMERIC blocker_score
+    +NUMERIC composite_score
+    +TEXT rag_status
+    +BOOL is_stale
+    +TIMESTAMPTZ calculated_at
+  }
+
+  users "1" --> "0..*" workstreams : owns
+  users "1" --> "0..*" workstream_members : has membership
+  workstreams "1" --> "0..*" workstream_members : has members
+  workstreams "1" --> "1" wizard_config : configured by
+  users "1" --> "0..*" wizard_config : configures
+  workstreams "1" --> "0..*" invite_links : generates
+  users "1" --> "0..*" invite_links : creates
+  workstreams "1" --> "0..*" milestones : tracks
+  workstreams "1" --> "0..*" spend_entries : tracks
+  workstreams "1" --> "0..*" blockers : tracks
+  workstreams "1" --> "0..*" updates : receives
+  workstreams "1" --> "0..*" comments : has thread
+  milestones "1" --> "0..*" comments : has thread
+  milestones "1" --> "0..1" notes : has note
+  blockers "1" --> "0..*" comments : has thread
+  blockers "1" --> "0..1" notes : has note
+  spend_entries "1" --> "0..*" comments : has thread
+  spend_entries "1" --> "0..1" notes : has note
+  workstreams "1" --> "1" rag_scores : scored by
+  users "1" --> "0..*" milestones : creates
+  users "1" --> "0..*" spend_entries : logs
+  users "1" --> "0..*" blockers : raises
+  users "1" --> "0..*" updates : posts
+  users "1" --> "0..*" comments : authors
+  users "1" --> "0..*" notes : authors
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <div class="legend-grid">
+      <div class="legend-card"><h3>Identity &amp; Access</h3><p>users, workstream_members, invite_links</p></div>
+      <div class="legend-card"><h3>Workstream Core</h3><p>workstreams, wizard_config</p></div>
+      <div class="legend-card"><h3>RAG Scoring</h3><p>rag_scores, milestones, spend_entries, blockers</p></div>
+      <div class="legend-card"><h3>Collaboration Layer</h3><p>comments, notes, updates</p></div>
+    </div>
+  </div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#111518',
+      primaryTextColor: '#e8eaeb',
+      primaryBorderColor: '#00c896',
+      lineColor: '#8a9299',
+      secondaryColor: '#181d21',
+      tertiaryColor: '#0a0d0f',
+      edgeLabelBackground: '#0a0d0f',
+      clusterBkg: '#111518'
+    }
+  });
+
+  let _zoom = 1;
+  function zoomDiag(delta) {
+    _zoom = Math.min(2.5, Math.max(0.3, _zoom + delta));
+    const el = document.querySelector('.mermaid');
+    if (el) { el.style.transform = `scale(${_zoom})`; el.style.transformOrigin = 'top left'; }
+    document.getElementById('zoom-label').textContent = Math.round(_zoom * 100) + '%';
+  }
+  function resetZoom() {
+    _zoom = 1;
+    const el = document.querySelector('.mermaid');
+    if (el) { el.style.transform = ''; el.style.transformOrigin = ''; }
+    document.getElementById('zoom-label').textContent = '100%';
+  }
+</script>
+</body>
+</html>

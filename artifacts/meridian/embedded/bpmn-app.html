@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian BPMN — Embedded</title>
+<link rel="stylesheet" href="../../shared/diagram-shell.css">
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<style>
+  .tab-btn { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 16px; border: 1px solid var(--border2); border-radius: 6px; background: transparent; color: var(--text2); cursor: pointer; transition: all 0.2s ease; }
+  .tab-btn.active { background: rgba(0,200,150,0.12); border-color: var(--accent); color: var(--accent); }
+  .bpmn-panel { display: none; }
+  .bpmn-panel.visible { display: block; }
+</style>
+</head>
+<body style="padding: 20px; background: var(--bg);">
+
+  <div class="diagram-card">
+    <div class="diagram-header">
+      <h3>Meridian — Process Flows</h3>
+      <p>Workstream lifecycle and invite &amp; role promotion sub-process.</p>
+    </div>
+    <div class="diagram-toolbar">
+      <div style="display:flex;gap:8px;">
+        <button class="tab-btn active" onclick="showPanel('p1', this)">Workstream Lifecycle</button>
+        <button class="tab-btn" onclick="showPanel('p2', this)">Invite &amp; Role Promotion</button>
+      </div>
+    </div>
+    <div class="diagram-panels">
+
+      <div id="panel-p1" class="diagram-panel bpmn-panel visible">
+        <div class="diagram-caption">
+          <h4>Workstream Lifecycle</h4>
+          <p>Main process across Owner, Contributor/Viewer, and System lanes.</p>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:700px;">
+flowchart TD
+  subgraph OWNER["Owner"]
+    S([Start]) --> Login["Sign Up / Log In"]
+    Login --> CreateWS["Create Workstream"]
+    CreateWS --> Wizard["Complete 9-Question Wizard"]
+    Wizard --> PSplit{Parallel Split}
+    PSplit --> PostUpdates["Post to Updates Tab"]
+    PostUpdates --> WorkComplete{Work Complete?}
+    WorkComplete -->|Yes| Archive["Archive Workstream"]
+    Archive --> E([End])
+    WorkComplete -->|"No — continue managing"| PostUpdates
+  end
+  subgraph CONTRIBUTOR["Contributor / Viewer"]
+    InviteJoin(["Joins via Invite Link"]) --> AddComments["Add Comments & Notes"]
+    AddComments --> UpdateData["Update Milestones, Spend & Blockers"]
+  end
+  subgraph SYSTEM["System"]
+    StoreConfig["Store Wizard Config"]
+    InitRAG["Initialize RAG Score"]
+    StoreConfig --> InitRAG
+    RecalcRAG["Recalculate RAG Score"]
+    InitRAG --> RecalcRAG
+    CheckStale["Check Staleness"]
+    RecalcRAG --> CheckStale
+  end
+  Wizard -.->|config| StoreConfig
+  PSplit -.-> InviteJoin
+  PSplit -.-> InitRAG
+  UpdateData -.->|triggers| RecalcRAG
+  CheckStale -.-> WorkComplete
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-p2" class="diagram-panel bpmn-panel">
+        <div class="diagram-caption">
+          <h4>Invite &amp; Role Promotion</h4>
+          <p>Sub-process: new user joins via invite link, auto-assigned Viewer, Owner may promote to Contributor.</p>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:700px;">
+flowchart TD
+  subgraph OWNER2["Owner"]
+    S2([Start]) --> GenLink["Generate Invite Link"]
+    GenLink --> ShareLink["Share Link with User"]
+    ReviewTeam["Review Team Tab"] --> Promote{Promote to Contributor?}
+    Promote -->|Yes| ChangeRole["Change Role: Viewer → Contributor"]
+    ChangeRole --> E_Contrib([End — Contributor])
+    Promote -->|No| E_Viewer([End — Viewer])
+  end
+  subgraph NEWUSER["New User"]
+    ClickLink["Click Invite Link"] --> HasAccount{Has Account?}
+    HasAccount -->|No| Register["Register new account"]
+    HasAccount -->|Yes| Login2["Log In"]
+    Register --> XorJoin[" "]
+    Login2 --> XorJoin
+  end
+  subgraph SYSTEM2["System"]
+    AutoAssign["Auto-assign Viewer Role"]
+    UpdateRole["Update Role in Database"]
+  end
+  ShareLink -.->|invite message| ClickLink
+  XorJoin -.-> AutoAssign
+  AutoAssign -.->|notifies owner| ReviewTeam
+  AutoAssign --> UpdateRole
+  ChangeRole -.-> UpdateRole
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#111518',
+      primaryTextColor: '#e8eaeb',
+      primaryBorderColor: '#00c896',
+      lineColor: '#8a9299',
+      secondaryColor: '#181d21',
+      tertiaryColor: '#0a0d0f',
+      edgeLabelBackground: '#0a0d0f',
+      clusterBkg: '#111518'
+    }
+  });
+
+  function showPanel(id, btn) {
+    document.querySelectorAll('.bpmn-panel').forEach(p => p.classList.remove('visible'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('visible');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

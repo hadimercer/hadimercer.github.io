@@ -3,70 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lens — Data Flow Diagrams | Hadi Mercer BA Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/diagram-shell.css">
+<title>Lens DFD — Embedded</title>
+<link rel="stylesheet" href="../../shared/diagram-shell.css">
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-38MGEGB275');
-</script>
 <style>
-  .tab-btn { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 16px; border: 1px solid var(--border2); border-radius: 6px; background: transparent; color: var(--text2); cursor: pointer; transition: all 0.2s ease; }
-  .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .tab-btn { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 14px; border: 1px solid var(--border2); border-radius: 6px; background: transparent; color: var(--text2); cursor: pointer; transition: all 0.2s ease; }
   .tab-btn.active { background: rgba(0,200,150,0.12); border-color: var(--accent); color: var(--accent); }
   .dfd-panel { display: none; }
   .dfd-panel.visible { display: block; }
 </style>
 </head>
-<body>
-
-<nav class="site-nav">
-  <a href="../../index.html" class="nav-logo">HM / BA Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-  </ul>
-</nav>
-
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
-    <span class="breadcrumb-sep">/</span>
-    <a href="../lens.html">Lens</a>
-    <span class="breadcrumb-sep">/</span>
-    <span class="breadcrumb-current">Data Flow Diagrams</span>
-  </div>
-</div>
-
-<div class="page-header">
-  <p class="artifact-type-label">BA Artifact · Data Flow Diagram</p>
-  <h1 class="page-title">Lens — Data Flow Diagrams</h1>
-  <p class="page-subtitle">Four-level DFD decomposing the Lens NLP pipeline. L0 context overview through to L3 results storage. Traces to FRD-LENS-001, FR-03, FR-08.</p>
-</div>
-
-<div class="doc-meta-block">
-  <div class="doc-meta-inner">
-    <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">DFD-LENS-001</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Levels</div><div class="doc-meta-val">L0–L3</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Notation</div><div class="doc-meta-val">Yourdon-DeMarco</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">March 2026</div></div>
-  </div>
-</div>
-
-<div class="doc-body">
+<body style="padding: 20px; background: var(--bg);">
 
   <div class="diagram-card">
     <div class="diagram-header">
-      <h3>Data Flow Diagrams — L0 to L3</h3>
-      <p>Four-level decomposition following Yourdon-DeMarco notation. L0 shows the system boundary and external entities. L1–L3 decompose each major process into sub-processes with explicit data stores.</p>
+      <h3>Lens — Data Flow Diagrams (L0–L3)</h3>
+      <p>Four-level DFD decomposition following Yourdon-DeMarco notation.</p>
     </div>
     <div class="diagram-toolbar">
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -81,7 +33,6 @@
       <div id="panel-l0" class="diagram-panel dfd-panel visible">
         <div class="diagram-caption">
           <h4>L0 — Context Diagram</h4>
-          <p>System boundary overview. Four external entities: Analyst (primary), Admin (reviewer), OpenAI API (NLP provider), and PostgreSQL (persistence). All data flows into and out of the central Lens Engine process.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
           <div class="mermaid" style="min-width:700px;">
@@ -105,7 +56,6 @@ flowchart LR
       <div id="panel-l1" class="diagram-panel dfd-panel">
         <div class="diagram-caption">
           <h4>L1 — Batch Ingestion &amp; Validation</h4>
-          <p>Decomposes P0 into 5 sub-processes covering upload acceptance, parsing, preview, labelling, and staging. Error path branches to P1.E which reports validation failures without writing any records.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
           <div class="mermaid" style="min-width:800px;">
@@ -129,7 +79,6 @@ flowchart LR
       <div id="panel-l2" class="diagram-panel dfd-panel">
         <div class="diagram-caption">
           <h4>L2 — NLP Pipeline Execution</h4>
-          <p>Core pipeline decomposition. 7 sub-processes: prompt building, API call, response parsing, theme extraction, executive summary, anomaly detection, and result assembly. All OpenAI interactions are explicit bidirectional flows.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
           <div class="mermaid" style="min-width:900px;">
@@ -160,7 +109,6 @@ flowchart LR
       <div id="panel-l3" class="diagram-panel dfd-panel">
         <div class="diagram-caption">
           <h4>L3 — Results Visualisation &amp; Storage</h4>
-          <p>Four sub-processes: dashboard rendering, CSV export, history persistence, and history browsing. Both Analyst and Admin can browse history. Export is Analyst-only.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
           <div class="mermaid" style="min-width:800px;">
@@ -191,18 +139,6 @@ flowchart LR
 
     </div>
   </div>
-
-</div>
-
-<footer>
-  <div class="site-footer">
-    <p class="footer-left">DFD-LENS-001 · Lens · Hadi Mercer BA Portfolio 2026</p>
-    <div class="footer-right">
-      <a href="../lens.html">← Back to Project</a>
-      <a href="../../index.html#projects">All Projects</a>
-    </div>
-  </div>
-</footer>
 
 <script>
   mermaid.initialize({

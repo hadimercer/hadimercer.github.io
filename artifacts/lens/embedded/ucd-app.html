@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lens UCD — Embedded</title>
+<link rel="stylesheet" href="../../shared/diagram-shell.css">
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body style="padding: 20px; background: var(--bg);">
+
+  <div class="diagram-card">
+    <div class="diagram-header">
+      <h3>Lens — Use Case Diagram</h3>
+      <p>14 use cases across 4 groups. Three actors: Analyst, Admin, and OpenAI API.</p>
+    </div>
+    <div class="diagram-panels">
+      <div class="diagram-panel">
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:900px;">
+flowchart LR
+  Analyst(["Analyst\nCX / HR / Ops"])
+  Admin(["Admin\nOptional Reviewer"])
+  OpenAI(["OpenAI API\nExternal NLP"])
+
+  subgraph SYSTEM["Lens System Boundary"]
+    subgraph INPUT["Input"]
+      UC01["UC-01\nUpload Batch Text File"]
+      UC02["UC-02\nLabel Batch & Domain Tag"]
+      UC02b["UC-02b\nEnter Context Profile"]
+      UC02c["UC-02c\nLink to Analysis Series"]
+      UC03["UC-03\nValidate & Preview Records"]
+    end
+
+    subgraph NLP["NLP Pipeline"]
+      UC04["UC-04\nRun Sentiment Analysis"]
+      UC05["UC-05\nExtract Recurring Themes"]
+      UC06["UC-06\nGenerate Executive Summary"]
+      UC07["UC-07\nFlag Sentiment Anomalies"]
+    end
+
+    subgraph VIS["Visualisation"]
+      UC08["UC-08\nView Sentiment Breakdown"]
+      UC09["UC-09\nView Theme Heatmap"]
+      UC10["UC-10\nView Sentiment Over Time"]
+      UC11["UC-11\nView Anomaly Flags"]
+    end
+
+    subgraph PERSIST["Persistence"]
+      UC12["UC-12\nSave Analysis to History"]
+      UC13["UC-13\nBrowse Past Analyses"]
+      UC14["UC-14\nExport Results CSV"]
+    end
+  end
+
+  Analyst --- UC01
+  Analyst --- UC02
+  Analyst --- UC02b
+  Analyst --- UC02c
+  Analyst --- UC08
+  Analyst --- UC13
+  Analyst --- UC14
+  Admin --- UC11
+  Admin --- UC13
+  UC01 -->|"include"| UC02
+  UC01 -->|"include"| UC03
+  UC03 -->|"include"| UC04
+  UC04 -->|"include"| UC05
+  UC04 -->|"include"| UC06
+  UC04 -->|"include"| UC07
+  UC04 --- OpenAI
+  UC05 --- OpenAI
+  UC06 --- OpenAI
+  UC04 -->|"include"| UC08
+  UC05 -->|"include"| UC09
+  UC04 -->|"extend"| UC10
+  UC07 -->|"include"| UC11
+  UC04 -->|"include"| UC12
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <table class="support-table">
+      <thead><tr><th>UC ID</th><th>Name</th><th>Group</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>UC-01</td><td>Upload Batch Text File</td><td>Input</td><td>CSV or pasted text. Validates format, row count, encoding before accepting.</td></tr>
+        <tr><td>UC-02</td><td>Label Batch &amp; Domain Tag</td><td>Input</td><td>Human-readable source label and domain tag (CX/HR/OPS).</td></tr>
+        <tr><td>UC-02b</td><td>Enter Context Profile</td><td>Input</td><td>Optional org context injected into NLP prompt.</td></tr>
+        <tr><td>UC-02c</td><td>Link to Analysis Series</td><td>Input</td><td>Assigns run to a named longitudinal series for trend comparison.</td></tr>
+        <tr><td>UC-03</td><td>Validate &amp; Preview Records</td><td>Input</td><td>Parses file, shows record count and 5-row sample.</td></tr>
+        <tr><td>UC-04</td><td>Run Sentiment Analysis</td><td>NLP Pipeline</td><td>Core step: each record sent to OpenAI for label and confidence score.</td></tr>
+        <tr><td>UC-05</td><td>Extract Recurring Themes</td><td>NLP Pipeline</td><td>Batch-level prompt: top 5-8 themes with frequency and dominant sentiment.</td></tr>
+        <tr><td>UC-06</td><td>Generate Executive Summary</td><td>NLP Pipeline</td><td>2-3 sentence narrative summary of analysis.</td></tr>
+        <tr><td>UC-07</td><td>Flag Sentiment Anomalies</td><td>NLP Pipeline</td><td>Records deviating ±2σ from batch mean tagged as anomalies.</td></tr>
+        <tr><td>UC-08</td><td>View Sentiment Breakdown</td><td>Visualisation</td><td>Donut chart + histogram: positive/neutral/negative %.</td></tr>
+        <tr><td>UC-09</td><td>View Theme Heatmap</td><td>Visualisation</td><td>Grid: themes vs sentiment polarity.</td></tr>
+        <tr><td>UC-10</td><td>View Sentiment Over Time</td><td>Visualisation</td><td>Line chart by day/week when timestamp column present.</td></tr>
+        <tr><td>UC-11</td><td>View Anomaly Flags</td><td>Visualisation</td><td>Filtered list of outlier records with deviation value.</td></tr>
+        <tr><td>UC-12</td><td>Save Analysis to History</td><td>Persistence</td><td>Full result written to PostgreSQL with unique analysis_id.</td></tr>
+        <tr><td>UC-13</td><td>Browse Past Analyses</td><td>Persistence</td><td>Paginated list of stored analyses grouped by series.</td></tr>
+        <tr><td>UC-14</td><td>Export Results CSV</td><td>Export</td><td>Per-record scores and theme assignments as downloadable CSV.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#111518',
+      primaryTextColor: '#e8eaeb',
+      primaryBorderColor: '#00c896',
+      lineColor: '#8a9299',
+      secondaryColor: '#181d21',
+      tertiaryColor: '#0a0d0f',
+      edgeLabelBackground: '#0a0d0f',
+      clusterBkg: '#111518'
+    }
+  });
+</script>
+</body>
+</html>

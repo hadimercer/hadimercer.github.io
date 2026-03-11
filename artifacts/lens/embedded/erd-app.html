@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lens ERD — Embedded</title>
+<link rel="stylesheet" href="../../shared/diagram-shell.css">
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body style="padding: 20px; background: var(--bg);">
+
+  <div class="diagram-card">
+    <div class="diagram-header">
+      <h3>Lens — Entity Relationship Diagram</h3>
+      <p>5-table PostgreSQL schema. analysis_results is the central hub. series_index, context_profiles, batch_records, and pipeline_run_log all relate to it.</p>
+    </div>
+    <div class="diagram-panels">
+      <div class="diagram-panel">
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:900px;">
+erDiagram
+  series_index {
+    uuid series_id PK "gen_random_uuid()"
+    text series_name "unique"
+    text domain_tag "nullable"
+    integer run_count
+    timestamptz last_run_at "nullable"
+    text created_by "nullable — analyst label"
+    timestamptz created_at
+  }
+
+  analysis_results {
+    uuid analysis_id PK "gen_random_uuid()"
+    text series_name FK "nullable — series_index"
+    integer run_sequence "nullable — within series"
+    text batch_label
+    text domain_tag "nullable"
+    integer record_count
+    jsonb sentiment_split "pos% neu% neg%"
+    jsonb top_themes "array of theme objects"
+    text executive_summary "nullable"
+    integer anomaly_count "nullable"
+    jsonb context_profile "nullable — snapshot at run"
+    uuid prior_cycle_ref FK "nullable — self-reference"
+    jsonb per_record_results "full scored array"
+    timestamptz created_at
+  }
+
+  context_profiles {
+    uuid profile_id PK "gen_random_uuid()"
+    uuid analysis_id FK "analysis_results"
+    text org_name "nullable"
+    text industry "nullable"
+    text department "nullable"
+    text reporting_period "nullable"
+    text situational_notes "nullable — max 500 chars"
+    timestamptz created_at
+  }
+
+  batch_records {
+    uuid record_id PK "gen_random_uuid()"
+    uuid analysis_id FK "analysis_results"
+    integer sequence_number
+    text text_body
+    text sentiment_label "positive|neutral|negative"
+    numeric confidence_score "numeric(4,3)"
+    numeric deviation_from_mean "nullable"
+    boolean is_anomaly "default false"
+    jsonb theme_assignments "nullable"
+    timestamptz record_timestamp "nullable"
+  }
+
+  pipeline_run_log {
+    uuid log_id PK "gen_random_uuid()"
+    uuid analysis_id FK "analysis_results"
+    timestamptz triggered_at
+    text status "SUCCESS|PARTIAL|FAILED"
+    integer records_submitted
+    integer records_scored
+    integer records_failed
+    integer api_call_count
+    numeric duration_seconds "nullable"
+    text error_detail "nullable"
+  }
+
+  series_index ||--o{ analysis_results : "1:N series_name"
+  analysis_results ||--o| context_profiles : "1:1 analysis_id"
+  analysis_results ||--o{ batch_records : "1:N analysis_id"
+  analysis_results ||--o| pipeline_run_log : "1:1 analysis_id"
+  analysis_results }o--o| analysis_results : "self-ref prior_cycle"
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <div class="legend-grid">
+      <div class="legend-card"><h3>Core</h3><p>analysis_results — central hub</p></div>
+      <div class="legend-card"><h3>Series</h3><p>series_index — longitudinal grouping</p></div>
+      <div class="legend-card"><h3>Records</h3><p>batch_records — per-record NLP results</p></div>
+      <div class="legend-card"><h3>Context</h3><p>context_profiles — optional org context</p></div>
+      <div class="legend-card"><h3>Audit</h3><p>pipeline_run_log — execution metadata</p></div>
+    </div>
+  </div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#111518',
+      primaryTextColor: '#e8eaeb',
+      primaryBorderColor: '#00c896',
+      lineColor: '#8a9299',
+      secondaryColor: '#181d21',
+      tertiaryColor: '#0a0d0f',
+      edgeLabelBackground: '#0a0d0f',
+      clusterBkg: '#111518'
+    }
+  });
+</script>
+</body>
+</html>

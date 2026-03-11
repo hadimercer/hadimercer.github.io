@@ -3,63 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadence — Data Model | Hadi Mercer BA Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/diagram-shell.css">
+<title>Cadence UML — Embedded</title>
+<link rel="stylesheet" href="../../shared/diagram-shell.css">
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-38MGEGB275');
-</script>
 </head>
-<body>
-
-<nav class="site-nav">
-  <a href="../../index.html" class="nav-logo">HM / BA Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-  </ul>
-</nav>
-
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
-    <span class="breadcrumb-sep">/</span>
-    <a href="../cadence.html">Cadence</a>
-    <span class="breadcrumb-sep">/</span>
-    <span class="breadcrumb-current">UML Class Diagram</span>
-  </div>
-</div>
-
-<div class="page-header">
-  <p class="artifact-type-label">BA Artifact · UML Class Diagram</p>
-  <h1 class="page-title">Cadence — Data Model</h1>
-  <p class="page-subtitle">13-table relational schema across 4 workflow groups: Headcount Reporting (WF1), Compensation Review (WF2), Performance Management (WF4), and Attrition Risk Scoring (WF3). PostgreSQL via Supabase.</p>
-</div>
-
-<div class="doc-meta-block">
-  <div class="doc-meta-inner">
-    <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">UML-CADENCE-001</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Tables</div><div class="doc-meta-val">13</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Workflows</div><div class="doc-meta-val">4</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">March 2026</div></div>
-  </div>
-</div>
-
-<div class="doc-body">
+<body style="padding: 20px; background: var(--bg);">
 
   <div class="diagram-card">
     <div class="diagram-header">
-      <h3>Full Data Model — 13 Tables</h3>
-      <p>Cross-workflow schema where headcount_snapshots acts as the central employee record anchor. WF1 data feeds WF2 and WF3. WF4 data feeds both WF2 and WF3. Risk scoring aggregates signals from all three upstream workflows.</p>
+      <h3>Cadence — Full Data Model (13 Tables)</h3>
+      <p>Cross-workflow schema. headcount_snapshots is the central employee record anchor feeding all downstream workflows.</p>
     </div>
     <div class="diagram-panels">
       <div class="diagram-panel">
@@ -277,42 +230,14 @@ classDiagram
     </div>
   </div>
 
-  <div style="margin-top:32px;margin-bottom:8px;">
+  <div style="margin-top:24px;">
     <div class="legend-grid">
-      <div class="legend-card">
-        <h3>WF1 — Headcount Reporting</h3>
-        <p><strong>headcount_snapshots, pipeline_run_log</strong> — Central employee record anchor. CSV upload pipeline with idempotent upsert. Feeds WF2 and WF3 downstream.</p>
-      </div>
-      <div class="legend-card">
-        <h3>WF2 — Compensation Review</h3>
-        <p><strong>salary_bands, merit_cycles, merit_eligibility, merit_recommendations</strong> — Full merit cycle lifecycle. Eligibility engine auto-determines from WF1 data. Band compliance enforced at recommendation.</p>
-      </div>
-      <div class="legend-card">
-        <h3>WF4 — Performance Management</h3>
-        <p><strong>performance_reviews, one_on_ones, monthly_checkins</strong> — Weekly 1:1 capture, monthly check-ins with employee acknowledgement, and quarterly formal reviews with HR approval gate.</p>
-      </div>
-      <div class="legend-card">
-        <h3>WF3 — Attrition Risk Scoring</h3>
-        <p><strong>attrition_risk_scores, risk_factor_config, retention_actions</strong> — Composite 0-100 risk score aggregating signals from WF1, WF2, and WF4. Configurable weights via risk_factor_config.</p>
-      </div>
+      <div class="legend-card"><h3>WF1 — Headcount Reporting</h3><p>headcount_snapshots, pipeline_run_log</p></div>
+      <div class="legend-card"><h3>WF2 — Compensation Review</h3><p>salary_bands, merit_cycles, merit_eligibility, merit_recommendations</p></div>
+      <div class="legend-card"><h3>WF4 — Performance Management</h3><p>performance_reviews, one_on_ones, monthly_checkins</p></div>
+      <div class="legend-card"><h3>WF3 — Attrition Risk Scoring</h3><p>attrition_risk_scores, risk_factor_config, retention_actions</p></div>
     </div>
   </div>
-
-  <div class="callout-strip" style="margin-top:28px;">
-    <strong>Cross-workflow data feeds:</strong> WF1 supplies headcount and salary data to WF2 (eligibility) and WF3 (compa-ratio signal). WF4 supplies rating trends and check-in frequency to both WF2 (performance modifier) and WF3 (sentiment and engagement signals). WF2 supplies merit history to WF3 (time-since-merit signal). All feeds are read-only lookups — no circular dependencies.
-  </div>
-
-</div>
-
-<footer>
-  <div class="site-footer">
-    <p class="footer-left">UML-CADENCE-001 · Cadence · Hadi Mercer BA Portfolio 2026</p>
-    <div class="footer-right">
-      <a href="../cadence.html">← Back to Project</a>
-      <a href="../../index.html#projects">All Projects</a>
-    </div>
-  </div>
-</footer>
 
 <script>
   mermaid.initialize({

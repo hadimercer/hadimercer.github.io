@@ -5,69 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IncidentOps — System Architecture | Hadi Mercer BA Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0d0f; --surface: #111518; --surface2: #181d21;
-    --border: #1f2629; --border2: #2a3338;
-    --accent: #00c896; --accent2: #0087ff;
-    --amber: #f5a623; --red: #e8443a;
-    --text: #e8eaeb; --text2: #8a9299; --text3: #4a5560;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Epilogue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; background: rgba(10,13,15,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
-  .nav-links { display: flex; gap: 32px; list-style: none; }
-  .nav-links a { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--text); }
-
-  .breadcrumb-bar { padding: 80px 40px 0; max-width: 1200px; margin: 0 auto; }
-  .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding-top: 24px; }
-  .breadcrumb a { color: var(--text3); text-decoration: none; transition: color 0.2s; }
-  .breadcrumb a:hover { color: var(--accent); }
-  .breadcrumb-sep { color: var(--border2); }
-  .breadcrumb-current { color: var(--text2); }
-
-  .page-header { max-width: 1200px; margin: 0 auto; padding: 32px 40px 0; }
-  .artifact-type-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
-  .page-title { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--text); margin-bottom: 8px; }
-  .page-subtitle { font-size: 15px; color: var(--text2); font-weight: 300; max-width: 640px; line-height: 1.6; }
-
-  .doc-meta-block { max-width: 1200px; margin: 0 auto; padding: 28px 40px 0; }
-  .doc-meta-inner { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--border2); }
-  .doc-meta-cell { flex: 1 1 140px; padding: 14px 20px; border-right: 1px solid var(--border2); }
-  .doc-meta-cell:last-child { border-right: none; }
-  .doc-meta-key { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-  .doc-meta-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
-
-  .doc-body { max-width: 1200px; margin: 0 auto; padding: 48px 40px 80px; }
-  .doc-section { margin-bottom: 48px; }
-  .section-heading { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text); letter-spacing: -0.01em; margin-bottom: 6px; padding-bottom: 16px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 16px; }
-  .section-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.1em; }
-  .doc-prose { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 16px; max-width: 860px; }
-
-  .arch-block { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 28px; margin-bottom: 20px; }
-  .arch-block h3 { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
-  .arch-block p { font-size: 14px; color: var(--text2); line-height: 1.7; }
-  .arch-block code { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); background: var(--surface2); padding: 1px 6px; border-radius: 3px; }
-
-  .flow-diagram { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 32px; margin: 24px 0; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text2); line-height: 2; overflow-x: auto; }
-  .flow-accent { color: var(--accent); font-weight: 700; }
-  .flow-arrow { color: var(--text3); }
-
-  .layer-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px; }
-  .layer-table th { background: var(--surface2); border: 1px solid var(--border2); padding: 10px 16px; text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; }
-  .layer-table td { border: 1px solid var(--border); padding: 12px 16px; color: var(--text2); vertical-align: top; line-height: 1.55; }
-  .layer-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); white-space: nowrap; }
-  .layer-table tr:hover td { background: var(--surface); }
-
-  footer { border-top: 1px solid var(--border); padding: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 20px; }
-  .footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; }
-  .footer-right a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; margin-left: 24px; }
-  .footer-right a:hover { color: var(--accent); }
-</style>
+<link rel="stylesheet" href="../shared/diagram-shell.css">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -76,16 +14,38 @@
   gtag('js', new Date());
   gtag('config', 'G-38MGEGB275');
 </script>
+<style>
+  :root {
+    --accent2: #0087ff;
+    --amber: #f5a623;
+    --red: #e8443a;
+  }
+  .doc-section { margin-bottom: 48px; }
+  .section-heading { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text); letter-spacing: -0.01em; margin-bottom: 6px; padding-bottom: 16px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 16px; }
+  .section-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.1em; }
+  .doc-prose { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 16px; max-width: 860px; }
+  .arch-block { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 28px; margin-bottom: 20px; }
+  .arch-block h3 { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .arch-block p { font-size: 14px; color: var(--text2); line-height: 1.7; }
+  .arch-block code { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); background: var(--surface2); padding: 1px 6px; border-radius: 3px; }
+  .flow-diagram { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 32px; margin: 24px 0; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text2); line-height: 2; overflow-x: auto; }
+  .flow-accent { color: var(--accent); font-weight: 700; }
+  .flow-arrow { color: var(--text3); }
+  .layer-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px; }
+  .layer-table th { background: var(--surface2); border: 1px solid var(--border2); padding: 10px 16px; text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; }
+  .layer-table td { border: 1px solid var(--border); padding: 12px 16px; color: var(--text2); vertical-align: top; line-height: 1.55; }
+  .layer-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); white-space: nowrap; }
+  .layer-table tr:hover td { background: var(--surface); }
+</style>
 </head>
 <body>
 
-<nav>
+<nav class="site-nav">
   <a href="../../index.html" class="nav-logo">HM / BA Portfolio</a>
   <ul class="nav-links">
     <li><a href="../../index.html#about">About</a></li>
     <li><a href="../../index.html#projects">Projects</a></li>
     <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
   </ul>
 </nav>
 
@@ -224,10 +184,12 @@
 </div>
 
 <footer>
-  <p class="footer-left">ARCH-INC-001 · IncidentOps PMI Hub · Hadi Mercer BA Portfolio 2026</p>
-  <div class="footer-right">
-    <a href="../incidentops.html">← Back to Project</a>
-    <a href="../../index.html#projects">All Projects</a>
+  <div class="site-footer">
+    <p class="footer-left">ARCH-INC-001 · IncidentOps PMI Hub · Hadi Mercer BA Portfolio 2026</p>
+    <div class="footer-right">
+      <a href="../incidentops.html">← Back to Project</a>
+      <a href="../../index.html#projects">All Projects</a>
+    </div>
   </div>
 </footer>
 

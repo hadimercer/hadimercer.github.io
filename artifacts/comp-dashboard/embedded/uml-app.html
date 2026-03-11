@@ -3,68 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>End-to-End Data Flow | Hadi Mercer BA Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/diagram-shell.css">
+<title>Comp Dashboard UML — Embedded</title>
+<link rel="stylesheet" href="../../shared/diagram-shell.css">
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-38MGEGB275');
-</script>
 <style>
-  .diagram-section { margin-bottom: 48px; }
-  .diagram-section h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text); margin-bottom: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .diagram-section > p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 16px; }
-  .diagram-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; overflow-x: auto; }
+  .diagram-section { margin-bottom: 40px; }
+  .diagram-section h2 { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--text); margin-bottom: 8px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .diagram-section > p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 14px; }
+  .diagram-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; }
   .mermaid { min-width: 600px; }
 </style>
 </head>
-<body>
-
-<nav class="site-nav">
-  <a href="../../index.html" class="nav-logo">HM / BA Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-  </ul>
-</nav>
-
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
-    <span class="breadcrumb-sep">/</span>
-    <a href="../comp-dashboard.html">Comp Dashboard</a>
-    <span class="breadcrumb-sep">/</span>
-    <span class="breadcrumb-current">UML Sequence Diagram</span>
-  </div>
-</div>
-
-<div class="page-header">
-  <p class="artifact-type-label">BA Artifact · UML Sequence Diagram</p>
-  <h1 class="page-title">End-to-End Data Flow</h1>
-  <p class="page-subtitle">Three-flow sequence diagram: BLS pipeline ingestion, internal CSV upload, and dashboard query read path. Traces to FR-18, OBJ-02, OBJ-05.</p>
-</div>
-
-<div class="doc-meta-block">
-  <div class="doc-meta-inner">
-    <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">FRD-COMP-001 | FR-18</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Traces To</div><div class="doc-meta-val">OBJ-02, OBJ-05</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">February 2026</div></div>
-  </div>
-</div>
-
-<div class="doc-body">
+<body style="padding: 20px; background: var(--bg);">
 
   <div class="diagram-section">
     <h2>Flow A — BLS Market Data Pipeline</h2>
-    <p>External market data ingestion (quarterly). Total Rewards Admin triggers a pipeline refresh; the BLS Pipeline reads SOC and MSA codes from the database, batches API calls in groups of 50, transforms and upserts wage data, then logs the run result.</p>
+    <p>External market data ingestion (quarterly). BLS Pipeline reads SOC and MSA codes, batches API calls in groups of 50, transforms and upserts wage data.</p>
     <div class="diagram-wrap">
       <div class="mermaid">
 sequenceDiagram
@@ -105,7 +59,7 @@ sequenceDiagram
 
   <div class="diagram-section">
     <h2>Flow B — CSV Internal Data Ingestion</h2>
-    <p>Internal employee and job grade data upload path. Admin uploads a CSV; the system validates schema and data types before writing. On validation failure, no records are written (fail loudly — NFR-01a).</p>
+    <p>Internal employee and job grade data upload path. On validation failure, no records are written (fail loudly — NFR-01a).</p>
     <div class="diagram-wrap">
       <div class="mermaid">
 sequenceDiagram
@@ -138,7 +92,7 @@ sequenceDiagram
 
   <div class="diagram-section">
     <h2>Flow C — Dashboard Query (Read Path)</h2>
-    <p>Read path from End User filter selection through to chart render. All queries cached via <code>@st.cache_data(ttl=300)</code>. Target: complete benchmarking view render in under 2 minutes (OBJ-01).</p>
+    <p>Read path from End User filter selection through to chart render. All queries cached via @st.cache_data(ttl=300).</p>
     <div class="diagram-wrap">
       <div class="mermaid">
 sequenceDiagram
@@ -177,18 +131,6 @@ sequenceDiagram
       </tbody>
     </table>
   </div>
-
-</div>
-
-<footer>
-  <div class="site-footer">
-    <p class="footer-left">FRD-COMP-001 FR-18 · Comp Dashboard · Hadi Mercer BA Portfolio 2026</p>
-    <div class="footer-right">
-      <a href="../comp-dashboard.html">← Back to Project</a>
-      <a href="../../index.html#projects">All Projects</a>
-    </div>
-  </div>
-</footer>
 
 <script>
   mermaid.initialize({

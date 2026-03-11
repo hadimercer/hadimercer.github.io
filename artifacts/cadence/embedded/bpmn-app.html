@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadence BPMN — Embedded</title>
+<link rel="stylesheet" href="../../shared/diagram-shell.css">
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<style>
+  .tab-btn { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 14px; border: 1px solid var(--border2); border-radius: 6px; background: transparent; color: var(--text2); cursor: pointer; transition: all 0.2s ease; }
+  .tab-btn.active { background: rgba(0,200,150,0.12); border-color: var(--accent); color: var(--accent); }
+  .bpmn-panel { display: none; }
+  .bpmn-panel.visible { display: block; }
+  .asis-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; padding: 2px 7px; border-radius: 3px; background: rgba(245,166,35,0.15); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); margin-bottom: 6px; }
+  .tobe-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; padding: 2px 7px; border-radius: 3px; background: rgba(0,200,150,0.1); color: var(--accent); border: 1px solid rgba(0,200,150,0.3); margin-bottom: 6px; }
+</style>
+</head>
+<body style="padding: 20px; background: var(--bg);">
+
+  <div class="diagram-card">
+    <div class="diagram-header">
+      <h3>Cadence — BPMN Process Diagrams</h3>
+      <p>AS-IS and TO-BE flows for 4 HR workflows.</p>
+    </div>
+    <div class="diagram-toolbar">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <button class="tab-btn active" onclick="showWf('wf1-asis', this)">WF1 AS-IS</button>
+        <button class="tab-btn" onclick="showWf('wf1-tobe', this)">WF1 TO-BE</button>
+        <button class="tab-btn" onclick="showWf('wf2-asis', this)">WF2 AS-IS</button>
+        <button class="tab-btn" onclick="showWf('wf2-tobe', this)">WF2 TO-BE</button>
+        <button class="tab-btn" onclick="showWf('wf4-asis', this)">WF4 AS-IS</button>
+        <button class="tab-btn" onclick="showWf('wf4-tobe', this)">WF4 TO-BE</button>
+        <button class="tab-btn" onclick="showWf('wf3-asis', this)">WF3 AS-IS</button>
+        <button class="tab-btn" onclick="showWf('wf3-tobe', this)">WF3 TO-BE</button>
+      </div>
+    </div>
+    <div class="diagram-panels">
+
+      <div id="panel-wf1-asis" class="diagram-panel bpmn-panel visible">
+        <div class="diagram-caption">
+          <span class="asis-badge">AS-IS</span>
+          <h4>WF1 — Headcount Reporting: Manual CSV</h4>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:650px;">
+flowchart LR
+  HRBP(["HRBP / HR Admin"]) -->|"Export headcount data"| Export["Export CSV\nfrom HRIS"]
+  Export --> Clean["Clean &\nFormat in Excel"]
+  Clean --> Charts["Build Pivot\nTables & Charts"]
+  Charts --> Email["Email to\nStakeholders"]
+  Email --> QA{Questions\nReceived?}
+  QA -->|"Yes — re-run"| Export
+  QA -->|"No"| Done([End])
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-wf1-tobe" class="diagram-panel bpmn-panel">
+        <div class="diagram-caption">
+          <span class="tobe-badge">TO-BE</span>
+          <h4>WF1 — Headcount Reporting: Automated Pipeline</h4>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:750px;">
+flowchart LR
+  HRBP(["HR Admin"]) -->|"Upload CSV"| Upload["Upload CSV\nvia Dashboard"]
+  Upload --> Validate{Validation\nPassed?}
+  Validate -->|"No"| Errors["Display\nValidation Errors"]
+  Errors --> Upload
+  Validate -->|"Yes"| Confirm["Confirm\n& Load"]
+  Confirm --> Pipeline["Pipeline\nRun: headcount_snapshots"]
+  Pipeline --> Metrics["Auto-compute:\nDelta, Tenure, Attrition Rate"]
+  Metrics --> DB[("PostgreSQL")]
+  DB --> Dashboard["Live Dashboard"]
+  Dashboard --> Done2([End])
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-wf2-asis" class="diagram-panel bpmn-panel">
+        <div class="diagram-caption">
+          <span class="asis-badge">AS-IS</span>
+          <h4>WF2 — Compensation Review: Spreadsheet Merit Cycle</h4>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:650px;">
+flowchart LR
+  CHRO(["CHRO"]) --> Spreadsheet["Distribute\nExcel Spreadsheets"]
+  Spreadsheet --> MgrInput["Manager Merit\nRecommendations"]
+  MgrInput --> Consolidate["HRBP Consolidates\nMultiple Sheets"]
+  Consolidate --> ManualCheck["Manual Band\nCompliance Check"]
+  ManualCheck --> Approve["CHRO Approval\n(email chain)"]
+  Approve --> End2([End])
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-wf2-tobe" class="diagram-panel bpmn-panel">
+        <div class="diagram-caption">
+          <span class="tobe-badge">TO-BE</span>
+          <h4>WF2 — Compensation Review: Eligibility Engine</h4>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:750px;">
+flowchart LR
+  CHRO(["CHRO"]) --> OpenCycle["Open Merit\nCycle in System"]
+  OpenCycle --> EligEngine["Eligibility Engine\nRuns Against WF1 Data"]
+  EligEngine --> MgrDash["Manager Dashboard"]
+  MgrDash --> Rec["Submit Merit\nRecommendations"]
+  Rec --> BandCheck{Exceeds\nBand Max?}
+  BandCheck -->|"Yes"| Flag["Flag for\nCHRO Review"]
+  BandCheck -->|"No"| HRApprove["HR Approval\nWorkflow"]
+  Flag --> HRApprove
+  HRApprove --> CloseCycle["Close Cycle\n& Archive"]
+  CloseCycle --> End3([End])
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-wf4-asis" class="diagram-panel bpmn-panel">
+        <div class="diagram-caption">
+          <span class="asis-badge">AS-IS</span>
+          <h4>WF4 — Performance Management: Undocumented Reviews</h4>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:600px;">
+flowchart LR
+  Manager(["Manager"]) --> Verbal["Verbal / Ad-hoc\nCheck-ins"]
+  Verbal --> NoRecord["No Structured\nRecord Kept"]
+  NoRecord --> AnnualReview["Annual Performance\nReview (Retrospective)"]
+  AnnualReview --> Decision["Rating Decision\nWith No Trail"]
+  Decision --> End4([End])
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-wf4-tobe" class="diagram-panel bpmn-panel">
+        <div class="diagram-caption">
+          <span class="tobe-badge">TO-BE</span>
+          <h4>WF4 — Performance Management: Structured Cadence</h4>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:750px;">
+flowchart LR
+  Manager(["Manager"]) --> WeeklyCapture["Capture Weekly 1:1:\nTopics · Actions · Sentiment"]
+  WeeklyCapture --> MonthlyCapture["Monthly Check-in:\nGoals · Achievements"]
+  MonthlyCapture --> EmpAck["Employee\nAcknowledges"]
+  EmpAck --> QuarterlyReview["Quarterly Review:\nSelf-assess → Manager → HR"]
+  QuarterlyReview -->|"Feeds merit"| WF2["Trigger\nWF2 Merit Cycle"]
+  QuarterlyReview -->|"Feeds risk"| WF3["Update\nWF3 Score"]
+  WF2 --> End5([End])
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-wf3-asis" class="diagram-panel bpmn-panel">
+        <div class="diagram-caption">
+          <span class="asis-badge">AS-IS</span>
+          <h4>WF3 — Attrition Risk: Reactive Resignation Response</h4>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:600px;">
+flowchart LR
+  Employee(["Employee"]) --> Resignation["Resignation\nReceived"]
+  Resignation --> ExitInt["Exit Interview\n(if conducted)"]
+  ExitInt --> PostHoc["Retrospective\nAnalysis Only"]
+  PostHoc --> Missed["Risk Not\nIdentified in Advance"]
+  Missed --> End6([End])
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-wf3-tobe" class="diagram-panel bpmn-panel">
+        <div class="diagram-caption">
+          <span class="tobe-badge">TO-BE</span>
+          <h4>WF3 — Attrition Risk: Proactive Scoring Engine</h4>
+        </div>
+        <div class="diagram-frame" style="overflow-x:auto;">
+          <div class="mermaid" style="min-width:750px;">
+flowchart LR
+  WF1Score["WF1 Data:\nTenure, Salary"] -->|"compa-ratio"| ScoreEngine(("Risk Scoring\nEngine"))
+  WF4Score["WF4 Data:\n1:1 Freq, Ratings"] -->|"sentiment"| ScoreEngine
+  WF2Score["WF2 Data:\nMerit History"] -->|"time since merit"| ScoreEngine
+  ScoreEngine --> RAG{RAG\nStatus}
+  RAG -->|"RED < 40"| Alert["Alert:\nHR + Manager Dashboard"]
+  RAG -->|"AMBER 40-69"| Monitor["Monitor:\nFlagged on Dashboard"]
+  RAG -->|"GREEN >= 70"| Clear["No Action\nRequired"]
+  Alert --> RetentionAction["Log Retention\nAction"]
+  RetentionAction --> End7([End])
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#111518',
+      primaryTextColor: '#e8eaeb',
+      primaryBorderColor: '#00c896',
+      lineColor: '#8a9299',
+      secondaryColor: '#181d21',
+      tertiaryColor: '#0a0d0f',
+      edgeLabelBackground: '#0a0d0f',
+      clusterBkg: '#111518'
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const first = document.querySelector('.bpmn-panel.visible .mermaid');
+    if (first) await mermaid.run({ nodes: [first] });
+  });
+
+  async function showWf(id, btn) {
+    document.querySelectorAll('.bpmn-panel').forEach(p => p.classList.remove('visible'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const panel = document.getElementById('panel-' + id);
+    panel.classList.add('visible');
+    btn.classList.add('active');
+    const node = panel.querySelector('.mermaid:not([data-processed="true"])');
+    if (node) await mermaid.run({ nodes: [node] });
+  }
+</script>
+</body>
+</html>
