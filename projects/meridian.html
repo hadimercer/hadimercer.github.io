@@ -1,541 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meridian — Workstream Portfolio Health Dashboard | Hadi Mercer Portfolio</title>
-<meta name="description" content="A multi-user SaaS dashboard where workstream RAG health is calculated from milestone completion, budget burn rate, and blocker age — never manually declared.">
-<meta property="og:title" content="Meridian — Workstream Portfolio Health Dashboard | Hadi Mercer Portfolio">
-<meta property="og:description" content="A multi-user SaaS dashboard where workstream RAG health is calculated from milestone completion, budget burn rate, and blocker age — never manually declared.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0d0f;
-    --surface: #111518;
-    --surface2: #181d21;
-    --border: #1f2629;
-    --border2: #2a3338;
-    --accent: #00c896;
-    --accent2: #0087ff;
-    --amber: #f5a623;
-    --red: #e8443a;
-    --text: #e8eaeb;
-    --text2: #8a9299;
-    --text3: #4a5560;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Epilogue', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.5;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 40px;
-    background: rgba(10,13,15,0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--text2);
-    text-decoration: none;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
-
-  /* ── DETAIL HERO ── */
-  .detail-hero {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 120px 40px 60px;
-  }
-
-  .detail-hero-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    margin-bottom: 40px;
-    transition: color 0.2s;
-  }
-
-  .back-btn:hover { color: var(--text); }
-
-  .detail-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .detail-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(36px, 5vw, 64px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
-  }
-
-  .detail-tagline {
-    font-size: 18px;
-    color: var(--text2);
-    font-weight: 300;
-    max-width: 700px;
-    line-height: 1.7;
-    margin-bottom: 36px;
-  }
-
-  .detail-meta-row {
-    display: flex;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-
-  .meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .meta-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .meta-value {
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  /* ── DOC METADATA BLOCK ── */
-  .doc-meta-block {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px;
-  }
-
-  .doc-meta-inner {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    border: 1px solid var(--border2);
-    margin-top: 40px;
-  }
-
-  .doc-meta-cell {
-    flex: 1 1 160px;
-    padding: 14px 20px;
-    border-right: 1px solid var(--border2);
-  }
-
-  .doc-meta-cell:last-child { border-right: none; }
-
-  .doc-meta-key {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 4px;
-  }
-
-  .doc-meta-val {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--accent);
-  }
-
-  /* ── MAIN CONTENT ── */
-  .detail-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 64px 40px;
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 64px;
-    align-items: start;
-  }
-
-  /* ── MAIN BODY ── */
-  .detail-main h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 26px;
-    color: var(--text);
-    margin: 52px 0 16px;
-    letter-spacing: -0.01em;
-  }
-
-  .detail-main h2:first-child { margin-top: 0; }
-
-  .detail-main h3 {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin: 28px 0 12px;
-  }
-
-  .detail-main p {
-    font-size: 15px;
-    color: var(--text2);
-    line-height: 1.75;
-    margin-bottom: 16px;
-  }
-
-  .detail-main p em {
-    color: var(--text);
-    font-style: italic;
-  }
-
-  .capability-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-
-  .capability-list li {
-    display: flex;
-    gap: 12px;
-    font-size: 14px;
-    color: var(--text2);
-    line-height: 1.6;
-  }
-
-  .capability-list li::before {
-    content: '→';
-    font-family: 'DM Mono', monospace;
-    color: var(--accent);
-    flex-shrink: 0;
-    font-size: 13px;
-    margin-top: 2px;
-  }
-
-  /* ── SCORING ENGINE BLOCK ── */
-  .score-block {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 28px;
-    margin-bottom: 20px;
-  }
-
-  .score-block-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-
-  .score-formula {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--text);
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    padding: 16px 18px;
-    line-height: 1.8;
-    margin-bottom: 14px;
-    white-space: pre;
-    overflow-x: auto;
-  }
-
-  /* ── TABLE ── */
-  .detail-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 24px;
-    font-size: 13px;
-  }
-
-  .detail-table th {
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    padding: 10px 14px;
-    text-align: left;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .detail-table td {
-    border: 1px solid var(--border);
-    padding: 10px 14px;
-    color: var(--text2);
-    vertical-align: top;
-    line-height: 1.5;
-  }
-
-  .detail-table td:first-child {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    white-space: nowrap;
-  }
-
-  .detail-table tr:hover td { background: var(--surface); }
-
-  /* ── SECTION DIVIDER ── */
-  .section-rule {
-    height: 1px;
-    background: var(--border);
-    margin: 48px 0;
-  }
-
-  /* ── SIDEBAR ── */
-  .detail-sidebar {
-    position: sticky;
-    top: 100px;
-  }
-
-  .sidebar-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 28px;
-    margin-bottom: 16px;
-  }
-
-  .sidebar-card h3 {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .demo-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 16px;
-    background: var(--accent);
-    color: #000;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.2s;
-    margin-bottom: 12px;
-  }
-
-  .demo-btn:hover { background: #00e0a8; }
-
-  .github-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 14px;
-    background: transparent;
-    color: var(--text2);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1px solid var(--border2);
-    transition: all 0.2s;
-  }
-
-  .github-btn:hover { border-color: var(--text2); color: var(--text); }
-
-  .demo-instructions { margin-top: 16px; }
-
-  .demo-step {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.5;
-  }
-
-  .step-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-    background: rgba(0, 200, 150, 0.08);
-    border: 1px solid rgba(0, 200, 150, 0.2);
-    padding: 2px 7px;
-    flex-shrink: 0;
-    height: fit-content;
-    margin-top: 2px;
-  }
-
-  .artifact-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    transition: gap 0.2s;
-  }
-
-  .artifact-link:last-child { border-bottom: none; }
-  .artifact-link:hover { gap: 14px; }
-
-  .artifact-link .aicon { font-size: 14px; flex-shrink: 0; }
-  .artifact-link .atext { font-size: 13px; color: var(--text2); flex: 1; }
-  .artifact-link .aarrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    transition: color 0.2s;
-  }
-
-  .artifact-link:hover .aarrow { color: var(--accent); }
-
-  /* ── STATUS BADGE ── */
-  .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    margin-bottom: 24px;
-  }
-
-  .status-badge::before {
-    content: '●';
-    font-size: 8px;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .footer-left {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 0.06em;
-  }
-
-  .footer-right {
-    display: flex;
-    gap: 24px;
-  }
-
-  .footer-right a {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    text-decoration: none;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .footer-right a:hover { color: var(--accent); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .detail-content { grid-template-columns: 1fr; }
-    .detail-sidebar { position: static; }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .nav-links { display: none; }
-    .detail-hero { padding: 100px 20px 40px; }
-    .doc-meta-block { padding: 0 20px; }
-    .detail-content { padding: 40px 20px; }
-    .doc-meta-cell { flex: 1 1 100%; border-right: none; border-bottom: 1px solid var(--border2); }
-    footer { padding: 32px 20px; }
-    .score-formula { white-space: pre-wrap; font-size: 11px; }
-  }
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meridian: status that is calculated, not declared | Hadi Mercer</title>
+<meta name="description" content="A personal project: workstream health calculated from milestones, budget and blockers, not picked from a list, with sign-in and row-level security.">
+<link rel="canonical" href="https://hadimercer.github.io/projects/meridian.html">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1316" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Hadi Mercer">
+<meta property="og:title" content="Meridian: status that is calculated, not declared | Hadi Mercer">
+<meta property="og:description" content="A personal project: workstream health calculated from milestones, budget and blockers, not picked from a list, with sign-in and row-level security.">
+<meta property="og:url" content="https://hadimercer.github.io/projects/meridian.html">
+<meta property="og:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Meridian: status that is calculated, not declared | Hadi Mercer">
+<meta name="twitter:description" content="A personal project: workstream health calculated from milestones, budget and blockers, not picked from a list, with sign-in and row-level security.">
+<meta name="twitter:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta name="twitter:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..600,50;1,9..144,400,50&amp;family=Inter:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/site.js" defer></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -545,338 +40,270 @@
   gtag('config', 'G-38MGEGB275');
 </script>
 </head>
-<body>
+<body data-project="meridian">
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+</svg>
 
-<nav>
-  <a href="../index.html" class="nav-logo">HM / Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../index.html#about">About</a></li>
-    <li><a href="../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<!-- ── HERO ── -->
-<div class="detail-hero">
-  <div class="detail-hero-inner">
-    <a href="../index.html#projects" class="back-btn">← Back to Portfolio</a>
-    <div class="status-badge">Live</div>
-    <p class="detail-eyebrow">Portfolio Health · SaaS Application · S3</p>
-    <h1 class="detail-title">Meridian — Workstream<br>Portfolio Health Dashboard</h1>
-    <p class="detail-tagline">A full-stack multi-user SaaS application where professionals track concurrent workstreams and receive a calculated RAG health status — derived automatically from milestone completion, budget burn rate, and blocker age. No manual colour-picking. The scoring engine reads the data and decides.</p>
-    <div class="detail-meta-row">
-      <div class="meta-item">
-        <span class="meta-label">Status</span>
-        <span class="meta-value" style="color:var(--accent)">Live</span>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/">Hadi Mercer</a>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#experience">Experience</a></li>
+        <li><a href="/#method">How I build</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+      <div class="nav-extra">
+        <button type="button" class="btn btn-ghost theme-toggle" data-theme-toggle>
+          <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+          <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+          <span data-theme-label>Switch to dark theme</span>
+        </button>
       </div>
-      <div class="meta-item">
-        <span class="meta-label">Tech Stack</span>
-        <span class="meta-value">Python · Supabase Auth · PostgreSQL RLS · Streamlit</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">BA Artifacts</span>
-        <span class="meta-value">35-FR FRD · UML Class Diagram · BPMN · Data Dictionary</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">Portfolio Ref</span>
-        <span class="meta-value">Smaller Project 3 (S3)</span>
-      </div>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="/?request=resume#contact" data-request="resume"><span class="label-long">Request my resume</span><span class="label-short">Resume</span></a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+        <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+      </button>
+      <button type="button" class="icon-btn menu-btn" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg class="icon icon-open" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg>
+        <svg class="icon icon-close" aria-hidden="true" focusable="false"><use href="#i-x"/></svg>
+      </button>
     </div>
   </div>
-</div>
+</header>
 
-<!-- ── DOCUMENT METADATA ── -->
-<div class="doc-meta-block">
-  <div class="doc-meta-inner">
-    <div class="doc-meta-cell">
-      <div class="doc-meta-key">Document ID</div>
-      <div class="doc-meta-val">FRD-MERIDIAN-001</div>
-    </div>
-    <div class="doc-meta-cell">
-      <div class="doc-meta-key">Version</div>
-      <div class="doc-meta-val">v1.0</div>
-    </div>
-    <div class="doc-meta-cell">
-      <div class="doc-meta-key">Status</div>
-      <div class="doc-meta-val">Baselined</div>
-    </div>
-    <div class="doc-meta-cell">
-      <div class="doc-meta-key">Project</div>
-      <div class="doc-meta-val">Meridian · S3</div>
-    </div>
-    <div class="doc-meta-cell">
-      <div class="doc-meta-key">Prepared By</div>
-      <div class="doc-meta-val">Hadi Mercer</div>
-    </div>
-    <div class="doc-meta-cell">
-      <div class="doc-meta-key">Date</div>
-      <div class="doc-meta-val">2026</div>
-    </div>
-  </div>
-</div>
+<main id="main" tabindex="-1">
 
-<!-- ── MAIN CONTENT ── -->
-<div class="detail-content">
-
-  <!-- ── LEFT: MAIN ── -->
-  <div class="detail-main">
-
-    <h2>The Problem</h2>
-    <p>Project managers have Jira and Asana. But business analysts, consultants, finance managers, and HR leads who manage work as a by-product of doing their job don't think of themselves as project managers — those tools are alienating and abandoned within weeks.</p>
-    <p>The fallback is a spreadsheet with a RAG column updated when there's time on a Friday afternoon. That spreadsheet doesn't alert when a workstream is drifting. It shows whatever was last typed.</p>
-    <p><em>Meridian's central design principle: health status is calculated, not declared.</em> A user never selects a RAG colour. They enter objective data — milestone completions, spend figures, open blockers — and Meridian calculates what the data means. A 9-question context wizard at workstream creation tunes the scoring engine so a hard-deadline client engagement is scored differently from a self-imposed internal initiative.</p>
-
-    <h2>What It Does</h2>
-    <ul class="capability-list">
-      <li>Calculates composite RAG from three weighted dimensions: Schedule Health (milestone pace vs. elapsed time), Budget Health (planned vs. actual burn), and Blocker Health (unresolved blocker age)</li>
-      <li>9-question context wizard at setup tunes scoring thresholds — 15 modifier rules document every combination and its effect on the three health dimensions</li>
-      <li>Multi-user collaboration with role-based access (Owner / Contributor / Viewer), invite link system, and per-entity comment threads</li>
-      <li>Staleness flag fires when update cadence exceeds the configured threshold — the system alerts the user when their own data has gone stale</li>
-      <li>Portfolio analytics: health trend over 30 days, schedule vs. budget scatter matrix, milestone velocity table, blocker age analysis</li>
-      <li>Six-page workstream view: Overview, Milestones, Budget, Blockers, Updates (typed post feed), Team management</li>
-    </ul>
-
-    <h2>What This Demonstrates</h2>
-    <ul class="capability-list">
-      <li>Full product thinking: problem statement, stakeholder personas, scoping decisions, and design rationale all documented before a line of code was written</li>
-      <li>35-requirement BABOK-aligned FRD with MoSCoW prioritisation, stakeholder objectives, and full traceability matrix</li>
-      <li>Scoring engine designed as a requirements problem first — the modifier matrix in the FRD precedes the code in <code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);">pipeline/scoring.py</code></li>
-      <li>PostgreSQL schema with 15+ tables, FK constraints, and row-level security via Supabase — no user can read another user's workstream data without explicit invitation</li>
-      <li>Auth and security: Supabase Auth, RLS on all user-scoped tables, zero credentials in source code (NFR-02b)</li>
-      <li>UML class diagram documenting the full data model (FR-34); BPMN covering workstream lifecycle and invite sub-process (FR-35)</li>
-    </ul>
-
-    <div class="section-rule"></div>
-
-    <!-- SCORING ENGINE -->
-    <h2>RAG Scoring Engine</h2>
-    <p>The scoring engine is Meridian's core differentiator. RAG status is never a manually selectable field — it is recalculated from source data on every relevant change. Three health dimensions feed a weighted composite score.</p>
-
-    <h3>Schedule Health</h3>
-    <div class="score-block">
-      <div class="score-block-label">Formula</div>
-      <div class="score-formula">SV = Milestone Completion % − Time Elapsed %
-
-Green:  SV ≥ −10%        (on track)
-Amber: −25% ≤ SV &lt; −10%  (lagging)
-Red:    SV &lt; −25%         (at risk)</div>
-    </div>
-
-    <h3>Budget Health</h3>
-    <div class="score-block">
-      <div class="score-block-label">Formula</div>
-      <div class="score-formula">BV = (Planned Spend to Date − Actual Spend) / Total Budget
-
-Green:  BV ≥ −5%          (on budget)
-Amber: −15% ≤ BV &lt; −5%   (over plan)
-Red:    BV &lt; −15%          (budget at risk)</div>
-    </div>
-
-    <h3>Blocker Health</h3>
-    <table class="detail-table">
-      <thead>
-        <tr>
-          <th>State</th>
-          <th>Score</th>
-          <th>Default Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>No open blockers</td><td>100</td><td>Green</td></tr>
-        <tr><td>1 blocker, &lt; 3 days</td><td>80</td><td>Green</td></tr>
-        <tr><td>1 blocker, 3–7 days</td><td>55</td><td>Amber</td></tr>
-        <tr><td>1 blocker, &gt; 7 days</td><td>25</td><td>Red</td></tr>
-        <tr><td>2+ blockers (any age)</td><td>40 max</td><td>Amber+</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Composite Score</h3>
-    <div class="score-block">
-      <div class="score-block-label">Weighted Average</div>
-      <div class="score-formula">Composite = (Schedule × 0.40) + (Budget × 0.35) + (Blockers × 0.25)
-
-Green ≥ 70  |  Amber 40–69  |  Red &lt; 40</div>
-    </div>
-
-    <h3>Wizard Modifier Examples</h3>
-    <table class="detail-table">
-      <thead>
-        <tr>
-          <th>Wizard Answer</th>
-          <th>Effect on Scoring Thresholds</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Hard / contractual deadline</td><td>Schedule Amber tightens: −10% → −5%; Red: −25% → −15%</td></tr>
-        <tr><td>Client-billable budget</td><td>Budget weight increases 35% → 45%; Amber at −3%, Red at −10%</td></tr>
-        <tr><td>Blocked by external party</td><td>Blocker age thresholds halved — risk accumulates faster</td></tr>
-        <tr><td>High / Critical risk rating</td><td>Amber-to-Red band compressed 5–10% across all dimensions</td></tr>
-        <tr><td>Review / Closing phase</td><td>Any incomplete milestone &gt; 2 days past due triggers Amber</td></tr>
-      </tbody>
-    </table>
-
-    <div class="section-rule"></div>
-
-    <!-- BA PROCESS -->
-    <h2>BA Process</h2>
-
-    <h3>1. Problem Discovery → Target User Definition</h3>
-    <p>The problem statement did not start as a feature list. It started with a single observation: professionals who manage parallel workstreams abandon structured tools quickly, then revert to spreadsheets with manually updated RAG columns. The core question was not "what should the tool do?" but "why do existing tools fail this user?"</p>
-    <p>Three stakeholder archetypes were defined before any functional requirements were written:</p>
-    <ul class="capability-list">
-      <li><em>The Independent Operator</em> — a BA or consultant managing 3–5 concurrent engagements with no team, primarily needs a personal health signal and an honest prompt to act. Drove the staleness flag (FR-10)</li>
-      <li><em>The Team Lead</em> — manages a cross-functional team, needs to delegate data entry and control role-based visibility. Drove the invite-link flow (FR-03, FR-30) and role system (FR-29)</li>
-      <li><em>The Executive Reviewer</em> — no data entry, needs a single-screen portfolio view and will disengage immediately if the tool requires any learning curve. Drove the Viewer role (FR-28, FR-30)</li>
-    </ul>
-
-    <h3>2. Scoring Engine as a Requirements Problem</h3>
-    <p>The most consequential design decision was treating the scoring engine as a requirements problem before a technical one. Letting users set their own RAG colour was explicitly rejected in the FRD — it reproduces the exact failure mode of the spreadsheet. The modifier matrix documents every wizard combination and its downstream effect on scoring thresholds, and was written before the first line of <code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);">scoring.py</code> was produced.</p>
-
-    <h3>3. Scope Discipline — What Was Deliberately Left Out</h3>
-    <table class="detail-table">
-      <thead>
-        <tr>
-          <th>Excluded Feature</th>
-          <th>Rationale</th>
-          <th>Future Phase</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Email / Slack notifications</td><td>Requires async infrastructure (queues, delivery) disproportionate to v1 BA demonstration scope</td><td>Phase 2</td></tr>
-        <tr><td>File attachments</td><td>Introduces storage and access-control complexity; staleness flag covers the alerting intent at UI level</td><td>Phase 4</td></tr>
-        <tr><td>Gantt / timeline view</td><td>Repositions product identity toward project management tools — exactly the category Meridian replaces for non-PM users</td><td>Phase 3</td></tr>
-        <tr><td>Public sharing</td><td>Conflicts with data sensitivity model; workstream data often contains budget figures and blocker details</td><td>Phase 4</td></tr>
-      </tbody>
-    </table>
-
-    <div class="section-rule"></div>
-
-    <!-- DATABASE SCHEMA -->
-    <h2>Database Schema</h2>
-    <p>PostgreSQL via Supabase. 15+ tables with FK constraints and row-level security policies. No user can read another user's workstream data without explicit invitation.</p>
-
-    <table class="detail-table">
-      <thead>
-        <tr>
-          <th>Table</th>
-          <th>Purpose</th>
-          <th>Key Relationships</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>users</td><td>Supabase Auth managed — identity source of truth</td><td>Referenced by workstream_members</td></tr>
-        <tr><td>workstreams</td><td>Core entity — name, dates, budget, phase, owner</td><td>Parent to all workstream-scoped tables</td></tr>
-        <tr><td>workstream_members</td><td>Role-based membership: Owner / Contributor / Viewer</td><td>FK to users + workstreams; RLS enforced</td></tr>
-        <tr><td>wizard_config</td><td>9 wizard answers per workstream; drives modifier matrix</td><td>FK to workstreams; read by scoring engine</td></tr>
-        <tr><td>rag_scores</td><td>Current calculated scores per dimension + composite; is_stale flag</td><td>FK to workstreams; recalculated on data change</td></tr>
-        <tr><td>rag_score_history</td><td>Daily snapshots of composite score for trend analytics</td><td>FK to workstreams; powers analytics page</td></tr>
-        <tr><td>milestones</td><td>Status: not_started / in_progress / complete; feeds Schedule Health</td><td>FK to workstreams; completion % drives SV</td></tr>
-        <tr><td>spend_entries</td><td>Auditable spend log — each entry individual with date, category, description</td><td>FK to workstreams; sum drives BV</td></tr>
-        <tr><td>blockers</td><td>Open/resolved, age tracked from date raised; feeds Blocker Health</td><td>FK to workstreams; open count + age drives score</td></tr>
-        <tr><td>updates</td><td>Typed post feed: Status Update, Decision Made, Risk Raised, etc.</td><td>FK to workstreams; restricted by role</td></tr>
-        <tr><td>comments</td><td>Per entity_type + entity_id — milestones, blockers, workstream</td><td>Polymorphic FK pattern</td></tr>
-        <tr><td>notes</td><td>Pinned notes — one per entity</td><td>FK to workstreams</td></tr>
-        <tr><td>invite_links</td><td>Token-based invite system; new users join as Viewer on accept</td><td>FK to workstreams; token validated on registration</td></tr>
-        <tr><td>user_workstream_last_seen</td><td>Unread activity tracking per user per workstream</td><td>FK to users + workstreams</td></tr>
-      </tbody>
-    </table>
-
-  </div><!-- end detail-main -->
-
-  <!-- ── RIGHT: SIDEBAR ── -->
-  <div class="detail-sidebar">
-    <div class="sidebar-card">
-      <h3>Try the Application</h3>
-      <a href="https://meridian-hadimercer.streamlit.app/home" target="_blank" class="demo-btn">Open Live Demo ↗</a>
-      <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:0.06em;margin:-6px 0 12px;text-align:center;">Live demo — may take ~30s to wake.</p>
-      <a href="https://github.com/hadimercer/Meridian_Workstream" target="_blank" class="github-btn">View on GitHub</a>
-      <div class="demo-instructions">
-        <div class="demo-step"><span class="step-num">Login</span><span>To access App request test credentials from the contact email on the portfolio.</span></div>
-        <div class="demo-step"><span class="step-num">1</span><span>Explore the 6 pre-seeded workstreams with 30 days of RAG history</span></div>
-        <div class="demo-step"><span class="step-num">2</span><span>Open any workstream and review score cards and wizard profile</span></div>
-        <div class="demo-step"><span class="step-num">3</span><span>Check Milestones and Blockers tabs to see how data feeds the RAG engine</span></div>
-        <div class="demo-step"><span class="step-num">4</span><span>Open Analytics for the portfolio health trend and scatter matrix</span></div>
+  <div class="page-hero" id="top">
+    <div class="container">
+      <a class="back-link" href="/#work"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg> All projects</a>
+      <p class="kicker">Workstream health</p>
+      <h1>Meridian: status that is calculated, not declared</h1>
+      <p class="summary">A workstream health tracker for people who manage work as part of their job, where status is calculated from milestones, budget and blockers instead of picked from a dropdown.</p>
+      <dl class="facts">
+        <div><dt class="label">Status</dt><dd><span class="status-live">Live</span></dd></div>
+        <div><dt class="label">Built with</dt><dd>Python, Supabase (Auth and row-level security), PostgreSQL, Streamlit</dd></div>
+        <div><dt class="label">Data</dt><dd>Synthetic data</dd></div>
+      </dl>
+      <div class="page-actions">
+        <a class="btn btn-primary" href="https://meridian-hadimercer.streamlit.app/home" target="_blank" rel="noopener">Live demo <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+        <a class="btn btn-secondary" href="https://github.com/hadimercer/Meridian_Workstream" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg> Code on GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+        <a class="btn btn-ghost" href="/?request=demo#contact" data-request="demo"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg> Request demo access</a>
       </div>
-    </div>
-
-    <div class="sidebar-card">
-      <h3>BA Artifacts</h3>
-      <a href="../artifacts/meridian/frd.html" class="artifact-link">
-        <span class="aicon">📄</span>
-        <span class="atext">FRD — 35 Functional Requirements (BABOK v3)</span>
-        <span class="aarrow">→</span>
-      </a>
-      <a href="../artifacts/meridian/uml.html" class="artifact-link">
-        <span class="aicon">📐</span>
-        <span class="atext">UML Class Diagram — Data Model</span>
-        <span class="aarrow">→</span>
-      </a>
-      <a href="../artifacts/meridian/bpmn.html" class="artifact-link">
-        <span class="aicon">🔄</span>
-        <span class="atext">BPMN — Workstream Lifecycle &amp; Invite Sub-Process</span>
-        <span class="aarrow">→</span>
-      </a>
-      <a href="https://github.com/hadimercer/Meridian_Workstream/blob/main/docs/meridian_schema.sql" target="_blank" class="artifact-link">
-        <span class="aicon">🗄</span>
-        <span class="atext">Schema SQL — Full Database Definition</span>
-        <span class="aarrow">↗</span>
-      </a>
-    </div>
-
-    <div class="sidebar-card">
-      <h3>Project Metadata</h3>
-      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
-        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:80px;">Type</span>
-        <span style="font-size:13px;color:var(--text2);">Full-stack SaaS</span>
-      </div>
-      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
-        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:80px;">FRs</span>
-        <span style="font-size:13px;color:var(--text2);">35 (FR-01 to FR-35)</span>
-      </div>
-      <div class="demo-step" style="padding:6px 0; border-bottom:1px solid var(--border);">
-        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:80px;">DB Tables</span>
-        <span style="font-size:13px;color:var(--text2);">15+</span>
-      </div>
-      <div class="demo-step" style="padding:6px 0;">
-        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;min-width:80px;">Auth</span>
-        <span style="font-size:13px;color:var(--text2);">Supabase Auth + RLS</span>
-      </div>
+      <p class="caption">The demo runs on Streamlit’s free tier and can take about 30 seconds to wake. It needs a sign-in, and I share test credentials on request.</p>
     </div>
   </div>
 
-</div><!-- end detail-content -->
+  <div class="page-body">
+    <div class="container page-layout">
 
-<footer>
-  <p class="footer-left">© 2026 Hadi Mercer · Portfolio</p>
-  <div class="footer-right">
-    <a href="../index.html">Portfolio</a>
-    <a href="https://github.com/hadimercer" target="_blank">GitHub</a>
-    <a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn</a>
+      <article class="prose">
+
+        <section id="problem" aria-labelledby="problem-title">
+          <h2 id="problem-title">The problem</h2>
+          <p>Project managers have Jira and Asana. But analysts, consultants, finance managers and HR leads who manage work alongside their day job do not see themselves as project managers, and they drop those tools within weeks. HR leads live this every week with projects like policy rollouts, system changes and hiring plans.</p>
+          <p>The fallback is a spreadsheet with a red, amber or green column, updated when there is time on a Friday afternoon. It never warns you when a workstream is drifting. It shows whatever was last typed. Meridian’s central rule is that health is calculated, not declared: you enter facts (milestones completed, money spent, open blockers) and Meridian works out what they mean.</p>
+        </section>
+
+        <section id="built" aria-labelledby="built-title">
+          <h2 id="built-title">What I built</h2>
+          <ul class="list">
+            <li>Get a red, amber or green status for every workstream, calculated from three measures: schedule, budget and blockers.</li>
+            <li>Answer nine setup questions when you create a workstream. Fifteen rules adjust the scoring to fit, so a client project with a hard deadline is scored differently from an internal initiative.</li>
+            <li>Invite colleagues as Owner, Contributor or Viewer, and discuss milestones and blockers in comment threads.</li>
+            <li>Get a staleness flag when your own updates fall behind the cadence you set.</li>
+            <li>See portfolio analytics: a 30-day health trend, schedule against budget, milestone velocity and blocker age.</li>
+          </ul>
+          <div class="box">
+            <p class="label">Tour the demo</p>
+            <ol class="flow">
+              <li><span><a href="/?request=demo#contact" data-request="demo">Request demo access</a> and sign in with the test credentials I send.</span></li>
+              <li><span>Explore the six seeded workstreams, each with 30 days of score history.</span></li>
+              <li><span>Open a workstream to see its score cards and setup answers.</span></li>
+              <li><span>Check Milestones and Blockers to see how the data feeds the score.</span></li>
+              <li><span>Open Analytics for the portfolio health trend and the schedule against budget view.</span></li>
+            </ol>
+          </div>
+        </section>
+
+        <section id="how" aria-labelledby="how-title">
+          <h2 id="how-title">How it works</h2>
+          <p>Status is never a field someone picks. It is recalculated from the source data on every relevant change, from three measures that feed one weighted score.</p>
+
+          <h3>Schedule health</h3>
+          <div class="box">
+            <p class="label">Formula</p>
+            <p class="formula">SV = milestone completion % − time elapsed %</p>
+            <table class="rules">
+              <tbody>
+                <tr><th scope="row">Green</th><td class="cond">SV ≥ −10%</td><td>On track</td></tr>
+                <tr><th scope="row">Amber</th><td class="cond">−25% ≤ SV &lt; −10%</td><td>Lagging</td></tr>
+                <tr><th scope="row">Red</th><td class="cond">SV &lt; −25%</td><td>At risk</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Budget health</h3>
+          <div class="box">
+            <p class="label">Formula</p>
+            <p class="formula">BV = (planned spend to date − actual spend) ÷ total budget</p>
+            <table class="rules">
+              <tbody>
+                <tr><th scope="row">Green</th><td class="cond">BV ≥ −5%</td><td>On budget</td></tr>
+                <tr><th scope="row">Amber</th><td class="cond">−15% ≤ BV &lt; −5%</td><td>Over plan</td></tr>
+                <tr><th scope="row">Red</th><td class="cond">BV &lt; −15%</td><td>Budget at risk</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Blocker health</h3>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th scope="col">Open blockers</th><th scope="col">Score</th><th scope="col">Default status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>None</td><td>100</td><td>Green</td></tr>
+                <tr><td>1 blocker, under 3 days old</td><td>80</td><td>Green</td></tr>
+                <tr><td>1 blocker, 3 to 7 days old</td><td>55</td><td>Amber</td></tr>
+                <tr><td>1 blocker, over 7 days old</td><td>25</td><td>Red</td></tr>
+                <tr><td>2 or more blockers, any age</td><td>40 at most</td><td>Amber or worse</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Composite score</h3>
+          <div class="box">
+            <p class="label">Weighted average</p>
+            <p class="formula">Composite = (schedule × 0.40) + (budget × 0.35) + (blockers × 0.25)</p>
+            <table class="rules">
+              <tbody>
+                <tr><th scope="row">Green</th><td class="cond">70 and above</td></tr>
+                <tr><th scope="row">Amber</th><td class="cond">40 to 69</td></tr>
+                <tr><th scope="row">Red</th><td class="cond">Below 40</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>How the setup answers change the rules</h3>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th scope="col">Setup answer</th><th scope="col">Effect on scoring</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Hard or contractual deadline</td><td>Schedule amber tightens from −10% to −5%, and red from −25% to −15%</td></tr>
+                <tr><td>Client-billable budget</td><td>Budget weight rises from 35% to 45%, with amber at −3% and red at −10%</td></tr>
+                <tr><td>Blocked by an external party</td><td>Blocker age thresholds are halved, so risk builds faster</td></tr>
+                <tr><td>High or critical risk rating</td><td>The band between amber and red narrows by 5% to 10% across all three measures</td></tr>
+                <tr><td>Review or closing phase</td><td>Any unfinished milestone more than 2 days past due triggers amber</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Access and privacy</h3>
+          <p>Meridian runs on PostgreSQL through Supabase, with more than 15 tables. People sign in with Supabase Auth, and row-level security on every user-scoped table means no one can read another person’s workstream without an invitation. No credentials live in the source code.</p>
+        </section>
+
+        <section id="shows" aria-labelledby="shows-title">
+          <h2 id="shows-title">What this shows</h2>
+          <ul class="list">
+            <li>Scoring designed as a requirements problem: every setup rule and its effect was written in the requirements document before the scoring code.</li>
+            <li>Consistent rules for everyone: the same data produces the same status, whoever enters it.</li>
+            <li>Access control that keeps each person’s data private, with sign-in, roles and row-level security.</li>
+            <li>35 written functional requirements, prioritized and traced back to the objectives.</li>
+          </ul>
+        </section>
+
+        <section id="documents" aria-labelledby="documents-title">
+          <h2 id="documents-title">Documents</h2>
+          <p>The requirements and diagrams behind the build. Each one opens as its own page.</p>
+          <ul class="doc-grid" role="list">
+            <li><a class="doc-card" href="/artifacts/meridian/frd.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-file"/></svg><span class="doc-text"><strong>Requirements document</strong><span class="doc-desc">35 functional requirements with priorities, objectives and a traceability matrix.</span></span></a></li>
+            <li><a class="doc-card" href="/artifacts/meridian/bpmn.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-flow"/></svg><span class="doc-text"><strong>BPMN process maps</strong><span class="doc-desc">The workstream lifecycle and the invite process.</span></span></a></li>
+            <li><a class="doc-card" href="/artifacts/meridian/uml.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-db"/></svg><span class="doc-text"><strong>UML class diagram</strong><span class="doc-desc">The full data model behind the scoring engine.</span></span></a></li>
+            <li><a class="doc-card" href="https://github.com/hadimercer/Meridian_Workstream/blob/main/docs/meridian_schema.sql" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-db"/></svg><span class="doc-text"><strong>Schema SQL on GitHub <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg></strong><span class="doc-desc">The full database definition.</span></span><span class="sr-only"> (opens in a new tab)</span></a></li>
+          </ul>
+        </section>
+
+        <section id="limits" aria-labelledby="limits-title">
+          <h2 id="limits-title">Limits</h2>
+          <div class="note-box">
+            <p>Meridian is a personal project on synthetic data. It is not a production system and has not been used at an employer.</p>
+            <p>Scores reflect the data people enter. A workstream nobody updates is flagged as stale, not reported as healthy.</p>
+          </div>
+        </section>
+
+      </article>
+
+      <aside class="toc" aria-labelledby="toc-title">
+        <p class="label" id="toc-title">On this page</p>
+        <ol>
+          <li><a href="#problem">The problem</a></li>
+          <li><a href="#built">What I built</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#shows">What this shows</a></li>
+          <li><a href="#documents">Documents</a></li>
+          <li><a href="#limits">Limits</a></li>
+        </ol>
+        <div class="toc-cta">
+          <a class="btn btn-secondary" href="/?request=resume#contact" data-request="resume">Request my resume</a>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <nav class="pager-wrap" aria-label="More projects">
+    <div class="container">
+      <p class="label pager-heading">More projects</p>
+      <div class="pager">
+        <a class="prev" href="/projects/lens.html">
+          <span class="label"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg> Previous project</span>
+          <span class="pager-title">Lens: open-text feedback, analyzed with guardrails</span>
+          <span class="pager-sub">AI-assisted text analysis</span>
+        </a>
+        <a class="next" href="/projects/incidentops.html">
+          <span class="label">Next project <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></span>
+          <span class="pager-title">IncidentOps: how work really flows</span>
+          <span class="pager-sub">Process mining</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2026 Hadi Mercer. Designed and built by me, from requirements to deployment.</p>
+    <ul class="footer-links">
+      <li><a href="mailto:hadibmercer@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="https://github.com/hadimercer" target="_blank" rel="noopener">GitHub<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
   </div>
 </footer>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.demo-btn').forEach(function(el) {
-      el.addEventListener('click', function() {
-        gtag('event', 'demo_click', { project: 'meridian' });
-      });
-    });
-    document.querySelectorAll('.github-btn').forEach(function(el) {
-      el.addEventListener('click', function() {
-        gtag('event', 'github_click', { project: 'meridian' });
-      });
-    });
-    document.querySelectorAll('.artifact-link').forEach(function(el) {
-      el.addEventListener('click', function() {
-        var href = this.getAttribute('href') || '';
-        var parts = href.split('/');
-        var name = parts[parts.length - 1].replace(/\.html$/, '').replace(/\.md$/, '').replace(/\.yaml$/, '') || href;
-        gtag('event', 'artifact_click', { project: 'meridian', artifact: name });
-      });
-    });
-  });
-</script>
 </body>
 </html>
