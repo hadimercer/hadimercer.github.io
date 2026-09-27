@@ -1,0 +1,5 @@
+# Private working files: never publish
+_brief/
+CLAUDE.md
+_archive/
+.claude/settings.local.json
