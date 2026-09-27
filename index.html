@@ -1,843 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hadi Mercer — Portfolio</title>
-<meta name="description" content="Hadi Mercer — HR, People Analytics, and Business Analysis portfolio. Ten years of HR at scale applied to five live analytics products, each built from documented requirements to a measurable outcome.">
-<meta property="og:title" content="Hadi Mercer — Portfolio">
-<meta property="og:description" content="HR · People Analytics · Business Analysis. Ten years of HR at scale applied to five live analytics products, each built from documented requirements to a measurable outcome.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0d0f;
-    --surface: #111518;
-    --surface2: #181d21;
-    --border: #1f2629;
-    --border2: #2a3338;
-    --accent: #00c896;
-    --accent2: #0087ff;
-    --amber: #f5a623;
-    --red: #e8443a;
-    --text: #e8eaeb;
-    --text2: #8a9299;
-    --text3: #4a5560;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Epilogue', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* ── NOISE TEXTURE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.5;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 40px;
-    background: rgba(10,13,15,0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--text2);
-    text-decoration: none;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 120px 40px 80px;
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--accent);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .hero-eyebrow::before {
-    content: '';
-    display: block;
-    width: 32px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(52px, 7vw, 96px);
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    margin-bottom: 12px;
-  }
-
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .hero-subtitle {
-    font-size: 18px;
-    color: var(--text2);
-    font-weight: 300;
-    max-width: 560px;
-    margin: 28px 0 48px;
-    line-height: 1.7;
-  }
-
-  .hero-meta {
-    display: flex;
-    gap: 40px;
-    margin-bottom: 56px;
-    flex-wrap: wrap;
-  }
-
-  .meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .meta-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .meta-value {
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .hero-ctas {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    background: var(--accent);
-    color: #000;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-primary:hover {
-    background: #00e0a8;
-    transform: translateY(-1px);
-  }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    background: transparent;
-    color: var(--text2);
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1px solid var(--border2);
-    transition: all 0.2s;
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--text2);
-    color: var(--text);
-  }
-
-  /* ── DECORATIVE GRID LINE ── */
-  .grid-accent {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 380px;
-    height: 380px;
-    opacity: 0.04;
-    background-image:
-      linear-gradient(var(--accent) 1px, transparent 1px),
-      linear-gradient(90deg, var(--accent) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-  }
-
-  /* ── SECTION LAYOUT ── */
-  section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 80px 40px;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 20px;
-    margin-bottom: 56px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 24px;
-  }
-
-  .section-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 0.1em;
-  }
-
-  .section-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 36px;
-    color: var(--text);
-    letter-spacing: -0.01em;
-  }
-
-  /* ── SKILLS GRID ── */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    margin-bottom: 40px;
-  }
-
-  .skill-cell {
-    background: var(--surface);
-    padding: 28px;
-  }
-
-  .skill-cell-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .tag {
-    display: inline-block;
-    padding: 4px 10px;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text2);
-    letter-spacing: 0.04em;
-  }
-
-  .tag.learning {
-    border-color: var(--accent2);
-    color: var(--accent2);
-    opacity: 0.8;
-  }
-
-  /* ── PROJECTS GRID ── */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 2px;
-    background: var(--border);
-  }
-
-  .project-card {
-    background: var(--surface);
-    padding: 36px;
-    cursor: pointer;
-    transition: background 0.2s;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    display: block;
-  }
-
-  .project-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-
-  .project-card:hover { background: var(--surface2); }
-  .project-card:hover::after { transform: scaleX(1); }
-
-  .project-card.coming-soon {
-    opacity: 0.45;
-    cursor: default;
-    pointer-events: none;
-  }
-
-  .card-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    padding: 4px 10px;
-    border: 1px solid;
-  }
-
-  .badge-live { border-color: var(--accent); color: var(--accent); }
-  .badge-live::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
-  .badge-soon { border-color: var(--text3); color: var(--text3); }
-  .badge-flagship { border-color: var(--amber); color: var(--amber); }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  .card-project-id {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.08em;
-    margin-bottom: 10px;
-  }
-
-  .card-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    color: var(--text);
-    line-height: 1.2;
-    margin-bottom: 14px;
-    letter-spacing: -0.01em;
-  }
-
-  .card-desc {
-    font-size: 14px;
-    color: var(--text2);
-    line-height: 1.65;
-    margin-bottom: 24px;
-  }
-
-  .card-tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .tech-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text3);
-    border: 1px solid var(--border2);
-    padding: 3px 8px;
-    letter-spacing: 0.04em;
-  }
-
-  .card-arrow {
-    position: absolute;
-    top: 36px;
-    right: 36px;
-    font-size: 18px;
-    color: var(--text3);
-    transition: all 0.2s;
-  }
-
-  .project-card:hover .card-arrow {
-    color: var(--accent);
-    transform: translate(3px, -3px);
-  }
-
-  .detail-hero {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 120px 40px 60px;
-  }
-
-  .detail-hero-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    background: none;
-    border: none;
-    margin-bottom: 40px;
-    transition: color 0.2s;
-    padding: 0;
-  }
-
-  .back-btn:hover { color: var(--text); }
-
-  .detail-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .detail-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(36px, 5vw, 64px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
-  }
-
-  .detail-tagline {
-    font-size: 18px;
-    color: var(--text2);
-    font-weight: 300;
-    max-width: 640px;
-    line-height: 1.7;
-    margin-bottom: 36px;
-  }
-
-  .detail-meta-row {
-    display: flex;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-
-  .detail-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 64px 40px;
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 64px;
-    align-items: start;
-  }
-
-  @media (max-width: 900px) {
-    .detail-content { grid-template-columns: 1fr; }
-  }
-
-  .detail-main h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 26px;
-    color: var(--text);
-    margin: 48px 0 16px;
-    letter-spacing: -0.01em;
-  }
-
-  .detail-main h2:first-child { margin-top: 0; }
-
-  .detail-main p {
-    font-size: 15px;
-    color: var(--text2);
-    line-height: 1.75;
-    margin-bottom: 16px;
-  }
-
-  .capability-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-
-  .capability-list li {
-    display: flex;
-    gap: 12px;
-    font-size: 14px;
-    color: var(--text2);
-    line-height: 1.6;
-  }
-
-  .capability-list li::before {
-    content: '→';
-    font-family: 'DM Mono', monospace;
-    color: var(--accent);
-    flex-shrink: 0;
-    font-size: 13px;
-    margin-top: 2px;
-  }
-
-  /* ── SIDEBAR ── */
-  .detail-sidebar {
-    position: sticky;
-    top: 100px;
-  }
-
-  .sidebar-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 28px;
-    margin-bottom: 16px;
-  }
-
-  .sidebar-card h3 {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .demo-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 16px;
-    background: var(--accent);
-    color: #000;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.2s;
-    margin-bottom: 12px;
-  }
-
-  .demo-btn:hover { background: #00e0a8; }
-
-  .github-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 14px;
-    background: transparent;
-    color: var(--text2);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1px solid var(--border2);
-    transition: all 0.2s;
-  }
-
-  .github-btn:hover { border-color: var(--text2); color: var(--text); }
-
-  .demo-instructions {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.7;
-    margin-top: 16px;
-  }
-
-  .demo-step {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-    font-size: 13px;
-    color: var(--text2);
-  }
-
-  .step-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-    background: rgba(0, 200, 150, 0.08);
-    border: 1px solid rgba(0, 200, 150, 0.2);
-    padding: 2px 7px;
-    flex-shrink: 0;
-    height: fit-content;
-    margin-top: 2px;
-  }
-
-  .artifact-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    transition: gap 0.2s;
-  }
-
-  .artifact-link:last-child { border-bottom: none; }
-  .artifact-link:hover { gap: 14px; }
-
-  .artifact-link .aicon {
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-
-  .artifact-link .atext {
-    font-size: 13px;
-    color: var(--text2);
-    flex: 1;
-  }
-
-  .artifact-link .aarrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    transition: color 0.2s;
-  }
-
-  .artifact-link:hover .aarrow { color: var(--accent); }
-
-  /* ── TIMELINE BAR ── */
-  .timeline-strip {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 40px;
-  }
-
-  .timeline-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .timeline-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-
-  .timeline-track {
-    display: flex;
-    gap: 2px;
-  }
-
-  .timeline-item {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .timeline-bar-fill {
-    height: 4px;
-    margin-bottom: 12px;
-    border-radius: 0;
-  }
-
-  .fill-complete { background: var(--accent); }
-  .fill-planned { background: var(--border2); }
-  .fill-flagship { background: var(--amber); }
-
-  .timeline-item-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--text3);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .timeline-item.complete .timeline-item-label { color: var(--text2); }
-  .timeline-item.flagship .timeline-item-label { color: var(--amber); opacity: 0.7; }
-
-  /* ── BA PROCESS STRIP ── */
-  .process-strip {
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 48px 40px;
-  }
-  .process-inner { max-width: 1200px; margin: 0 auto; }
-  .process-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; color: var(--text3);
-    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px;
-  }
-  .process-track { display: flex; align-items: stretch; gap: 0; }
-  .process-step { flex: 1; min-width: 0; padding: 0 20px 0 0; position: relative; }
-  .process-step:not(:last-child)::after {
-    content: '→'; position: absolute; right: 2px; top: 50%;
-    transform: translateY(-50%);
-    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3);
-  }
-  .process-step-num {
-    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--accent);
-    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; opacity: 0.7;
-  }
-  .process-step-title {
-    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text);
-    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; font-weight: 500;
-  }
-  .process-step-desc {
-    font-family: 'Epilogue', sans-serif; font-size: 12px;
-    color: var(--text3); line-height: 1.6;
-  }
-  @media (max-width: 768px) {
-    .process-strip { padding: 32px 20px; }
-    .process-track { flex-direction: column; gap: 24px; }
-    .process-step { padding: 0; }
-    .process-step:not(:last-child)::after { display: none; }
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .footer-left {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    letter-spacing: 0.06em;
-  }
-
-  .footer-right {
-    display: flex;
-    gap: 24px;
-  }
-
-  .footer-right a {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    text-decoration: none;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .footer-right a:hover { color: var(--accent); }
-
-  /* ── DIVIDER ── */
-  .divider {
-    height: 1px;
-    background: var(--border);
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .nav-links { display: none; }
-    .hero { padding: 100px 20px 60px; }
-    section { padding: 60px 20px; }
-    .detail-content { padding: 40px 20px; }
-    .detail-hero { padding: 100px 20px 40px; }
-    footer { padding: 32px 20px; }
-    .timeline-strip { padding: 32px 20px; }
-  }
-
-  /* ── ENTRANCE ANIMATIONS ── */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.6s ease forwards;
-  }
-
-  .fade-up:nth-child(1) { animation-delay: 0.1s; }
-  .fade-up:nth-child(2) { animation-delay: 0.2s; }
-  .fade-up:nth-child(3) { animation-delay: 0.3s; }
-  .fade-up:nth-child(4) { animation-delay: 0.4s; }
-  .fade-up:nth-child(5) { animation-delay: 0.5s; }
-
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hadi Mercer | HR Operations, People Analytics and HR Technology</title>
+<meta name="description" content="HR professional in Dallas Fort Worth. Ten years in HR and operations, most of it at Amazon, plus five working HR tools I designed and built.">
+<link rel="canonical" href="https://hadimercer.github.io/">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1316" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hadi Mercer">
+<meta property="og:title" content="Hadi Mercer | HR that runs on good process and good data">
+<meta property="og:description" content="Senior HR generalist and HR operations professional in Dallas Fort Worth who builds the tools behind the work. Five live HR and analytics projects.">
+<meta property="og:url" content="https://hadimercer.github.io/">
+<meta property="og:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hadi Mercer | HR that runs on good process and good data">
+<meta name="twitter:description" content="Senior HR generalist and HR operations professional in Dallas Fort Worth who builds the tools behind the work. Five live HR and analytics projects.">
+<meta name="twitter:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta name="twitter:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..600,50;1,9..144,400,50&amp;family=Inter:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/site.js" defer></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -846,349 +39,592 @@
   gtag('js', new Date());
   gtag('config', 'G-38MGEGB275');
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Hadi Mercer",
+  "url": "https://hadimercer.github.io/",
+  "jobTitle": "HR professional",
+  "sameAs": ["https://www.linkedin.com/in/hadimercer", "https://github.com/hadimercer"],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Euless",
+    "addressRegion": "TX",
+    "addressCountry": "US"
+  },
+  "knowsLanguage": ["English", "French", "Arabic"]
+}
+</script>
 </head>
 <body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+</svg>
 
-<nav>
-  <a href="/" class="nav-logo">HM / Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<!-- ════════════════════ MAIN HOME ════════════════════ -->
-<div id="main-content">
-
-  <!-- HERO -->
-  <div class="hero" id="top">
-    <div class="grid-accent"></div>
-
-    <p class="hero-eyebrow fade-up">HR · People Analytics · Business Analysis — 2026</p>
-
-    <h1 class="fade-up">
-      Hadi<br><em>Mercer</em>
-    </h1>
-
-    <p class="hero-subtitle fade-up">
-      Operational complexity at scale teaches you where requirements fail before a line of code is written. Each project here starts with a defined problem, documented requirements, and a measurable outcome — not a feature list.
-    </p>
-
-    <div class="hero-meta fade-up">
-      <div class="meta-item">
-        <span class="meta-label">Background</span>
-        <span class="meta-value">HR Business Partnering · People Analytics · Operations · PMO</span>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="#top">Hadi Mercer</a>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#method">How I build</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-extra">
+        <button type="button" class="btn btn-ghost theme-toggle" data-theme-toggle>
+          <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+          <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+          <span data-theme-label>Switch to dark theme</span>
+        </button>
       </div>
-      <div class="meta-item">
-        <span class="meta-label">Focus</span>
-        <span class="meta-value">HR &amp; People Analytics · Business Analysis</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">Portfolio Projects</span>
-        <span class="meta-value">5 Live · 1 In Progress · 1 Planned</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">Location</span>
-        <span class="meta-value">Irving, TX (Dallas–Fort Worth) · Open to relocation</span>
-      </div>
-    </div>
-
-    <div class="hero-ctas fade-up">
-      <a href="#projects" class="btn-primary">View Projects ↓</a>
-      <a href="https://github.com/hadimercer" target="_blank" class="btn-secondary">GitHub ↗</a>
-      <a href="https://linkedin.com/in/hadimercer" target="_blank" class="btn-secondary">LinkedIn ↗</a>
-    </div>
-  </div>
-
-  <!-- PORTFOLIO PROGRESS STRIP -->
-  <div class="timeline-strip">
-    <div class="timeline-inner">
-      <p class="timeline-label">Portfolio delivery — 12-week roadmap</p>
-      <div class="timeline-track">
-        <div class="timeline-item complete">
-          <div class="timeline-bar-fill fill-complete"></div>
-          <div class="timeline-item-label">Comp Dash</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-bar-fill fill-complete"></div>
-          <div class="timeline-item-label">IncidentOps</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-bar-fill fill-complete"></div>
-          <div class="timeline-item-label">Meridian</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-bar-fill fill-complete"></div>
-          <div class="timeline-item-label">Cadence</div>
-        </div>
-        <div class="timeline-item complete">
-          <div class="timeline-bar-fill fill-complete"></div>
-          <div class="timeline-item-label">Lens</div>
-        </div>
-        <div class="timeline-item planned">
-          <div class="timeline-bar-fill fill-planned"></div>
-          <div class="timeline-item-label">Process Intel</div>
-        </div>
-        <div class="timeline-item flagship">
-          <div class="timeline-bar-fill fill-flagship"></div>
-          <div class="timeline-item-label">BA Co-Pilot</div>
-        </div>
-      </div>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="/?request=resume#contact" data-request="resume"><span class="label-long">Request my resume</span><span class="label-short">Resume</span></a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+        <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+      </button>
+      <button type="button" class="icon-btn menu-btn" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg class="icon icon-open" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg>
+        <svg class="icon icon-close" aria-hidden="true" focusable="false"><use href="#i-x"/></svg>
+      </button>
     </div>
   </div>
+</header>
 
-  <!-- BA METHODOLOGY STRIP -->
-  <div class="process-strip">
-    <div class="process-inner">
-      <p class="process-label">Methodology applied to every project</p>
-      <div class="process-track">
-        <div class="process-step">
-          <p class="process-step-num">01</p>
-          <p class="process-step-title">Problem Discovery</p>
-          <p class="process-step-desc">Define the current-state pain, identify who it affects, and establish what measurable improvement looks like.</p>
-        </div>
-        <div class="process-step">
-          <p class="process-step-num">02</p>
-          <p class="process-step-title">Requirements Engineering</p>
-          <p class="process-step-desc">Elicit, prioritise (MoSCoW), and document functional and non-functional requirements against a BABOK-aligned FRD.</p>
-        </div>
-        <div class="process-step">
-          <p class="process-step-num">03</p>
-          <p class="process-step-title">Solution Scoping</p>
-          <p class="process-step-desc">Draw explicit in/out-of-scope boundaries with rationale. Document technology decisions and trace each to a requirement.</p>
-        </div>
-        <div class="process-step">
-          <p class="process-step-num">04</p>
-          <p class="process-step-title">Build &amp; Document</p>
-          <p class="process-step-desc">Implement the solution alongside its artifacts — architecture diagrams, data dictionary, UML, and deployment documentation.</p>
-        </div>
-        <div class="process-step">
-          <p class="process-step-num">05</p>
-          <p class="process-step-title">Validate Outcome</p>
-          <p class="process-step-desc">Map each delivered feature to its originating requirement. Confirm success indicators from the objectives section are met.</p>
+<main id="main" tabindex="-1">
+
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">HR Operations · People Analytics · HR Technology</p>
+        <h1 id="hero-title">Hadi Mercer</h1>
+        <p class="lead">I fix the process behind the people problem, and I build the tools that keep it fixed.</p>
+        <p class="summary">Ten years in HR and operations, most of it at Amazon: employee relations and investigations, high-volume onboarding and compliance, performance and merit cycles, and the reporting leaders plan against. I also design and build working HR tools. Five of them are live on this site.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#work">See my work</a>
+          <a class="btn btn-secondary" href="/?request=resume#contact" data-request="resume">Request my resume</a>
+          <a class="btn btn-secondary" href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
         </div>
       </div>
+      <dl class="glance card">
+        <div><dt class="label">Based in</dt><dd>Euless, Texas (Dallas Fort Worth)</dd></div>
+        <div><dt class="label">Open to</dt><dd>Austin, San Antonio and remote</dd></div>
+        <div><dt class="label">Availability</dt><dd>Available now</dd></div>
+        <div><dt class="label">Work authorization</dt><dd>Authorized to work in the US, no sponsorship needed</dd></div>
+      </dl>
     </div>
-  </div>
+  </section>
 
-  <!-- ABOUT SECTION -->
-  <section id="about">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <h2 class="section-title">About</h2>
+  <section class="proof" aria-labelledby="proof-title">
+    <div class="container">
+      <h2 id="proof-title" class="sr-only">Results in numbers</h2>
+      <ul class="proof-list">
+        <li><span class="stat-num">5.6% <span class="to" aria-hidden="true">→</span><span class="sr-only">to</span> 1.2%</span><span class="stat-label">Weekly roster error rate after I put governance around it. The target was 2%.</span></li>
+        <li><span class="stat-num">700 <span class="to" aria-hidden="true">→</span><span class="sr-only">to</span> 2,300</span><span class="stat-label">Weekly visits to the HR knowledge base I built, within one month</span></li>
+        <li><span class="stat-num"><span class="to">About</span> 60</span><span class="stat-label">Associates moved into permanent roles at five nearby sites in two weeks, instead of losing work after peak</span></li>
+        <li><span class="stat-num">130 <span class="to">to</span> 150</span><span class="stat-label">New hires onboarded every week through 12-week peaks</span></li>
+      </ul>
     </div>
+  </section>
 
-    <p style="font-family:'Epilogue',sans-serif;font-size:15px;color:var(--text2);line-height:1.75;max-width:760px;margin-bottom:40px;">
-      Ten years of HR at scale — 6,000-associate sites, ER investigations, performance cycles, PMO reporting — taught me that most people problems are process and data problems underneath. The projects below are the tools I wished I'd had, each built from documented requirements to a measurable outcome. The discipline is Business Analysis; the domain depth is HR.
-    </p>
+  <section class="section section--flush" id="focus" aria-labelledby="focus-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Focus</p>
+        <h2 id="focus-title">What I do</h2>
+        <p class="intro">Three kinds of work, and each one makes the others better.</p>
+      </div>
+      <ul class="focus-grid" data-stagger>
+        <li class="focus-item reveal">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-users"/></svg>
+          <h3>HR operations and employee relations</h3>
+          <p>The daily core of HR at volume: employee questions and cases, investigations, onboarding, I-9 verification, background checks, drug testing, unemployment claims, and the merit and performance cycles. After a compliance audit I became my site’s quality gate on how investigations were run, reviewing 50 to 100 cases a year.</p>
+        </li>
+        <li class="focus-item reveal">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-chart"/></svg>
+          <h3>People data and reporting</h3>
+          <p>Attendance, attrition and internal mobility reporting that site leaders planned against. HRIS accuracy lifted to 99%, manual reporting cut by 30%, and weekly roster errors cut from 5.6% to 1.2%. I work in Excel (VBA and Power Query), SQL, Power BI and SharePoint.</p>
+        </li>
+        <li class="focus-item reveal">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg>
+          <h3>HR technology and responsible AI</h3>
+          <p>I design HR tools the way I run HR processes: problem first, requirements written down, every decision traceable. My projects include workflow automation with a full audit trail, compensation benchmarking on public data, and AI-assisted text analysis with human review and cost controls. AI in HR should be governed like any other policy.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-    <div class="skills-grid">
-      <div class="skill-cell">
-        <p class="skill-cell-label">Core Competencies</p>
-        <div class="skill-tags">
-          <span class="tag">Requirements Elicitation & Documentation</span>
-          <span class="tag">BABOK v3</span>
-          <span class="tag">BPMN 2.0</span>
-          <span class="tag">Process Design</span>
-          <span class="tag">OKR/KPI Framework Design</span>
-          <span class="tag">Stakeholder Management</span>
-          <span class="tag">Change Management</span>
-          <span class="tag">Lean & Continuous Improvement</span>
-          <span class="tag">Cross-functional Collaboration</span>
-          <span class="tag">Agile/Scrum</span>
-        </div>
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Work</p>
+        <h2 id="work-title">Selected work</h2>
+        <p class="intro">Personal projects, built on synthetic or public data. Each one starts from an HR or operations problem I have seen up close, has written requirements, and is live for you to try.</p>
       </div>
-      <div class="skill-cell">
-        <p class="skill-cell-label">Technical — Established</p>
-        <div class="skill-tags">
-          <span class="tag">SQL · PostgreSQL</span>
-          <span class="tag">Python (Pandas · Plotly · Streamlit)</span>
-          <span class="tag">Excel (Advanced) · Power Query</span>
-          <span class="tag">Amazon QuickSight</span>
-          <span class="tag">Power BI</span>
-          <span class="tag">Git/GitHub</span>
-          <span class="tag">Supabase</span>
-          <span class="tag">HRIS Platforms (Workday · SuccessFactors)</span>
-          <span class="tag">Workflow Automation</span>
-          <span class="tag">FRD Documentation (BABOK-aligned)</span>
-          <span class="tag">Traceability Matrix Design</span>
-        </div>
-      </div>
-      <div class="skill-cell">
-        <p class="skill-cell-label">Technical — In Progress</p>
-        <div class="skill-tags">
-          <span class="tag learning">REST APIs</span>
-          <span class="tag learning">OpenAI API</span>
-          <span class="tag learning">Simulation Modelling</span>
-          <span class="tag learning">UML</span>
-          <span class="tag learning">Advanced Process Mining</span>
-          <span class="tag learning">OpenAPI Specification Design</span>
-        </div>
-      </div>
-      <div class="skill-cell">
-        <p class="skill-cell-label">Languages & Domain</p>
-        <div style="margin-bottom: 12px;">
-          <p class="meta-label" style="margin-bottom: 8px;">Languages</p>
-          <div class="skill-tags">
-            <span class="tag">English (Fluent)</span>
-            <span class="tag">French (Fluent)</span>
-            <span class="tag">Arabic (Native)</span>
+
+      <div class="work-grid" data-stagger>
+
+        <article class="project-card project-card--featured reveal" data-project="cadence" aria-labelledby="p-cadence">
+          <div class="card-body">
+            <p class="kicker">HR workflow automation</p>
+            <h3 id="p-cadence">Cadence: four HR processes, one audit trail</h3>
+            <p>Headcount reporting, performance check-ins, merit review and attrition risk usually live in separate spreadsheets owned by different people. Cadence runs them as one connected system with structured intake, automated routing and a full audit trail, so each workflow’s output feeds the next.</p>
+            <ul class="chips">
+              <li class="chip">HR process design</li>
+              <li class="chip">Rules engines</li>
+              <li class="chip">PostgreSQL data model</li>
+            </ul>
           </div>
+          <ul class="feature-stats">
+            <li><strong>4</strong><span>connected HR workflows</span></li>
+            <li><strong>45</strong><span>written functional requirements</span></li>
+            <li><strong>13</strong><span>tables in one PostgreSQL data model</span></li>
+          </ul>
+          <div class="card-links">
+            <a class="primary" href="/projects/cadence.html">Case study<span class="sr-only">: Cadence</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
+            <a href="https://cadence-hr-workflow.streamlit.app/" target="_blank" rel="noopener">Live demo<span class="sr-only">: Cadence (opens in a new tab)</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg></a>
+            <a href="https://github.com/hadimercer/Cadence_HR_HUB" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg> Code<span class="sr-only">: Cadence on GitHub (opens in a new tab)</span></a>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-project="comp-dashboard" aria-labelledby="p-comp">
+          <div class="card-body">
+            <p class="kicker">Compensation analytics</p>
+            <h3 id="p-comp">Comp Dash: market benchmarking on public BLS data</h3>
+            <p>Pay benchmarks go stale in spreadsheets. Comp Dash pulls real Bureau of Labor Statistics wage data for five US metros, maps it to a fictional company’s job families, and flags where pay sits outside the market range. It is built for analysis and monitoring, not for setting pay.</p>
+            <ul class="chips">
+              <li class="chip">Data pipeline</li>
+              <li class="chip">Market positioning</li>
+              <li class="chip">Pay equity monitoring</li>
+            </ul>
+          </div>
+          <div class="card-links">
+            <a class="primary" href="/projects/comp-dashboard.html">Case study<span class="sr-only">: Comp Dash</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
+            <a href="https://comp-benchmarking-hadimercer-ps2.streamlit.app/" target="_blank" rel="noopener">Live demo<span class="sr-only">: Comp Dash (opens in a new tab)</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg></a>
+            <a href="https://github.com/hadimercer/Comp-Benchmarking" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg> Code<span class="sr-only">: Comp Dash on GitHub (opens in a new tab)</span></a>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-project="lens" aria-labelledby="p-lens">
+          <div class="card-body">
+            <p class="kicker">AI-assisted text analysis</p>
+            <h3 id="p-lens">Lens: open-text feedback, analyzed with guardrails</h3>
+            <p>Survey comments and feedback pile up and get read once. Lens validates a batch, uses an AI model to score sentiment and pull out themes, stores every run so you can compare cycles, and keeps the paid model behind an admin gate and a model allowlist.</p>
+            <ul class="chips">
+              <li class="chip">Responsible AI design</li>
+              <li class="chip">Trend over time</li>
+              <li class="chip">Governance controls</li>
+            </ul>
+          </div>
+          <div class="card-links">
+            <a class="primary" href="/projects/lens.html">Case study<span class="sr-only">: Lens</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
+            <a href="https://lens-sentiment-engine.streamlit.app/" target="_blank" rel="noopener">Live demo<span class="sr-only">: Lens (opens in a new tab)</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg></a>
+            <a href="https://github.com/hadimercer/Lens_Sentiment_Engine" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg> Code<span class="sr-only">: Lens on GitHub (opens in a new tab)</span></a>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-project="meridian" aria-labelledby="p-meridian">
+          <div class="card-body">
+            <p class="kicker">Workstream health</p>
+            <h3 id="p-meridian">Meridian: status that is calculated, not declared</h3>
+            <p>A status color updated on a Friday afternoon says whatever was last typed. Meridian calculates health from milestones, budget burn and open blockers, the same way for every workstream, with sign-in and row-level security so each person sees only their own data.</p>
+            <ul class="chips">
+              <li class="chip">Scoring design</li>
+              <li class="chip">Role-based access</li>
+              <li class="chip">35 written requirements</li>
+            </ul>
+          </div>
+          <div class="card-links">
+            <a class="primary" href="/projects/meridian.html">Case study<span class="sr-only">: Meridian</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
+            <a href="https://meridian-hadimercer.streamlit.app/home" target="_blank" rel="noopener">Live demo<span class="sr-only">: Meridian (opens in a new tab)</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg></a>
+            <a href="https://github.com/hadimercer/Meridian_Workstream" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg> Code<span class="sr-only">: Meridian on GitHub (opens in a new tab)</span></a>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-project="incidentops" aria-labelledby="p-incidentops">
+          <div class="card-body">
+            <p class="kicker">Process mining</p>
+            <h3 id="p-incidentops">IncidentOps: how work really flows</h3>
+            <p>Averages hide the costly paths. IncidentOps applies process mining to a service-desk event log to show where real cases leave the intended process, which paths take longest, and where escalations bounce back and forth. It asks the same question I asked about inbound flow at Amazon: not who is slow, but where the order of the work breaks.</p>
+            <ul class="chips">
+              <li class="chip">Process mining</li>
+              <li class="chip">Bottleneck analysis</li>
+              <li class="chip">KPI design</li>
+            </ul>
+          </div>
+          <div class="card-links">
+            <a class="primary" href="/projects/incidentops.html">Case study<span class="sr-only">: IncidentOps</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
+            <a href="https://incidentopspmi-hadimercer.streamlit.app/" target="_blank" rel="noopener">Live demo<span class="sr-only">: IncidentOps (opens in a new tab)</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"/></svg></a>
+            <a href="https://github.com/hadimercer/IncidentOps_PMI_Hub" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg> Code<span class="sr-only">: IncidentOps on GitHub (opens in a new tab)</span></a>
+          </div>
+        </article>
+
+        <article class="private-card reveal" aria-labelledby="p-copilot">
+          <div>
+            <p class="kicker">Side project <span class="tag tag-private">Private</span></p>
+            <h3 id="p-copilot">BA Co-Pilot</h3>
+            <p>An AI assistant that turns stakeholder conversations into first drafts of business analysis documents: requirements, user stories and traceability. It is private while I test it, and I am happy to walk you through it.</p>
+          </div>
+          <a class="btn btn-secondary" href="/?request=walkthrough#contact" data-request="walkthrough">Request a walkthrough</a>
+        </article>
+
+      </div>
+
+      <p class="work-note"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg> The demos run on Streamlit’s free tier. If one is asleep, it wakes up in about 30 seconds.</p>
+    </div>
+  </section>
+
+  <section class="section" id="experience" aria-labelledby="experience-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Career</p>
+        <h2 id="experience-title">Experience</h2>
+        <p class="intro">Promoted three times at Amazon, across HR and operations. Before that, I helped build an HR function from nothing, and I started in HR reporting and recruiting.</p>
+      </div>
+
+      <ol class="timeline">
+        <li class="tl-item reveal">
+          <p class="tl-date">Mar 2025 to present</p>
+          <div class="tl-body">
+            <h3 class="tl-title">Independent HR Subject-Matter Expert</h3>
+            <p class="tl-org">Expert-network consulting, clients confidential</p>
+            <ul class="tl-points">
+              <li>Paid expert sessions with companies building HR software, on how employee lifecycle and separation processes actually run inside large employers.</li>
+              <li>Designed and built the five HR and analytics tools on this site.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="tl-item reveal">
+          <p class="tl-date">Aug 2024 to Feb 2025</p>
+          <div class="tl-body">
+            <h3 class="tl-title">Operations Manager II, Inbound and ICQA</h3>
+            <p class="tl-org">Amazon, Texas</p>
+            <ul class="tl-points">
+              <li>Took over a night shift of about 40 associates after two managers resigned. Cut the receive backlog from five days to two within a month and held it through peak.</li>
+              <li>Built a training pathways system that cut escalations for untrained staffing by about a quarter; all four shifts adopted it.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="tl-item reveal">
+          <p class="tl-date">Jun 2022 to Aug 2024</p>
+          <div class="tl-body">
+            <h3 class="tl-title">HR Partner (PXT)</h3>
+            <p class="tl-org">Amazon, Connecticut then Texas</p>
+            <ul class="tl-points">
+              <li>Day-to-day HR for 6,000+ hourly and salaried employees across two 24/7 fulfillment centers. Partner to 12 senior leaders and coach to 130+ front-line managers.</li>
+              <li>Site quality gate for employee relations investigations after a compliance audit, reviewing 50 to 100 cases a year for accuracy and documentation quality.</li>
+              <li>Cut weekly roster errors from 5.6% to 1.2%, lifted HRIS accuracy to 99%, and brought a failing internal transfer process to 100% accuracy within a month.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="tl-item reveal">
+          <p class="tl-date">Feb 2021 to Jun 2022</p>
+          <div class="tl-body">
+            <h3 class="tl-title">Sr. HR Assistant</h3>
+            <p class="tl-org">Amazon, Connecticut</p>
+            <ul class="tl-points">
+              <li>Employee relations intake, policy guidance and onboarding through peaks of 130 to 150 new hires a week. Owned the site engagement KPI and coached bottom-quartile managers on their results.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="tl-item reveal">
+          <p class="tl-date">Oct 2019 to Feb 2021</p>
+          <div class="tl-body">
+            <h3 class="tl-title">Quality Process Assistant</h3>
+            <p class="tl-org">Amazon, Connecticut</p>
+            <ul class="tl-points">
+              <li>Coordinated five quality coaches and built a coaching workstation (Excel VBA, Power Query, SharePoint) that lifted coaching from 50 to 60 a day to about 250.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="tl-item tl-item--muted reveal">
+          <p class="tl-date">2017 to 2019</p>
+          <div class="tl-body">
+            <h3 class="tl-title">Relocation to the United States</h3>
+          </div>
+        </li>
+        <li class="tl-item reveal">
+          <p class="tl-date">Dec 2016 to Jul 2017</p>
+          <div class="tl-body">
+            <h3 class="tl-title">Project Management Officer</h3>
+            <p class="tl-org">Digital Works Group, Morocco</p>
+            <ul class="tl-points">
+              <li>Moved by the CEO into a chief-of-staff style role. Owned the executive trackers and oversaw an ERP deployment from process maps to go-live.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="tl-item reveal">
+          <p class="tl-date">Apr 2016 to Dec 2016</p>
+          <div class="tl-body">
+            <h3 class="tl-title">HR Business Partner <span class="tl-qual">(one of three)</span></h3>
+            <p class="tl-org">Digital Works Group, Morocco and Egypt</p>
+            <ul class="tl-points">
+              <li>One of three HR Business Partners who built recruitment, onboarding, performance and offboarding from nothing for 1,200+ employees in two countries.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="tl-item reveal">
+          <p class="tl-date">Apr 2014 to Mar 2016</p>
+          <div class="tl-body">
+            <h3 class="tl-title">HP-CDG IT Services Maroc</h3>
+            <p class="tl-org">Rabat, Morocco</p>
+            <ul class="tl-roles">
+              <li>HR Reporting Specialist · <span class="num">Mar 2015 to Mar 2016</span></li>
+              <li>Recruitment Process Lead · <span class="num">Oct 2014 to Mar 2015</span></li>
+              <li>HR Analyst (paid internship) · <span class="num">Apr 2014 to Sep 2014</span></li>
+            </ul>
+            <ul class="tl-points">
+              <li>Hired 40+ engineers across five software projects, cut hiring cycle time 15%, and automated HR reporting to cut manual effort 30%.</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+
+      <div class="edu-grid reveal">
+        <div>
+          <h3 class="label">Education</h3>
+          <ul>
+            <li><strong>Master’s degree, Entrepreneurial and Managerial Engineering</strong> (minor in Human Resources Management), Mohammed V University, Rabat, 2014</li>
+            <li><strong>Bachelor’s degree, Management</strong>, Mohammed V University, Rabat, 2012</li>
+          </ul>
         </div>
-        <div style="border-top: 1px solid var(--border2); padding-top: 12px;">
-          <p class="meta-label" style="margin-bottom: 8px;">Domain</p>
-          <div class="skill-tags">
-            <span class="tag">Regulatory Compliance</span>
-            <span class="tag">Workforce Analytics</span>
-            <span class="tag">Employee Relations</span>
-            <span class="tag">Performance Management</span>
-            <span class="tag">IT Service Management</span>
-            <span class="tag">Compensation Analytics</span>
-            <span class="tag">HR Process Automation</span>
+        <div>
+          <h3 class="label">Certificate</h3>
+          <ul>
+            <li><strong>Workday Basics Series</strong> (Workday via Coursera)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="edu-cta">
+        <a class="btn btn-primary" href="/?request=resume#contact" data-request="resume">Request my full resume</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="method" aria-labelledby="method-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Method</p>
+        <h2 id="method-title">How I build</h2>
+        <p class="intro">Business analysis is how I work, not what I am. Every project follows the same four steps, and the documents are public so you can check the work.</p>
+      </div>
+      <ol class="steps" data-stagger>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">01</span>
+          <h3>Start with the problem.</h3>
+          <p>Who is affected, what it costs, and what better looks like in numbers.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">02</span>
+          <h3>Write the requirements.</h3>
+          <p>What the tool must do, what it must never do, what is in scope and what is out, and why.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">03</span>
+          <h3>Build and document.</h3>
+          <p>The working tool, plus its process maps, data model and diagrams.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num" aria-hidden="true">04</span>
+          <h3>Check it against the goal.</h3>
+          <p>Every feature traced back to a requirement, and every requirement back to an objective.</p>
+        </li>
+      </ol>
+      <div class="docs-row reveal">
+        <p>Read the documents:</p>
+        <ul>
+          <li><a href="/artifacts/cadence/frd.html">Cadence requirements</a></li>
+          <li><a href="/artifacts/comp-dashboard/frd.html">Comp Dash requirements</a></li>
+          <li><a href="/artifacts/lens/frd.html">Lens requirements</a></li>
+          <li><a href="/artifacts/meridian/frd.html">Meridian requirements</a></li>
+          <li><a href="/artifacts/incidentops/frd.html">IncidentOps requirements</a></li>
+          <li><a href="/artifacts/cadence/bpmn.html">Process maps and diagrams</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="words" aria-labelledby="words-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">References</p>
+        <h2 id="words-title">What colleagues say</h2>
+      </div>
+      <div class="quotes" data-stagger>
+        <figure class="quote reveal">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <blockquote>
+            <p>As a dedicated people partner, he consistently demonstrated the ability to use data not only to react to emerging issues but also to anticipate and proactively address challenges within his client groups.</p>
+          </blockquote>
+          <figcaption><strong>Michael Holland</strong>Human Resources Manager, Amazon</figcaption>
+        </figure>
+        <figure class="quote reveal">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <blockquote>
+            <p>He has a unique ability to identify trends, uncover root causes, and partner with leaders to implement practical solutions that improve both business performance and employee experience.</p>
+          </blockquote>
+          <figcaption><strong>Michael Piscitelli</strong>Senior Human Resources Business Partner, Yale New Haven Health. Worked with Hadi as fellow HR Partners at Amazon.</figcaption>
+        </figure>
+      </div>
+      <p class="quotes-note">From <a href="https://www.linkedin.com/in/hadimercer/details/recommendations/" target="_blank" rel="noopener">LinkedIn recommendations<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+    </div>
+  </section>
+
+  <section class="section" id="toolkit" aria-labelledby="toolkit-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Toolkit</p>
+        <h2 id="toolkit-title">Tools I work with</h2>
+      </div>
+      <div class="toolkit" data-stagger>
+        <div class="tool-group reveal">
+          <h3 class="label">HR systems</h3>
+          <ul class="chips">
+            <li class="chip">Workday (reporting and approvals)</li>
+            <li class="chip">PeopleSoft</li>
+            <li class="chip">Kronos</li>
+            <li class="chip">SuccessFactors (reporting)</li>
+          </ul>
+        </div>
+        <div class="tool-group reveal">
+          <h3 class="label">Data and reporting</h3>
+          <ul class="chips">
+            <li class="chip">Excel (VBA, Power Query)</li>
+            <li class="chip">SQL and PostgreSQL</li>
+            <li class="chip">Power BI</li>
+            <li class="chip">Amazon QuickSight</li>
+            <li class="chip">Python (pandas, Streamlit)</li>
+          </ul>
+        </div>
+        <div class="tool-group reveal">
+          <h3 class="label">Process and delivery</h3>
+          <ul class="chips">
+            <li class="chip">BPMN 2.0</li>
+            <li class="chip">UML</li>
+            <li class="chip">Requirements documents</li>
+            <li class="chip">SharePoint</li>
+            <li class="chip">Git and GitHub</li>
+          </ul>
+        </div>
+        <div class="tool-group reveal">
+          <h3 class="label">Languages</h3>
+          <ul class="chips">
+            <li class="chip">English</li>
+            <li class="chip">French</li>
+            <li class="chip">Arabic</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-title">Request my resume, or just say hello</h2>
+        <p class="intro">I tailor my resume to the role, so tell me a little about yours and I will send the right version. I reply personally, usually within a day.</p>
+      </div>
+      <div class="contact-grid">
+        <form class="card form-card" action="https://api.web3forms.com/submit" method="POST" data-endpoint="https://api.web3forms.com/submit" data-request-form>
+          <input type="hidden" name="access_key" value="4995c544-775b-4cb2-a10b-fb3acaebbe6e">
+          <input type="hidden" name="from_name" value="hadimercer.github.io">
+          <input type="hidden" name="subject" value="Portfolio request from hadimercer.github.io">
+          <input type="hidden" name="redirect" value="https://hadimercer.github.io/thanks.html">
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+          <div class="form-grid">
+            <div class="field">
+              <label for="f-name">Your name</label>
+              <input class="input" id="f-name" name="name" type="text" autocomplete="name" required>
+              <p class="field-error" id="f-name-error" hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><span>Please add your name.</span></p>
+            </div>
+            <div class="field">
+              <label for="f-email">Work email</label>
+              <input class="input" id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+              <p class="field-error" id="f-email-error" hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><span>Please add a valid email address.</span></p>
+            </div>
+            <div class="field">
+              <label for="f-company">Company</label>
+              <input class="input" id="f-company" name="company" type="text" autocomplete="organization" required>
+              <p class="field-error" id="f-company-error" hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><span>Please add your company.</span></p>
+            </div>
+            <div class="field">
+              <label for="f-role">Role you are hiring for</label>
+              <input class="input" id="f-role" name="role" type="text" placeholder="For example, Senior HR Generalist" required>
+              <p class="field-error" id="f-role-error" hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><span>Please tell me the role.</span></p>
+            </div>
+            <div class="field field--full">
+              <label for="f-request">What would you like?</label>
+              <div class="select-wrap">
+                <select class="input" id="f-request" name="request">
+                  <option selected>My resume</option>
+                  <option>A walkthrough of BA Co-Pilot</option>
+                  <option>Access to a demo (Meridian or Lens)</option>
+                  <option>A conversation about a role</option>
+                  <option>Something else</option>
+                </select>
+                <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-chevron"/></svg>
+              </div>
+            </div>
+            <div class="field field--full">
+              <label for="f-message">Message <span class="optional">(optional)</span></label>
+              <textarea class="input" id="f-message" name="message" rows="5"></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Send request</button>
+          </div>
+          <div class="form-status" role="status" aria-live="polite" tabindex="-1"></div>
+          <p class="form-note">I only use your details to reply to you. Prefer email? Write to <a href="mailto:hadibmercer@gmail.com">hadibmercer@gmail.com</a>.</p>
+        </form>
+
+        <div class="contact-aside reveal">
+          <ul class="contact-list">
+            <li><a href="mailto:hadibmercer@gmail.com"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg><span><span class="label">Email</span><span class="contact-value">hadibmercer@gmail.com</span></span></a></li>
+            <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg><span><span class="label">LinkedIn</span><span class="contact-value">linkedin.com/in/hadimercer</span></span><span class="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a href="https://github.com/hadimercer" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg><span><span class="label">GitHub</span><span class="contact-value">github.com/hadimercer</span></span><span class="sr-only"> (opens in a new tab)</span></a></li>
+          </ul>
+          <div class="contact-meta">
+            <p><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"/></svg><span>Euless, Texas (Dallas Fort Worth). Open to Austin, San Antonio and remote. Available now. Authorized to work in the US, no sponsorship needed.</span></p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="divider"></div>
+</main>
 
-  <!-- PROJECTS SECTION -->
-  <section id="projects">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <h2 class="section-title">Projects</h2>
-      <p class="meta-label" style="margin-left:auto;align-self:center;letter-spacing:0.08em;">Defined problem → documented requirements → working application</p>
-    </div>
-
-    <div class="projects-grid">
-
-      <!-- S2: Comp Dashboard -->
-      <a class="project-card" href="projects/comp-dashboard.html">
-        <span class="card-arrow">↗</span>
-        <div class="card-badge badge-live">Live</div>
-        <h3 class="card-title">Compensation & Market Benchmarking Dashboard</h3>
-        <p class="card-desc">Compensation decisions made without current market data create pay equity risk and retention exposure. This tool translates raw BLS survey data into position-by-position benchmarks, flags where internal salaries fall outside defensible ranges, and surfaces geographic differentials across 5 US metros — turning an annual spreadsheet exercise into a live analytical capability.</p>
-        <div class="card-tech">
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">PostgreSQL</span>
-          <span class="tech-tag">Streamlit</span>
-          <span class="tech-tag">BLS API</span>
-          <span class="tech-tag">FRD</span>
-        </div>
-      </a>
-
-      <!-- IncidentOps -->
-      <a class="project-card" href="projects/incidentops.html">
-        <span class="card-arrow">↗</span>
-        <div class="card-badge badge-live">Live</div>
-        <h3 class="card-title">IncidentOps — Process Mining Insights Hub</h3>
-        <p class="card-desc">IT service desks accumulate process debt silently — tickets take longer than expected, escalations follow no consistent pattern, and closure compliance erodes without anyone seeing the aggregate picture. IncidentOps applies process mining to a real event log, surfaces where the actual incident lifecycle diverges from the intended process, and identifies the variant patterns responsible for the longest cycle times.</p>
-        <div class="card-tech">
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">Process Mining</span>
-          <span class="tech-tag">PostgreSQL</span>
-          <span class="tech-tag">Streamlit</span>
-          <span class="tech-tag">BPMN</span>
-        </div>
-      </a>
-
-      <!-- S3: Meridian -->
-      <a class="project-card" href="projects/meridian.html">
-        <span class="card-arrow">↗</span>
-        <div class="card-badge badge-live">Live</div>
-        <h3 class="card-title">Meridian — Workstream Portfolio Health Dashboard</h3>
-        <p class="card-desc">Portfolio managers reporting RAG status manually introduce subjective bias — the same workstream gets rated differently depending on who completes the update. Meridian replaces manual status judgement with a calculated health score derived from milestone completion, budget burn rate, and blocker age, applied consistently across all workstreams with role-based access for multi-user collaboration.</p>
-        <div class="card-tech">
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">Supabase Auth</span>
-          <span class="tech-tag">RLS</span>
-          <span class="tech-tag">Streamlit</span>
-          <span class="tech-tag">35 FRs</span>
-        </div>
-      </a>
-
-      <!-- S1: Cadence -->
-      <a class="project-card" href="projects/cadence.html">
-        <span class="card-arrow">↗</span>
-        <div class="card-badge badge-live">Live</div>
-        <h3 class="card-title">Cadence — HR Process Automation Hub</h3>
-        <p class="card-desc">Manual HR process coordination creates compliance gaps: tasks missed during onboarding, no audit trail for policy acknowledgements, and no visibility into where a request is stalled. Cadence replaces ad-hoc coordination with structured intake, automated task routing, and a complete audit trail — turning four high-frequency HR processes into governed, repeatable workflows.</p>
-        <div class="card-tech">
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">Streamlit</span>
-          <span class="tech-tag">PostgreSQL</span>
-          <span class="tech-tag">BPMN</span>
-          <span class="tech-tag">Automation</span>
-        </div>
-      </a>
-
-      <!-- S4: Lens -->
-      <a class="project-card" href="projects/lens.html">
-        <span class="card-arrow">↗</span>
-        <div class="card-badge badge-live">Live</div>
-        <h3 class="card-title">Lens — Sentiment & Text Analytics Tool</h3>
-        <p class="card-desc">Organisations collect customer feedback at scale but lack a consistent method for turning unstructured text into comparable, longitudinal insight. Lens provides a structured intake, validation, and LLM-assisted sentiment analysis pipeline — producing categorised results that persist across cycles so trend analysis is possible rather than one-off interpretation.</p>
-        <div class="card-tech">
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">OpenAI API</span>
-          <span class="tech-tag">PostgreSQL</span>
-          <span class="tech-tag">Streamlit</span>
-          <span class="tech-tag">NLP</span>
-        </div>
-      </a>
-
-      <!-- F1: Coming Soon -->
-      <div class="project-card coming-soon">
-        <div class="card-badge badge-soon">In Progress</div>
-        <h3 class="card-title">Operational Process Intelligence Platform</h3>
-        <p class="card-desc">What-if simulation engine for process improvement. Models the downstream impact of operational changes before implementation.</p>
-        <div class="card-tech">
-          <span class="tech-tag">Simulation</span>
-          <span class="tech-tag">Process Intelligence</span>
-          <span class="tech-tag">Python</span>
-        </div>
-      </div>
-
-      <!-- F2: Coming Soon -->
-      <div class="project-card coming-soon">
-        <div class="card-badge badge-flagship">Planned</div>
-        <h3 class="card-title">Business Analysis Co-Pilot</h3>
-        <p class="card-desc">AI-powered assistant for BA artifact generation. Produces BABOK-aligned FRDs, user stories, and traceability matrices from stakeholder conversations.</p>
-        <div class="card-tech">
-          <span class="tech-tag">LLM</span>
-          <span class="tech-tag">BABOK</span>
-          <span class="tech-tag">AI-Assisted BA</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <footer>
-    <p class="footer-left">© 2026 Hadi Mercer · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9bf3fafff2f9f6fee9f8fee9dbfcf6faf2f7b5f8f4f6">[email&#160;protected]</a></p>
-    <div class="footer-right">
-      <a href="https://github.com/hadimercer" target="_blank">GitHub</a>
-      <a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn</a>
-    </div>
-  </footer>
-
-</div><!-- end main-content -->
-<script>
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      if (href === '#') return;
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-</script>
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2026 Hadi Mercer. Designed and built by me, from requirements to deployment.</p>
+    <ul class="footer-links">
+      <li><a href="mailto:hadibmercer@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="https://github.com/hadimercer" target="_blank" rel="noopener">GitHub<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
+  </div>
+</footer>
 </body>
 </html>
