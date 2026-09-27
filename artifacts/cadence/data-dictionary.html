@@ -1,69 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadence Data Dictionary | Hadi Mercer Portfolio</title>
-<meta name="description" content="Data dictionary for Cadence — HR Process Automation Hub. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<meta property="og:title" content="Cadence Data Dictionary | Hadi Mercer Portfolio">
-<meta property="og:description" content="Data dictionary for Cadence — HR Process Automation Hub. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0d0f; --surface: #111518; --surface2: #181d21;
-    --border: #1f2629; --border2: #2a3338;
-    --accent: #00c896; --accent2: #0087ff;
-    --text: #e8eaeb; --text2: #8a9299; --text3: #4a5560;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Epilogue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; background: rgba(10,13,15,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-  .nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
-  .nav-links { display: flex; gap: 32px; list-style: none; }
-  .nav-links a { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--text); }
-
-  .breadcrumb-bar { padding: 80px 40px 0; max-width: 1200px; margin: 0 auto; }
-  .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; padding-top: 24px; }
-  .breadcrumb a { color: var(--text3); text-decoration: none; }
-  .breadcrumb a:hover { color: var(--accent); }
-  .breadcrumb-sep { color: var(--border2); }
-
-  .page-header { max-width: 1200px; margin: 0 auto; padding: 32px 40px 0; }
-  .artifact-type-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
-  .page-title { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--text); margin-bottom: 8px; }
-  .page-subtitle { font-size: 15px; color: var(--text2); font-weight: 300; max-width: 640px; line-height: 1.6; }
-
-  .doc-meta-block { max-width: 1200px; margin: 0 auto; padding: 28px 40px 0; }
-  .doc-meta-inner { display: flex; flex-wrap: wrap; border: 1px solid var(--border2); }
-  .doc-meta-cell { flex: 1 1 140px; padding: 14px 20px; border-right: 1px solid var(--border2); }
-  .doc-meta-cell:last-child { border-right: none; }
-  .doc-meta-key { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-  .doc-meta-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); }
-
-  .doc-body { max-width: 1200px; margin: 0 auto; padding: 48px 40px 80px; }
-
-  .preview-block { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px; margin-bottom: 32px; }
-  .preview-block h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--text); margin-bottom: 16px; }
-  .preview-block p { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 14px; max-width: 800px; }
-
-  .table-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 20px; }
-  .table-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
-  .table-card .tc-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); margin-bottom: 6px; }
-  .table-card .tc-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
-
-  .download-cta { background: rgba(0,200,150,0.06); border: 1px solid rgba(0,200,150,0.25); border-radius: 8px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-  .download-cta p { font-size: 14px; color: var(--text2); max-width: 560px; line-height: 1.6; }
-  .download-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); border: 1px solid rgba(0,200,150,0.4); padding: 10px 20px; border-radius: 4px; text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.2s; white-space: nowrap; }
-  .download-btn:hover { background: rgba(0,200,150,0.1); }
-
-  footer { border-top: 1px solid var(--border); padding: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 20px; }
-  .footer-left { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); }
-  .footer-right a { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; margin-left: 24px; }
-  .footer-right a:hover { color: var(--accent); }
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadence: data dictionary | Hadi Mercer</title>
+<meta name="description" content="Data dictionary for Cadence, a personal HR workflow project: every table, column and business definition across four HR workflows.">
+<link rel="canonical" href="https://hadimercer.github.io/artifacts/cadence/data-dictionary.html">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1316" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Hadi Mercer">
+<meta property="og:title" content="Cadence: data dictionary | Hadi Mercer">
+<meta property="og:description" content="Data dictionary for Cadence, a personal HR workflow project: every table, column and business definition across four HR workflows.">
+<meta property="og:url" content="https://hadimercer.github.io/artifacts/cadence/data-dictionary.html">
+<meta property="og:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cadence: data dictionary | Hadi Mercer">
+<meta name="twitter:description" content="Data dictionary for Cadence, a personal HR workflow project: every table, column and business definition across four HR workflows.">
+<meta name="twitter:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta name="twitter:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..600,50;1,9..144,400,50&amp;family=Inter:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/artifacts/shared/diagram-shell.css">
+<script src="/assets/js/site.js" defer></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -73,42 +41,55 @@
   gtag('config', 'G-38MGEGB275');
 </script>
 </head>
-<body>
+<body data-project="cadence">
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+</svg>
 
-<nav>
-  <a href="../../index.html" class="nav-logo">HM / Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-    <li><a href="https://linkedin.com/in/hadimercer" target="_blank">LinkedIn ↗</a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
+<header class="site-header doc-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/">Hadi Mercer</a>
+    <span class="doc-crumb">· Documents</span>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="/projects/cadence.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg> <span class="label-long">Back to Cadence</span><span class="label-short">Cadence</span></a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+        <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<div class="breadcrumb-bar" id="top">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
     <span class="breadcrumb-sep">/</span>
-    <a href="../cadence.html">Cadence</a>
+    <a href="/projects/cadence.html">Cadence</a>
     <span class="breadcrumb-sep">/</span>
     <span>Data Dictionary</span>
-  </div>
+  </nav>
 </div>
 
 <div class="page-header">
   <p class="artifact-type-label">BA Artifact · Data Dictionary</p>
-  <h1 class="page-title">Cadence — Data Dictionary</h1>
+  <h1 class="page-title">Cadence: Data Dictionary</h1>
   <p class="page-subtitle">Column-level definitions, data types, constraints, and plain-language descriptions for all tables in the Cadence HR Hub PostgreSQL schema.</p>
 </div>
 
 <div class="doc-meta-block">
   <div class="doc-meta-inner">
     <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">Cadence_DD_v0.2</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">0.2 — Portfolio</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Project</div><div class="doc-meta-val">Cadence HR Hub (S1)</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">0.2 · Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Project</div><div class="doc-meta-val">Cadence HR Hub</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Format</div><div class="doc-meta-val">Word Document (.docx)</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Source</div><div class="doc-meta-val"><a href="https://github.com/hadimercer/Cadence_HR_HUB/blob/main/docs/artifacts/Cadence_Data_Dictionary_v0.2.docx" target="_blank" style="color:var(--accent);text-decoration:none;">GitHub ↗</a></div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Source</div><div class="doc-meta-val"><a href="https://github.com/hadimercer/Cadence_HR_HUB/blob/main/docs/artifacts/Cadence_Data_Dictionary_v0.2.docx" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">GitHub ↗</a></div></div>
   </div>
 </div>
 
@@ -116,7 +97,7 @@
 
   <div class="preview-block">
     <h2>Schema Overview</h2>
-    <p>The Cadence data dictionary defines every table, column, data type, constraint, and plain-language business definition across the four workflow modules. It is designed for developer handoff and stakeholder review — each entry explains not just the technical type but the business meaning and any design rationale for non-obvious decisions.</p>
+    <p>The Cadence data dictionary defines every table, column, data type, constraint, and plain-language business definition across the four workflow modules. It is designed for developer handoff and stakeholder review: each entry explains not just the technical type but the business meaning and any design rationale for non-obvious decisions.</p>
 
     <div class="table-grid">
       <div class="table-card">
@@ -156,18 +137,24 @@
 
   <div class="download-cta">
     <p>The full data dictionary is available as a Word document on GitHub, with column-level type definitions, business descriptions, constraint notes, and design rationale for each table.</p>
-    <a href="https://github.com/hadimercer/Cadence_HR_HUB/blob/main/docs/artifacts/Cadence_Data_Dictionary_v0.2.docx" target="_blank" class="download-btn">View on GitHub ↗</a>
+    <a href="https://github.com/hadimercer/Cadence_HR_HUB/blob/main/docs/artifacts/Cadence_Data_Dictionary_v0.2.docx" target="_blank" rel="noopener" class="download-btn">View on GitHub ↗</a>
   </div>
 
 </div>
 
-<footer>
-  <p class="footer-left">Cadence_DD_v0.2 · Cadence HR Hub · Hadi Mercer Portfolio 2026</p>
-  <div class="footer-right">
-    <a href="../cadence.html">← Back to Project</a>
-    <a href="../../index.html#projects">All Projects</a>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2026 Hadi Mercer. Designed and built by me, from requirements to deployment.</p>
+    <ul class="footer-links">
+      <li><a href="/projects/cadence.html">Back to Cadence</a></li>
+      <li><a href="/#work">All projects</a></li>
+      <li><a href="mailto:hadibmercer@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
   </div>
 </footer>
-
 </body>
 </html>

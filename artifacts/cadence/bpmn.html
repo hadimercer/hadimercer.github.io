@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadence — BPMN Process Diagrams | Hadi Mercer Portfolio</title>
-<meta name="description" content="BPMN process diagrams for Cadence — HR Process Automation Hub. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<meta property="og:title" content="Cadence — BPMN Process Diagrams | Hadi Mercer Portfolio">
-<meta property="og:description" content="BPMN process diagrams for Cadence — HR Process Automation Hub. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/diagram-shell.css">
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadence: BPMN process maps | Hadi Mercer</title>
+<meta name="description" content="BPMN process maps for Cadence, a personal HR workflow project: current and future flows for headcount, performance, merit and attrition risk.">
+<link rel="canonical" href="https://hadimercer.github.io/artifacts/cadence/bpmn.html">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1316" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Hadi Mercer">
+<meta property="og:title" content="Cadence: BPMN process maps | Hadi Mercer">
+<meta property="og:description" content="BPMN process maps for Cadence, a personal HR workflow project: current and future flows for headcount, performance, merit and attrition risk.">
+<meta property="og:url" content="https://hadimercer.github.io/artifacts/cadence/bpmn.html">
+<meta property="og:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cadence: BPMN process maps | Hadi Mercer">
+<meta name="twitter:description" content="BPMN process maps for Cadence, a personal HR workflow project: current and future flows for headcount, performance, merit and attrition risk.">
+<meta name="twitter:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta name="twitter:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..600,50;1,9..144,400,50&amp;family=Inter:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/artifacts/shared/diagram-shell.css">
+<script src="/assets/js/site.js" defer></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -18,52 +40,52 @@
   gtag('js', new Date());
   gtag('config', 'G-38MGEGB275');
 </script>
-<style>
-  .tab-btn { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 16px; border: 1px solid var(--border2); border-radius: 6px; background: transparent; color: var(--text2); cursor: pointer; transition: all 0.2s ease; }
-  .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .tab-btn.active { background: rgba(0,200,150,0.12); border-color: var(--accent); color: var(--accent); }
-  .tab-btn.as-is { border-color: rgba(245,166,35,0.4); color: var(--amber); }
-  .tab-btn.as-is.active { background: rgba(245,166,35,0.1); border-color: var(--amber); }
-  .tab-btn.to-be { border-color: rgba(0,200,150,0.4); }
-  .tab-btn.to-be.active { background: rgba(0,200,150,0.12); border-color: var(--accent); color: var(--accent); }
-  .bpmn-panel { display: none; }
-  .bpmn-panel.visible { display: block; }
-  .wf-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .asis-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; background: rgba(245,166,35,0.15); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); margin-bottom: 8px; }
-  .tobe-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; background: rgba(0,200,150,0.1); color: var(--accent); border: 1px solid rgba(0,200,150,0.3); margin-bottom: 8px; }
-</style>
 </head>
-<body>
+<body data-project="cadence">
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+</svg>
 
-<nav class="site-nav">
-  <a href="../../index.html" class="nav-logo">HM / Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
+<header class="site-header doc-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/">Hadi Mercer</a>
+    <span class="doc-crumb">· Documents</span>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="/projects/cadence.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg> <span class="label-long">Back to Cadence</span><span class="label-short">Cadence</span></a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+        <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<div class="breadcrumb-bar" id="top">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
     <span class="breadcrumb-sep">/</span>
-    <a href="../cadence.html">Cadence</a>
+    <a href="/projects/cadence.html">Cadence</a>
     <span class="breadcrumb-sep">/</span>
     <span class="breadcrumb-current">BPMN Process Diagrams</span>
-  </div>
+  </nav>
 </div>
 
 <div class="page-header">
   <p class="artifact-type-label">BA Artifact · BPMN 2.0</p>
-  <h1 class="page-title">Cadence — BPMN Process Diagrams</h1>
+  <h1 class="page-title">Cadence: BPMN Process Diagrams</h1>
   <p class="page-subtitle">As-is and to-be process flows for 4 HR workflows: Headcount Reporting, Compensation Review, Performance Management, and Attrition Risk Scoring. BPMN 2.0 simplified. Traces to FRD-CADENCE-001.</p>
 </div>
 
 <div class="doc-meta-block">
   <div class="doc-meta-inner">
     <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">BPMN-CADENCE-001</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 · Portfolio</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Workflows</div><div class="doc-meta-val">4</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Notation</div><div class="doc-meta-val">BPMN 2.0 simplified</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
@@ -75,7 +97,7 @@
 
   <div class="diagram-card">
     <div class="diagram-header">
-      <h3>Process Diagrams — 4 Workflows × AS-IS / TO-BE</h3>
+      <h2>Process Diagrams: 4 Workflows × AS-IS / TO-BE</h2>
       <p>8 diagrams total. AS-IS shows the current manual or undocumented state. TO-BE shows the Cadence system target state. Select a workflow and view below.</p>
     </div>
     <div class="diagram-toolbar">
@@ -96,7 +118,7 @@
       <div id="panel-wf1-asis" class="diagram-panel bpmn-panel visible">
         <div class="diagram-caption">
           <span class="asis-badge">AS-IS</span>
-          <h4>WF1 — Headcount Reporting: Manual CSV Reporting</h4>
+          <h3>WF1 · Headcount Reporting: Manual CSV Reporting</h3>
           <p>HRBP exports CSV from HRIS, manually cleans and formats in Excel, builds pivot tables and charts, emails stakeholders. Follow-up questions restart the entire cycle.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
@@ -107,7 +129,7 @@ flowchart LR
   Clean -->|"Build charts manually"| Charts["Build Pivot\nTables & Charts"]
   Charts -->|"Email report"| Email["Email to\nStakeholders"]
   Email -->|"Follow-up questions"| QA{Questions\nReceived?}
-  QA -->|"Yes — re-run"| Export
+  QA -->|"Yes, re-run"| Export
   QA -->|"No"| Done([End])
           </div>
         </div>
@@ -117,7 +139,7 @@ flowchart LR
       <div id="panel-wf1-tobe" class="diagram-panel bpmn-panel">
         <div class="diagram-caption">
           <span class="tobe-badge">TO-BE</span>
-          <h4>WF1 — Headcount Reporting: Automated Pipeline</h4>
+          <h3>WF1 · Headcount Reporting: Automated Pipeline</h3>
           <p>HR Admin uploads CSV via dashboard. System validates schema, confirms load, triggers pipeline, auto-computes metrics (delta, tenure, attrition rate), and updates the live dashboard instantly.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
@@ -125,7 +147,7 @@ flowchart LR
 flowchart LR
   HRBP(["HR Admin"]) -->|"Upload CSV"| Upload["Upload CSV\nvia Dashboard"]
   Upload -->|"Validate schema"| Validate{Validation\nPassed?}
-  Validate -->|"No — show errors"| Errors["Display\nValidation Errors"]
+  Validate -->|"No, show errors"| Errors["Display\nValidation Errors"]
   Errors --> Upload
   Validate -->|"Yes"| Confirm["Confirm\n& Load"]
   Confirm -->|"Trigger pipeline"| Pipeline["Pipeline\nRun: headcount_snapshots"]
@@ -141,7 +163,7 @@ flowchart LR
       <div id="panel-wf2-asis" class="diagram-panel bpmn-panel">
         <div class="diagram-caption">
           <span class="asis-badge">AS-IS</span>
-          <h4>WF2 — Compensation Review: Spreadsheet Merit Cycle</h4>
+          <h3>WF2 · Compensation Review: Spreadsheet Merit Cycle</h3>
           <p>CHRO distributes Excel spreadsheets. Managers fill in recommendations. HRBP manually consolidates multiple sheets, performs manual band compliance check, then CHRO approves via email chain.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
@@ -161,7 +183,7 @@ flowchart LR
       <div id="panel-wf2-tobe" class="diagram-panel bpmn-panel">
         <div class="diagram-caption">
           <span class="tobe-badge">TO-BE</span>
-          <h4>WF2 — Compensation Review: Eligibility Engine</h4>
+          <h3>WF2 · Compensation Review: Eligibility Engine</h3>
           <p>CHRO opens cycle in system. Eligibility engine auto-determines eligible employees from WF1 data. Managers submit recommendations via dashboard. Band max flag triggers CHRO review path. HR approval workflow closes cycle.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
@@ -172,7 +194,7 @@ flowchart LR
   EligEngine -->|"Flag eligible employees"| MgrDash["Manager Dashboard:\nView Eligible Reports"]
   MgrDash -->|"Submit recommendations"| Rec["Submit Merit\nRecommendations"]
   Rec -->|"Check band max flag"| BandCheck{Exceeds\nBand Max?}
-  BandCheck -->|"Yes — flag"| Flag["Flag for\nCHRO Review"]
+  BandCheck -->|"Yes, flag"| Flag["Flag for\nCHRO Review"]
   BandCheck -->|"No"| HRApprove["HR Approval\nWorkflow"]
   Flag --> HRApprove
   HRApprove --> CloseCycle["Close Cycle\n& Archive"]
@@ -185,8 +207,8 @@ flowchart LR
       <div id="panel-wf4-asis" class="diagram-panel bpmn-panel">
         <div class="diagram-caption">
           <span class="asis-badge">AS-IS</span>
-          <h4>WF4 — Performance Management: Undocumented Reviews</h4>
-          <p>Manager conducts informal verbal check-ins with no structured record. Annual review is retrospective with no documentation trail — high bias risk and no data to inform merit decisions.</p>
+          <h3>WF4 · Performance Management: Undocumented Reviews</h3>
+          <p>Manager conducts informal verbal check-ins with no structured record. Annual review is retrospective with no documentation trail: high bias risk and no data to inform merit decisions.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
           <div class="mermaid" style="min-width:700px;">
@@ -204,7 +226,7 @@ flowchart LR
       <div id="panel-wf4-tobe" class="diagram-panel bpmn-panel">
         <div class="diagram-caption">
           <span class="tobe-badge">TO-BE</span>
-          <h4>WF4 — Performance Management: Weekly 1:1 + Monthly + Quarterly</h4>
+          <h3>WF4 · Performance Management: Weekly 1:1 + Monthly + Quarterly</h3>
           <p>Structured cadence: weekly 1:1 capture, monthly check-ins with employee acknowledgement, quarterly formal review with HR approval. Output feeds WF2 (merit eligibility) and WF3 (attrition risk).</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
@@ -225,8 +247,8 @@ flowchart LR
       <div id="panel-wf3-asis" class="diagram-panel bpmn-panel">
         <div class="diagram-caption">
           <span class="asis-badge">AS-IS</span>
-          <h4>WF3 — Attrition Risk Scoring: Reactive Resignation Response</h4>
-          <p>No proactive signal. Organisation only becomes aware of flight risk when resignation is submitted. Exit interview conducted if time permits. Post-hoc analysis provides no preventive value.</p>
+          <h3>WF3 · Attrition Risk Scoring: Reactive Resignation Response</h3>
+          <p>No proactive signal. Organization only becomes aware of flight risk when resignation is submitted. Exit interview conducted if time permits. Post-hoc analysis provides no preventive value.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
           <div class="mermaid" style="min-width:700px;">
@@ -244,7 +266,7 @@ flowchart LR
       <div id="panel-wf3-tobe" class="diagram-panel bpmn-panel">
         <div class="diagram-caption">
           <span class="tobe-badge">TO-BE</span>
-          <h4>WF3 — Attrition Risk Scoring: Proactive Scoring Engine</h4>
+          <h3>WF3 · Attrition Risk Scoring: Proactive Scoring Engine</h3>
           <p>Composite 0-100 risk score aggregates signals from WF1 (tenure/salary), WF2 (merit history), and WF4 (ratings/sentiment). RED flags trigger retention action logging. AMBER raises dashboard alert for monitoring.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
@@ -267,38 +289,33 @@ flowchart LR
   </div>
 
   <div class="callout-strip" style="margin-top:28px;">
-    <strong>BPMN Notation Note:</strong> These diagrams use simplified BPMN 2.0 notation appropriate for a portfolio BA artifact. Core constructs — sequence flows, gateways, events, tasks, and swimlanes — are all correctly applied. AS-IS diagrams represent the pre-Cadence state based on stakeholder discovery. TO-BE diagrams represent the target system behaviour as specified in FRD-CADENCE-001.
+    <strong>BPMN Notation Note:</strong> These diagrams use simplified BPMN 2.0 notation appropriate for a portfolio BA artifact. Core constructs (sequence flows, gateways, events, tasks, and swimlanes) are all correctly applied. AS-IS diagrams represent the pre-Cadence state based on stakeholder discovery. TO-BE diagrams represent the target system behavior as specified in FRD-CADENCE-001.
   </div>
 
 </div>
 
-<footer>
-  <div class="site-footer">
-    <p class="footer-left">BPMN-CADENCE-001 · Cadence · Hadi Mercer Portfolio 2026</p>
-    <div class="footer-right">
-      <a href="../cadence.html">← Back to Project</a>
-      <a href="../../index.html#projects">All Projects</a>
-    </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2026 Hadi Mercer. Designed and built by me, from requirements to deployment.</p>
+    <ul class="footer-links">
+      <li><a href="/projects/cadence.html">Back to Cadence</a></li>
+      <li><a href="/#work">All projects</a></li>
+      <li><a href="mailto:hadibmercer@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="/artifacts/shared/diagram-shell.js"></script>
 <script>
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: 'dark',
-    themeVariables: {
-      primaryColor: '#111518',
-      primaryTextColor: '#e8eaeb',
-      primaryBorderColor: '#00c896',
-      lineColor: '#8a9299',
-      secondaryColor: '#181d21',
-      tertiaryColor: '#0a0d0f',
-      edgeLabelBackground: '#0a0d0f',
-      clusterBkg: '#111518'
-    }
-  });
+  mermaid.initialize(Object.assign({ startOnLoad: false }, window.diagramTheme()));
 
   document.addEventListener('DOMContentLoaded', async () => {
+    await document.fonts.ready;
     const first = document.querySelector('.bpmn-panel.visible .mermaid');
     if (first) await mermaid.run({ nodes: [first] });
   });

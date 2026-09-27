@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lens — Use Case Diagram | Hadi Mercer Portfolio</title>
-<meta name="description" content="Use case diagram for Lens — Sentiment &amp; Text Analytics Tool. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<meta property="og:title" content="Lens — Use Case Diagram | Hadi Mercer Portfolio">
-<meta property="og:description" content="Use case diagram for Lens — Sentiment &amp; Text Analytics Tool. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/diagram-shell.css">
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lens: use case diagram | Hadi Mercer</title>
+<meta name="description" content="Use case diagram for Lens, a personal AI-assisted text analysis project: what analysts and admins can do in the app.">
+<link rel="canonical" href="https://hadimercer.github.io/artifacts/lens/ucd.html">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1316" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Hadi Mercer">
+<meta property="og:title" content="Lens: use case diagram | Hadi Mercer">
+<meta property="og:description" content="Use case diagram for Lens, a personal AI-assisted text analysis project: what analysts and admins can do in the app.">
+<meta property="og:url" content="https://hadimercer.github.io/artifacts/lens/ucd.html">
+<meta property="og:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lens: use case diagram | Hadi Mercer">
+<meta name="twitter:description" content="Use case diagram for Lens, a personal AI-assisted text analysis project: what analysts and admins can do in the app.">
+<meta name="twitter:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta name="twitter:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..600,50;1,9..144,400,50&amp;family=Inter:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/artifacts/shared/diagram-shell.css">
+<script src="/assets/js/site.js" defer></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -19,37 +41,51 @@
   gtag('config', 'G-38MGEGB275');
 </script>
 </head>
-<body>
+<body data-project="lens">
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+</svg>
 
-<nav class="site-nav">
-  <a href="../../index.html" class="nav-logo">HM / Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
+<header class="site-header doc-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/">Hadi Mercer</a>
+    <span class="doc-crumb">· Documents</span>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="/projects/lens.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg> <span class="label-long">Back to Lens</span><span class="label-short">Lens</span></a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+        <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<div class="breadcrumb-bar" id="top">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
     <span class="breadcrumb-sep">/</span>
-    <a href="../lens.html">Lens</a>
+    <a href="/projects/lens.html">Lens</a>
     <span class="breadcrumb-sep">/</span>
     <span class="breadcrumb-current">Use Case Diagram</span>
-  </div>
+  </nav>
 </div>
 
 <div class="page-header">
   <p class="artifact-type-label">BA Artifact · Use Case Diagram</p>
-  <h1 class="page-title">Lens — Use Case Diagram</h1>
-  <p class="page-subtitle">14 use cases across 4 groups: Input, NLP Pipeline, Visualisation, and Persistence. Three actors: Analyst, Admin, and OpenAI API. Domain-agnostic: same system serves CX, HR, and OPS framings.</p>
+  <h1 class="page-title">Lens: Use Case Diagram</h1>
+  <p class="page-subtitle">14 use cases across 4 groups: Input, NLP Pipeline, Visualization, and Persistence. Three actors: Analyst, Admin, and OpenAI API. Domain-agnostic: same system serves CX, HR, and OPS framings.</p>
 </div>
 
 <div class="doc-meta-block">
   <div class="doc-meta-inner">
     <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">UCD-LENS-001</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 · Portfolio</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Use Cases</div><div class="doc-meta-val">14</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Actors</div><div class="doc-meta-val">3</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
@@ -61,8 +97,8 @@
 
   <div class="diagram-card">
     <div class="diagram-header">
-      <h3>Use Case Diagram</h3>
-      <p>14 use cases grouped into 4 subsystems within the Lens System Boundary. Analyst drives all input and visualisation use cases. Admin has read-only access to anomaly flags and history. OpenAI API is invoked for all NLP processing use cases.</p>
+      <h2>Use Case Diagram</h2>
+      <p>14 use cases grouped into 4 subsystems within the Lens System Boundary. Analyst drives all input and visualization use cases. Admin has read-only access to anomaly flags and history. OpenAI API is invoked for all NLP processing use cases.</p>
     </div>
     <div class="diagram-panels">
       <div class="diagram-panel">
@@ -89,7 +125,7 @@ flowchart LR
       UC07["UC-07\nFlag Sentiment Anomalies"]
     end
 
-    subgraph VIS["Visualisation"]
+    subgraph VIS["Visualization"]
       UC08["UC-08\nView Sentiment Breakdown"]
       UC09["UC-09\nView Theme Heatmap"]
       UC10["UC-10\nView Sentiment Over Time"]
@@ -133,8 +169,8 @@ flowchart LR
   </div>
 
   <div style="margin-top:32px;">
-    <h2 style="font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);">Use Case Reference</h2>
-    <table class="support-table">
+    <h2 style="font-family:var(--serif);font-size:26px;color:var(--text);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);">Use Case Reference</h2>
+    <div class="table-scroll"><table class="support-table">
       <thead><tr><th>UC ID</th><th>Name</th><th>Group</th><th>Description</th></tr></thead>
       <tbody>
         <tr><td>UC-01</td><td>Upload Batch Text File</td><td>Input</td><td>CSV or pasted text. Validates format, row count, encoding before accepting.</td></tr>
@@ -146,44 +182,38 @@ flowchart LR
         <tr><td>UC-05</td><td>Extract Recurring Themes</td><td>NLP Pipeline</td><td>Batch-level prompt: top 5-8 themes with frequency and dominant sentiment.</td></tr>
         <tr><td>UC-06</td><td>Generate Executive Summary</td><td>NLP Pipeline</td><td>2-3 sentence narrative: sentiment distribution, dominant themes, notable patterns.</td></tr>
         <tr><td>UC-07</td><td>Flag Sentiment Anomalies</td><td>NLP Pipeline</td><td>Records deviating ±2σ from batch mean tagged as anomalies.</td></tr>
-        <tr><td>UC-08</td><td>View Sentiment Breakdown</td><td>Visualisation</td><td>Donut chart + histogram: positive/neutral/negative %.</td></tr>
-        <tr><td>UC-09</td><td>View Theme Heatmap</td><td>Visualisation</td><td>Grid: themes vs sentiment polarity, with representative quotes on hover.</td></tr>
-        <tr><td>UC-10</td><td>View Sentiment Over Time</td><td>Visualisation</td><td>Line chart by day/week when timestamp column present.</td></tr>
-        <tr><td>UC-11</td><td>View Anomaly Flags</td><td>Visualisation</td><td>Filtered list of outlier records with deviation value and type.</td></tr>
+        <tr><td>UC-08</td><td>View Sentiment Breakdown</td><td>Visualization</td><td>Donut chart + histogram: positive/neutral/negative %.</td></tr>
+        <tr><td>UC-09</td><td>View Theme Heatmap</td><td>Visualization</td><td>Grid: themes vs sentiment polarity, with representative quotes on hover.</td></tr>
+        <tr><td>UC-10</td><td>View Sentiment Over Time</td><td>Visualization</td><td>Line chart by day/week when timestamp column present.</td></tr>
+        <tr><td>UC-11</td><td>View Anomaly Flags</td><td>Visualization</td><td>Filtered list of outlier records with deviation value and type.</td></tr>
         <tr><td>UC-12</td><td>Save Analysis to History</td><td>Persistence</td><td>Full result written to PostgreSQL with unique analysis_id.</td></tr>
         <tr><td>UC-13</td><td>Browse Past Analyses</td><td>Persistence</td><td>Paginated list of stored analyses grouped by series.</td></tr>
         <tr><td>UC-14</td><td>Export Results CSV</td><td>Export</td><td>Per-record scores and theme assignments as downloadable CSV.</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 
 </div>
 
-<footer>
-  <div class="site-footer">
-    <p class="footer-left">UCD-LENS-001 · Lens · Hadi Mercer Portfolio 2026</p>
-    <div class="footer-right">
-      <a href="../lens.html">← Back to Project</a>
-      <a href="../../index.html#projects">All Projects</a>
-    </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2026 Hadi Mercer. Designed and built by me, from requirements to deployment.</p>
+    <ul class="footer-links">
+      <li><a href="/projects/lens.html">Back to Lens</a></li>
+      <li><a href="/#work">All projects</a></li>
+      <li><a href="mailto:hadibmercer@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="/artifacts/shared/diagram-shell.js"></script>
 <script>
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: 'dark',
-    themeVariables: {
-      primaryColor: '#111518',
-      primaryTextColor: '#e8eaeb',
-      primaryBorderColor: '#00c896',
-      lineColor: '#8a9299',
-      secondaryColor: '#181d21',
-      tertiaryColor: '#0a0d0f',
-      edgeLabelBackground: '#0a0d0f',
-      clusterBkg: '#111518'
-    }
-  });
+  mermaid.initialize(Object.assign({ startOnLoad: true }, window.diagramTheme()));
 </script>
 </body>
 </html>

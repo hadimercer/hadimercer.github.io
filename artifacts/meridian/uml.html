@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meridian — Data Model | Hadi Mercer Portfolio</title>
-<meta name="description" content="UML data model for Meridian — Workstream Portfolio Health Dashboard. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<meta property="og:title" content="Meridian — Data Model | Hadi Mercer Portfolio">
-<meta property="og:description" content="UML data model for Meridian — Workstream Portfolio Health Dashboard. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/diagram-shell.css">
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meridian: UML data model | Hadi Mercer</title>
+<meta name="description" content="UML class diagram for Meridian, a personal workstream health project: the data model behind scoring, roles and row-level security.">
+<link rel="canonical" href="https://hadimercer.github.io/artifacts/meridian/uml.html">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1316" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Hadi Mercer">
+<meta property="og:title" content="Meridian: UML data model | Hadi Mercer">
+<meta property="og:description" content="UML class diagram for Meridian, a personal workstream health project: the data model behind scoring, roles and row-level security.">
+<meta property="og:url" content="https://hadimercer.github.io/artifacts/meridian/uml.html">
+<meta property="og:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Meridian: UML data model | Hadi Mercer">
+<meta name="twitter:description" content="UML class diagram for Meridian, a personal workstream health project: the data model behind scoring, roles and row-level security.">
+<meta name="twitter:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta name="twitter:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..600,50;1,9..144,400,50&amp;family=Inter:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/artifacts/shared/diagram-shell.css">
+<script src="/assets/js/site.js" defer></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -19,37 +41,51 @@
   gtag('config', 'G-38MGEGB275');
 </script>
 </head>
-<body>
+<body data-project="meridian">
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+</svg>
 
-<nav class="site-nav">
-  <a href="../../index.html" class="nav-logo">HM / Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
+<header class="site-header doc-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/">Hadi Mercer</a>
+    <span class="doc-crumb">· Documents</span>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="/projects/meridian.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg> <span class="label-long">Back to Meridian</span><span class="label-short">Meridian</span></a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+        <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<div class="breadcrumb-bar" id="top">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
     <span class="breadcrumb-sep">/</span>
-    <a href="../meridian.html">Meridian</a>
+    <a href="/projects/meridian.html">Meridian</a>
     <span class="breadcrumb-sep">/</span>
     <span class="breadcrumb-current">UML Class Diagram</span>
-  </div>
+  </nav>
 </div>
 
 <div class="page-header">
   <p class="artifact-type-label">BA Artifact · UML Class Diagram</p>
-  <h1 class="page-title">Meridian — Data Model</h1>
+  <h1 class="page-title">Meridian: Data Model</h1>
   <p class="page-subtitle">Full relational schema for the Meridian portfolio health dashboard. 12 tables across 4 entity groups. Traces to FRD-MERIDIAN-001.</p>
 </div>
 
 <div class="doc-meta-block">
   <div class="doc-meta-inner">
     <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">UML-MERIDIAN-001</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 · Portfolio</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Entities</div><div class="doc-meta-val">12 Tables</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">February 2026</div></div>
@@ -60,7 +96,7 @@
 
   <div class="diagram-card">
     <div class="diagram-header">
-      <h3>Full Data Model</h3>
+      <h2>Full Data Model</h2>
       <p>12 tables across 4 entity groups: Identity &amp; Access, Workstream Core, RAG Scoring, and Collaboration Layer. Every table references workstreams directly or through the polymorphic entity pattern.</p>
     </div>
     <div class="diagram-panels">
@@ -69,7 +105,7 @@
           <button onclick="zoomDiag(-0.15)" class="source-chip">− Zoom Out</button>
           <button onclick="resetZoom()" class="source-chip">Reset</button>
           <button onclick="zoomDiag(0.15)" class="source-chip">+ Zoom In</button>
-          <span id="zoom-label" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-left:4px;">100%</span>
+          <span id="zoom-label" style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-left:4px;">100%</span>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
           <div class="mermaid" style="min-width:900px;">
@@ -244,50 +280,50 @@ classDiagram
   <div style="margin-top: 32px; margin-bottom: 8px;">
     <div class="legend-grid">
       <div class="legend-card">
-        <h3>Identity &amp; Access</h3>
-        <p><strong>users, workstream_members, invite_links</strong> — Authentication, role assignment, and the open-link invite flow. workstream_members is the RLS anchor: every data operation checks this table for the user's role.</p>
+        <h2>Identity &amp; Access</h2>
+        <p><strong>users, workstream_members, invite_links</strong>: Authentication, role assignment, and the open-link invite flow. workstream_members is the RLS anchor: every data operation checks this table for the user's role.</p>
       </div>
       <div class="legend-card">
-        <h3>Workstream Core</h3>
-        <p><strong>workstreams, wizard_config</strong> — The atomic unit of tracking and its scoring profile. wizard_config is 1:1 with workstreams and stores all 9 wizard answers that tune the RAG engine.</p>
+        <h2>Workstream Core</h2>
+        <p><strong>workstreams, wizard_config</strong>: The atomic unit of tracking and its scoring profile. wizard_config is 1:1 with workstreams and stores all 9 wizard answers that tune the RAG engine.</p>
       </div>
       <div class="legend-card">
-        <h3>RAG Scoring</h3>
-        <p><strong>rag_scores, milestones, spend_entries, blockers</strong> — The three health dimension inputs. rag_scores is recalculated on every write to these tables. Never manually set.</p>
+        <h2>RAG Scoring</h2>
+        <p><strong>rag_scores, milestones, spend_entries, blockers</strong>: The three health dimension inputs. rag_scores is recalculated on every write to these tables. Never manually set.</p>
       </div>
       <div class="legend-card">
-        <h3>Collaboration Layer</h3>
-        <p><strong>comments, notes, updates</strong> — Contextual conversation per tab item (comments), persistent annotations (notes), and structured announcements (updates). Polymorphic via entity_type + entity_id.</p>
+        <h2>Collaboration Layer</h2>
+        <p><strong>comments, notes, updates</strong>: Contextual conversation per tab item (comments), persistent annotations (notes), and structured announcements (updates). Polymorphic via entity_type + entity_id.</p>
       </div>
     </div>
   </div>
 
   <div style="margin-top: 40px;">
-    <h2 style="font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);">Key Design Decisions</h2>
-    <table class="support-table">
+    <h2 style="font-family:var(--serif);font-size:26px;color:var(--text);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);">Key Design Decisions</h2>
+    <div class="table-scroll"><table class="support-table">
       <thead>
         <tr><th>Decision</th><th>Implementation</th><th>Rationale</th></tr>
       </thead>
       <tbody>
-        <tr><td>Role-based access control</td><td>workstream_members.role — owner / contributor / viewer</td><td>Every Supabase RLS policy references this column. Single source of truth for permissions across all 12 tables.</td></tr>
-        <tr><td>Wizard stored, not derived</td><td>wizard_config table — 9 columns, one per question</td><td>Wizard answers must persist independently of the workstream so they can be re-run without losing history. Separate table keeps workstreams clean.</td></tr>
+        <tr><td>Role-based access control</td><td>workstream_members.role: owner / contributor / viewer</td><td>Every Supabase RLS policy references this column. Single source of truth for permissions across all 12 tables.</td></tr>
+        <tr><td>Wizard stored, not derived</td><td>wizard_config table: 9 columns, one per question</td><td>Wizard answers must persist independently of the workstream so they can be re-run without losing history. Separate table keeps workstreams clean.</td></tr>
         <tr><td>Polymorphic comments &amp; notes</td><td>entity_type TEXT + entity_id UUID on both tables</td><td>Avoids 6+ separate comment tables. entity_type values: workstream, milestone, blocker, spend_entry. Validated at application layer.</td></tr>
-        <tr><td>RAG score as live table</td><td>rag_scores — 1:1 with workstreams, recalculated on trigger</td><td>Storing the calculated score avoids re-computing on every dashboard load. Recalculated on any write to milestones, spend_entries, or blockers.</td></tr>
+        <tr><td>RAG score as live table</td><td>rag_scores: 1:1 with workstreams, recalculated on trigger</td><td>Storing the calculated score avoids re-computing on every dashboard load. Recalculated on any write to milestones, spend_entries, or blockers.</td></tr>
         <tr><td>Former member attribution</td><td>is_former_member BOOL on workstream_members, comments</td><td>FR-31 requires historical comments to be retained but attributed as 'Former member' after removal. Flag set on removal, not deletion of records.</td></tr>
         <tr><td>Invite token model</td><td>invite_links.token TEXT UNIQUE + is_active BOOL</td><td>Open invite link pattern. Owner can deactivate a link without deleting it. Token looked up on signup to auto-assign Viewer role via workstream_members.</td></tr>
-        <tr><td>Staleness flag on rag_scores</td><td>rag_scores.is_stale BOOL — set by scheduled check vs Q8</td><td>Staleness is a separate signal from health score (FR-10). Displayed alongside RAG on the portfolio card without overriding the calculated colour.</td></tr>
+        <tr><td>Staleness flag on rag_scores</td><td>rag_scores.is_stale BOOL, set by scheduled check vs Q8</td><td>Staleness is a separate signal from health score (FR-10). Displayed alongside RAG on the portfolio card without overriding the calculated color.</td></tr>
         <tr><td>Updates post locking</td><td>updates.is_locked BOOL + edited_at</td><td>FR-27: posts editable within 15 minutes, then locked. Application sets is_locked = true after 15-minute window. Preserves integrity of the decision/risk log.</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <div class="callout-strip" style="margin-top:20px;">
-      <strong>On the comments polymorphic pattern:</strong> The <code>entity_type + entity_id</code> approach is deliberately chosen over foreign-key-per-entity-type for v1 simplicity. The tradeoff is that referential integrity is enforced at the application layer rather than the database layer. This is an acceptable constraint for a portfolio build — a Phase 2 refactor could introduce separate comment tables per entity if integrity guarantees become critical.
+      <strong>On the comments polymorphic pattern:</strong> The <code>entity_type + entity_id</code> approach is deliberately chosen over foreign-key-per-entity-type for v1 simplicity. The tradeoff is that referential integrity is enforced at the application layer rather than the database layer. This is an acceptable constraint for a portfolio build; a Phase 2 refactor could introduce separate comment tables per entity if integrity guarantees become critical.
     </div>
   </div>
 
   <div style="margin-top: 40px;">
-    <h2 style="font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);">Enumerated Field Values</h2>
-    <table class="support-table">
+    <h2 style="font-family:var(--serif);font-size:26px;color:var(--text);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);">Enumerated Field Values</h2>
+    <div class="table-scroll"><table class="support-table">
       <thead>
         <tr><th>Table</th><th>Column</th><th>Valid Values</th><th>Notes</th></tr>
       </thead>
@@ -296,43 +332,37 @@ classDiagram
         <tr><td>milestones</td><td>status</td><td>not_started, in_progress, complete</td><td>Drives Schedule Health calculation</td></tr>
         <tr><td>blockers</td><td>status</td><td>open, resolved</td><td>Age tracked from date_raised while open</td></tr>
         <tr><td>updates</td><td>post_type</td><td>status_update, decision_made, risk_raised, milestone_reached, general_announcement</td><td>status_update restricted to Owner role</td></tr>
-        <tr><td>rag_scores</td><td>rag_status</td><td>green, amber, red</td><td>Derived from composite_score thresholds: &ge;70 green, 40–69 amber, &lt;40 red</td></tr>
-        <tr><td>comments / notes</td><td>entity_type</td><td>workstream, milestone, blocker, spend_entry</td><td>Polymorphic anchor — validated at app layer</td></tr>
+        <tr><td>rag_scores</td><td>rag_status</td><td>green, amber, red</td><td>Derived from composite_score thresholds: &ge;70 green, 40 to 69 amber, &lt;40 red</td></tr>
+        <tr><td>comments / notes</td><td>entity_type</td><td>workstream, milestone, blocker, spend_entry</td><td>Polymorphic anchor, validated at app layer</td></tr>
         <tr><td>wizard_config</td><td>q2_deadline_nature</td><td>hard_contractual, business_driven, self_imposed, ongoing</td><td>Most impactful single modifier on schedule weighting</td></tr>
         <tr><td>wizard_config</td><td>q4_budget_exposure</td><td>client_billable, approved_internal, informal_none</td><td>informal_none suppresses budget dimension to 5%</td></tr>
         <tr><td>wizard_config</td><td>q5_dependency_level</td><td>self_contained, depends_1_2, depends_multiple, blocked_external</td><td>blocked_external halves blocker age thresholds</td></tr>
         <tr><td>wizard_config</td><td>q6_risk_level</td><td>low, medium, high, critical</td><td>high/critical compress the Amber-to-Red band</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 
 </div>
 
-<footer>
-  <div class="site-footer">
-    <p class="footer-left">UML-MERIDIAN-001 · Meridian · Hadi Mercer Portfolio 2026</p>
-    <div class="footer-right">
-      <a href="../meridian.html">← Back to Project</a>
-      <a href="../../index.html#projects">All Projects</a>
-    </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2026 Hadi Mercer. Designed and built by me, from requirements to deployment.</p>
+    <ul class="footer-links">
+      <li><a href="/projects/meridian.html">Back to Meridian</a></li>
+      <li><a href="/#work">All projects</a></li>
+      <li><a href="mailto:hadibmercer@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="/artifacts/shared/diagram-shell.js"></script>
 <script>
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: 'dark',
-    themeVariables: {
-      primaryColor: '#111518',
-      primaryTextColor: '#e8eaeb',
-      primaryBorderColor: '#00c896',
-      lineColor: '#8a9299',
-      secondaryColor: '#181d21',
-      tertiaryColor: '#0a0d0f',
-      edgeLabelBackground: '#0a0d0f',
-      clusterBkg: '#111518'
-    }
-  });
+  mermaid.initialize(Object.assign({ startOnLoad: true }, window.diagramTheme()));
 
   let _zoom = 1;
   function zoomDiag(delta) {

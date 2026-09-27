@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lens — Data Flow Diagrams | Hadi Mercer Portfolio</title>
-<meta name="description" content="Data flow diagrams for Lens — Sentiment &amp; Text Analytics Tool. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<meta property="og:title" content="Lens — Data Flow Diagrams | Hadi Mercer Portfolio">
-<meta property="og:description" content="Data flow diagrams for Lens — Sentiment &amp; Text Analytics Tool. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/diagram-shell.css">
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lens: data flow diagrams | Hadi Mercer</title>
+<meta name="description" content="Data flow diagrams for Lens, a personal AI-assisted text analysis project, from the system context down to each pipeline stage.">
+<link rel="canonical" href="https://hadimercer.github.io/artifacts/lens/dfd.html">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1316" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Hadi Mercer">
+<meta property="og:title" content="Lens: data flow diagrams | Hadi Mercer">
+<meta property="og:description" content="Data flow diagrams for Lens, a personal AI-assisted text analysis project, from the system context down to each pipeline stage.">
+<meta property="og:url" content="https://hadimercer.github.io/artifacts/lens/dfd.html">
+<meta property="og:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lens: data flow diagrams | Hadi Mercer">
+<meta name="twitter:description" content="Data flow diagrams for Lens, a personal AI-assisted text analysis project, from the system context down to each pipeline stage.">
+<meta name="twitter:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta name="twitter:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..600,50;1,9..144,400,50&amp;family=Inter:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/artifacts/shared/diagram-shell.css">
+<script src="/assets/js/site.js" defer></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -18,46 +40,53 @@
   gtag('js', new Date());
   gtag('config', 'G-38MGEGB275');
 </script>
-<style>
-  .tab-btn { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 16px; border: 1px solid var(--border2); border-radius: 6px; background: transparent; color: var(--text2); cursor: pointer; transition: all 0.2s ease; }
-  .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .tab-btn.active { background: rgba(0,200,150,0.12); border-color: var(--accent); color: var(--accent); }
-  .dfd-panel { display: none; }
-  .dfd-panel.visible { display: block; }
-</style>
 </head>
-<body>
+<body data-project="lens">
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+</svg>
 
-<nav class="site-nav">
-  <a href="../../index.html" class="nav-logo">HM / Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
+<header class="site-header doc-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/">Hadi Mercer</a>
+    <span class="doc-crumb">· Documents</span>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="/projects/lens.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg> <span class="label-long">Back to Lens</span><span class="label-short">Lens</span></a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+        <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<div class="breadcrumb-bar" id="top">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
     <span class="breadcrumb-sep">/</span>
-    <a href="../lens.html">Lens</a>
+    <a href="/projects/lens.html">Lens</a>
     <span class="breadcrumb-sep">/</span>
     <span class="breadcrumb-current">Data Flow Diagrams</span>
-  </div>
+  </nav>
 </div>
 
 <div class="page-header">
   <p class="artifact-type-label">BA Artifact · Data Flow Diagram</p>
-  <h1 class="page-title">Lens — Data Flow Diagrams</h1>
+  <h1 class="page-title">Lens: Data Flow Diagrams</h1>
   <p class="page-subtitle">Four-level DFD decomposing the Lens NLP pipeline. L0 context overview through to L3 results storage. Traces to FRD-LENS-001, FR-03, FR-08.</p>
 </div>
 
 <div class="doc-meta-block">
   <div class="doc-meta-inner">
     <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">DFD-LENS-001</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Levels</div><div class="doc-meta-val">L0–L3</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 · Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Levels</div><div class="doc-meta-val">L0 to L3</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Notation</div><div class="doc-meta-val">Yourdon-DeMarco</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">March 2026</div></div>
@@ -68,22 +97,22 @@
 
   <div class="diagram-card">
     <div class="diagram-header">
-      <h3>Data Flow Diagrams — L0 to L3</h3>
-      <p>Four-level decomposition following Yourdon-DeMarco notation. L0 shows the system boundary and external entities. L1–L3 decompose each major process into sub-processes with explicit data stores.</p>
+      <h2>Data Flow Diagrams: L0 to L3</h2>
+      <p>Four-level decomposition following Yourdon-DeMarco notation. L0 shows the system boundary and external entities. L1 to L3 decompose each major process into sub-processes with explicit data stores.</p>
     </div>
     <div class="diagram-toolbar">
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="tab-btn active" onclick="showDfd('l0', this)">L0 — Context</button>
-        <button class="tab-btn" onclick="showDfd('l1', this)">L1 — Ingestion</button>
-        <button class="tab-btn" onclick="showDfd('l2', this)">L2 — NLP Pipeline</button>
-        <button class="tab-btn" onclick="showDfd('l3', this)">L3 — Visualisation</button>
+        <button class="tab-btn active" onclick="showDfd('l0', this)">L0: Context</button>
+        <button class="tab-btn" onclick="showDfd('l1', this)">L1: Ingestion</button>
+        <button class="tab-btn" onclick="showDfd('l2', this)">L2: NLP Pipeline</button>
+        <button class="tab-btn" onclick="showDfd('l3', this)">L3: Visualization</button>
       </div>
     </div>
     <div class="diagram-panels">
 
       <div id="panel-l0" class="diagram-panel dfd-panel visible">
         <div class="diagram-caption">
-          <h4>L0 — Context Diagram</h4>
+          <h3>L0: Context Diagram</h3>
           <p>System boundary overview. Four external entities: Analyst (primary), Admin (reviewer), OpenAI API (NLP provider), and PostgreSQL (persistence). All data flows into and out of the central Lens Engine process.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
@@ -107,7 +136,7 @@ flowchart LR
 
       <div id="panel-l1" class="diagram-panel dfd-panel">
         <div class="diagram-caption">
-          <h4>L1 — Batch Ingestion &amp; Validation</h4>
+          <h3>L1: Batch Ingestion &amp; Validation</h3>
           <p>Decomposes P0 into 5 sub-processes covering upload acceptance, parsing, preview, labelling, and staging. Error path branches to P1.E which reports validation failures without writing any records.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
@@ -131,7 +160,7 @@ flowchart LR
 
       <div id="panel-l2" class="diagram-panel dfd-panel">
         <div class="diagram-caption">
-          <h4>L2 — NLP Pipeline Execution</h4>
+          <h3>L2: NLP Pipeline Execution</h3>
           <p>Core pipeline decomposition. 7 sub-processes: prompt building, API call, response parsing, theme extraction, executive summary, anomaly detection, and result assembly. All OpenAI interactions are explicit bidirectional flows.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
@@ -162,7 +191,7 @@ flowchart LR
 
       <div id="panel-l3" class="diagram-panel dfd-panel">
         <div class="diagram-caption">
-          <h4>L3 — Results Visualisation &amp; Storage</h4>
+          <h3>L3: Results Visualization &amp; Storage</h3>
           <p>Four sub-processes: dashboard rendering, CSV export, history persistence, and history browsing. Both Analyst and Admin can browse history. Export is Analyst-only.</p>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
@@ -197,33 +226,28 @@ flowchart LR
 
 </div>
 
-<footer>
-  <div class="site-footer">
-    <p class="footer-left">DFD-LENS-001 · Lens · Hadi Mercer Portfolio 2026</p>
-    <div class="footer-right">
-      <a href="../lens.html">← Back to Project</a>
-      <a href="../../index.html#projects">All Projects</a>
-    </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2026 Hadi Mercer. Designed and built by me, from requirements to deployment.</p>
+    <ul class="footer-links">
+      <li><a href="/projects/lens.html">Back to Lens</a></li>
+      <li><a href="/#work">All projects</a></li>
+      <li><a href="mailto:hadibmercer@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="/artifacts/shared/diagram-shell.js"></script>
 <script>
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: 'dark',
-    themeVariables: {
-      primaryColor: '#111518',
-      primaryTextColor: '#e8eaeb',
-      primaryBorderColor: '#00c896',
-      lineColor: '#8a9299',
-      secondaryColor: '#181d21',
-      tertiaryColor: '#0a0d0f',
-      edgeLabelBackground: '#0a0d0f',
-      clusterBkg: '#111518'
-    }
-  });
+  mermaid.initialize(Object.assign({ startOnLoad: false }, window.diagramTheme()));
 
   document.addEventListener('DOMContentLoaded', async () => {
+    await document.fonts.ready;
     const first = document.querySelector('.dfd-panel.visible .mermaid');
     if (first) await mermaid.run({ nodes: [first] });
   });

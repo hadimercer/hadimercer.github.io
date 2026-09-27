@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lens — Entity Relationship Diagram | Hadi Mercer Portfolio</title>
-<meta name="description" content="Entity relationship diagram for Lens — Sentiment &amp; Text Analytics Tool. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<meta property="og:title" content="Lens — Entity Relationship Diagram | Hadi Mercer Portfolio">
-<meta property="og:description" content="Entity relationship diagram for Lens — Sentiment &amp; Text Analytics Tool. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/diagram-shell.css">
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lens: entity relationship diagram | Hadi Mercer</title>
+<meta name="description" content="Entity relationship diagram for Lens, a personal AI-assisted text analysis project: the five-table schema and how it connects.">
+<link rel="canonical" href="https://hadimercer.github.io/artifacts/lens/erd.html">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1316" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Hadi Mercer">
+<meta property="og:title" content="Lens: entity relationship diagram | Hadi Mercer">
+<meta property="og:description" content="Entity relationship diagram for Lens, a personal AI-assisted text analysis project: the five-table schema and how it connects.">
+<meta property="og:url" content="https://hadimercer.github.io/artifacts/lens/erd.html">
+<meta property="og:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lens: entity relationship diagram | Hadi Mercer">
+<meta name="twitter:description" content="Entity relationship diagram for Lens, a personal AI-assisted text analysis project: the five-table schema and how it connects.">
+<meta name="twitter:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta name="twitter:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..600,50;1,9..144,400,50&amp;family=Inter:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/artifacts/shared/diagram-shell.css">
+<script src="/assets/js/site.js" defer></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -19,37 +41,51 @@
   gtag('config', 'G-38MGEGB275');
 </script>
 </head>
-<body>
+<body data-project="lens">
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+</svg>
 
-<nav class="site-nav">
-  <a href="../../index.html" class="nav-logo">HM / Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
+<header class="site-header doc-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/">Hadi Mercer</a>
+    <span class="doc-crumb">· Documents</span>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="/projects/lens.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg> <span class="label-long">Back to Lens</span><span class="label-short">Lens</span></a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+        <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<div class="breadcrumb-bar" id="top">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
     <span class="breadcrumb-sep">/</span>
-    <a href="../lens.html">Lens</a>
+    <a href="/projects/lens.html">Lens</a>
     <span class="breadcrumb-sep">/</span>
     <span class="breadcrumb-current">ERD</span>
-  </div>
+  </nav>
 </div>
 
 <div class="page-header">
   <p class="artifact-type-label">BA Artifact · Entity Relationship Diagram</p>
-  <h1 class="page-title">Lens — Entity Relationship Diagram</h1>
+  <h1 class="page-title">Lens: Entity Relationship Diagram</h1>
   <p class="page-subtitle">5-table PostgreSQL schema for the Lens Sentiment &amp; Text Analytics Tool. Core table is analysis_results, surrounded by series_index, context_profiles, batch_records, and pipeline_run_log.</p>
 </div>
 
 <div class="doc-meta-block">
   <div class="doc-meta-inner">
     <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">ERD-LENS-001</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 · Portfolio</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Tables</div><div class="doc-meta-val">5</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">DB</div><div class="doc-meta-val">PostgreSQL via Supabase</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
@@ -61,7 +97,7 @@
 
   <div class="diagram-card">
     <div class="diagram-header">
-      <h3>Entity Relationship Diagram</h3>
+      <h2>Entity Relationship Diagram</h2>
       <p>analysis_results is the central hub table. series_index groups runs into longitudinal series. batch_records stores per-record NLP results. context_profiles holds optional org context. pipeline_run_log captures execution metadata.</p>
     </div>
     <div class="diagram-panels">
@@ -75,14 +111,14 @@ erDiagram
     text domain_tag "nullable"
     integer run_count
     timestamptz last_run_at "nullable"
-    text created_by "nullable — analyst label"
+    text created_by "nullable, analyst label"
     timestamptz created_at
   }
 
   analysis_results {
     uuid analysis_id PK "gen_random_uuid()"
-    text series_name FK "nullable — series_index"
-    integer run_sequence "nullable — within series"
+    text series_name FK "nullable, series_index"
+    integer run_sequence "nullable, within series"
     text batch_label
     text domain_tag "nullable"
     integer record_count
@@ -90,8 +126,8 @@ erDiagram
     jsonb top_themes "array of theme objects"
     text executive_summary "nullable"
     integer anomaly_count "nullable"
-    jsonb context_profile "nullable — snapshot at run"
-    uuid prior_cycle_ref FK "nullable — self-reference"
+    jsonb context_profile "nullable, snapshot at run"
+    uuid prior_cycle_ref FK "nullable, self-reference"
     jsonb per_record_results "full scored array"
     timestamptz created_at
   }
@@ -103,7 +139,7 @@ erDiagram
     text industry "nullable"
     text department "nullable"
     text reporting_period "nullable"
-    text situational_notes "nullable — max 500 chars"
+    text situational_notes "nullable, max 500 chars"
     timestamptz created_at
   }
 
@@ -147,55 +183,49 @@ erDiagram
   <div style="margin-top:32px;margin-bottom:8px;">
     <div class="legend-grid">
       <div class="legend-card">
-        <h3>Core</h3>
-        <p><strong>analysis_results</strong> — Central hub. All relationships converge here. Stores aggregated NLP output: sentiment split, themes, summary, anomaly count, and full per-record results as JSONB.</p>
+        <h2>Core</h2>
+        <p><strong>analysis_results</strong>: Central hub. All relationships converge here. Stores aggregated NLP output: sentiment split, themes, summary, anomaly count, and full per-record results as JSONB.</p>
       </div>
       <div class="legend-card">
-        <h3>Series</h3>
-        <p><strong>series_index</strong> — Groups analysis runs into named longitudinal series. Enables trend comparison across time periods (e.g., "Q4 2025 CX Survey" series with 3 monthly runs).</p>
+        <h2>Series</h2>
+        <p><strong>series_index</strong>: Groups analysis runs into named longitudinal series. Enables trend comparison across time periods (e.g., "Q4 2025 CX Survey" series with 3 monthly runs).</p>
       </div>
       <div class="legend-card">
-        <h3>Records</h3>
-        <p><strong>batch_records</strong> — Per-record scored results. One row per text input. Stores label, confidence score, deviation from batch mean, anomaly flag, and theme assignments.</p>
+        <h2>Records</h2>
+        <p><strong>batch_records</strong>: Per-record scored results. One row per text input. Stores label, confidence score, deviation from batch mean, anomaly flag, and theme assignments.</p>
       </div>
       <div class="legend-card">
-        <h3>Context</h3>
-        <p><strong>context_profiles</strong> — Optional org context injected into NLP prompts. Org name, industry, department, reporting period, and situational notes. Stored alongside result for audit.</p>
+        <h2>Context</h2>
+        <p><strong>context_profiles</strong>: Optional org context injected into NLP prompts. Org name, industry, department, reporting period, and situational notes. Stored alongside result for audit.</p>
       </div>
       <div class="legend-card">
-        <h3>Audit</h3>
-        <p><strong>pipeline_run_log</strong> — Execution metadata. API call counts, records submitted vs scored vs failed, duration, error detail. Supports pipeline monitoring and debugging.</p>
+        <h2>Audit</h2>
+        <p><strong>pipeline_run_log</strong>: Execution metadata. API call counts, records submitted vs scored vs failed, duration, error detail. Supports pipeline monitoring and debugging.</p>
       </div>
     </div>
   </div>
 
 </div>
 
-<footer>
-  <div class="site-footer">
-    <p class="footer-left">ERD-LENS-001 · Lens · Hadi Mercer Portfolio 2026</p>
-    <div class="footer-right">
-      <a href="../lens.html">← Back to Project</a>
-      <a href="../../index.html#projects">All Projects</a>
-    </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2026 Hadi Mercer. Designed and built by me, from requirements to deployment.</p>
+    <ul class="footer-links">
+      <li><a href="/projects/lens.html">Back to Lens</a></li>
+      <li><a href="/#work">All projects</a></li>
+      <li><a href="mailto:hadibmercer@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="/artifacts/shared/diagram-shell.js"></script>
 <script>
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: 'dark',
-    themeVariables: {
-      primaryColor: '#111518',
-      primaryTextColor: '#e8eaeb',
-      primaryBorderColor: '#00c896',
-      lineColor: '#8a9299',
-      secondaryColor: '#181d21',
-      tertiaryColor: '#0a0d0f',
-      edgeLabelBackground: '#0a0d0f',
-      clusterBkg: '#111518'
-    }
-  });
+  mermaid.initialize(Object.assign({ startOnLoad: true }, window.diagramTheme()));
 </script>
 </body>
 </html>

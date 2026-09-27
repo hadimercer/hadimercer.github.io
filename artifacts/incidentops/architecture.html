@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IncidentOps — System Architecture | Hadi Mercer Portfolio</title>
-<meta name="description" content="System architecture for IncidentOps — Process Mining Insights Hub. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<meta property="og:title" content="IncidentOps — System Architecture | Hadi Mercer Portfolio">
-<meta property="og:description" content="System architecture for IncidentOps — Process Mining Insights Hub. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/diagram-shell.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IncidentOps: system architecture | Hadi Mercer</title>
+<meta name="description" content="System architecture for IncidentOps, a personal process mining project: how data moves from a service-desk event log to the dashboard.">
+<link rel="canonical" href="https://hadimercer.github.io/artifacts/incidentops/architecture.html">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1316" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Hadi Mercer">
+<meta property="og:title" content="IncidentOps: system architecture | Hadi Mercer">
+<meta property="og:description" content="System architecture for IncidentOps, a personal process mining project: how data moves from a service-desk event log to the dashboard.">
+<meta property="og:url" content="https://hadimercer.github.io/artifacts/incidentops/architecture.html">
+<meta property="og:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IncidentOps: system architecture | Hadi Mercer">
+<meta name="twitter:description" content="System architecture for IncidentOps, a personal process mining project: how data moves from a service-desk event log to the dashboard.">
+<meta name="twitter:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta name="twitter:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..600,50;1,9..144,400,50&amp;family=Inter:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/artifacts/shared/diagram-shell.css">
+<script src="/assets/js/site.js" defer></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -17,65 +40,56 @@
   gtag('js', new Date());
   gtag('config', 'G-38MGEGB275');
 </script>
-<style>
-  :root {
-    --accent2: #0087ff;
-    --amber: #f5a623;
-    --red: #e8443a;
-  }
-  .doc-section { margin-bottom: 48px; }
-  .section-heading { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--text); letter-spacing: -0.01em; margin-bottom: 6px; padding-bottom: 16px; border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 16px; }
-  .section-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text3); letter-spacing: 0.1em; }
-  .doc-prose { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 16px; max-width: 860px; }
-  .arch-block { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 28px; margin-bottom: 20px; }
-  .arch-block h3 { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
-  .arch-block p { font-size: 14px; color: var(--text2); line-height: 1.7; }
-  .arch-block code { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); background: var(--surface2); padding: 1px 6px; border-radius: 3px; }
-  .flow-diagram { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 32px; margin: 24px 0; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text2); line-height: 2; overflow-x: auto; }
-  .flow-accent { color: var(--accent); font-weight: 700; }
-  .flow-arrow { color: var(--text3); }
-  .layer-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px; }
-  .layer-table th { background: var(--surface2); border: 1px solid var(--border2); padding: 10px 16px; text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; }
-  .layer-table td { border: 1px solid var(--border); padding: 12px 16px; color: var(--text2); vertical-align: top; line-height: 1.55; }
-  .layer-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); white-space: nowrap; }
-  .layer-table tr:hover td { background: var(--surface); }
-</style>
 </head>
-<body>
+<body data-project="incidentops">
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+</svg>
 
-<nav class="site-nav">
-  <a href="../../index.html" class="nav-logo">HM / Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
+<header class="site-header doc-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/">Hadi Mercer</a>
+    <span class="doc-crumb">· Documents</span>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="/projects/incidentops.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg> <span class="label-long">Back to IncidentOps</span><span class="label-short">IncidentOps</span></a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+        <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<div class="breadcrumb-bar" id="top">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
     <span class="breadcrumb-sep">/</span>
-    <a href="../incidentops.html">IncidentOps</a>
+    <a href="/projects/incidentops.html">IncidentOps</a>
     <span class="breadcrumb-sep">/</span>
     <span class="breadcrumb-current">System Architecture</span>
-  </div>
+  </nav>
 </div>
 
 <div class="page-header">
   <p class="artifact-type-label">BA Artifact · Architecture Diagram</p>
-  <h1 class="page-title">IncidentOps — System Architecture</h1>
+  <h1 class="page-title">IncidentOps: System Architecture</h1>
   <p class="page-subtitle">Four-layer analytics pipeline converting incident event logs into structured process mining insights and operational dashboards.</p>
 </div>
 
 <div class="doc-meta-block">
   <div class="doc-meta-inner">
     <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">ARCH-INC-001</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 · Portfolio</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Project</div><div class="doc-meta-val">IncidentOps PMI Hub</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Date</div><div class="doc-meta-val">March 2026</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Source</div><div class="doc-meta-val"><a href="https://github.com/hadimercer/IncidentOps_PMI_Hub/blob/main/docs/architecture.md" target="_blank" style="color:var(--accent);text-decoration:none;">GitHub ↗</a></div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Source</div><div class="doc-meta-val"><a href="https://github.com/hadimercer/IncidentOps_PMI_Hub/blob/main/docs/architecture.md" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">GitHub ↗</a></div></div>
   </div>
 </div>
 
@@ -84,15 +98,15 @@
   <div class="doc-section">
     <h2 class="section-heading"><span class="section-num">01</span>Overview</h2>
     <p class="doc-prose">IncidentOps PMI Hub implements a four-stage analytics pipeline. A semicolon-delimited incident event log is exported from a source ticketing system, ingested via a Python loader, transformed into analytical views via SQL, and surfaced as process mining insights through a six-workstream Streamlit dashboard.</p>
-    <p class="doc-prose">The design deliberately prioritises reproducibility and portfolio readability over complex infrastructure. Business logic lives primarily in SQL views, which keeps the UI thinner and easier to explain in stakeholder handoff contexts.</p>
+    <p class="doc-prose">The design deliberately prioritizes reproducibility and portfolio readability over complex infrastructure. Business logic lives primarily in SQL views, which keeps the UI thinner and easier to explain in stakeholder handoff contexts.</p>
 
     <div class="flow-diagram">
       <span class="flow-accent">CSV Export</span> (source ticketing system)<br>
-      <span class="flow-arrow">  ↓  load_csv.py — validate · normalise · idempotent event keys</span><br>
+      <span class="flow-arrow">  ↓  load_csv.py: validate · normalize · idempotent event keys</span><br>
       <span class="flow-accent">PostgreSQL</span> (raw storage + canonical event mapping)<br>
-      <span class="flow-arrow">  ↓  SQL analytical views — process mining calculations</span><br>
+      <span class="flow-arrow">  ↓  SQL analytical views: process mining calculations</span><br>
       <span class="flow-accent">Streamlit Dashboard</span> (6 workstream modules)<br>
-      <span class="flow-arrow">  ↓  read-only analytics — no ticket mutation</span><br>
+      <span class="flow-arrow">  ↓  read-only analytics: no ticket mutation</span><br>
       <span class="flow-accent">End User</span> (service owners · ops managers · team leads)
     </div>
   </div>
@@ -100,7 +114,7 @@
   <div class="doc-section">
     <h2 class="section-heading"><span class="section-num">02</span>Architecture Layers</h2>
 
-    <table class="layer-table">
+    <div class="table-scroll"><table class="layer-table">
       <thead>
         <tr><th>Layer</th><th>Component</th><th>Responsibility</th><th>Design Decision</th></tr>
       </thead>
@@ -109,7 +123,7 @@
           <td>Ingestion</td>
           <td><code>load_csv.py</code></td>
           <td>Maps source columns, validates timestamps, computes idempotent event keys, stages data to PostgreSQL</td>
-          <td>Idempotent keys prevent duplicate event rows on re-import. Validated at ingestion boundary — not at query time.</td>
+          <td>Idempotent keys prevent duplicate event rows on re-import. Validated at ingestion boundary, not at query time.</td>
         </tr>
         <tr>
           <td>Storage</td>
@@ -121,21 +135,21 @@
           <td>Presentation</td>
           <td>Streamlit (6 workstreams)</td>
           <td>Queries analytical views; surfaces process mining metrics, KPIs, and variant analysis through interactive dashboard modules.</td>
-          <td>Shared theme layer supports reusable components across workstreams. UI is thin — pure consumer of SQL view output.</td>
+          <td>Shared theme layer supports reusable components across workstreams. UI is thin: pure consumer of SQL view output.</td>
         </tr>
         <tr>
           <td>Testing</td>
           <td>Test suite</td>
-          <td>Covers loader normalisation, SQL object structure, and app query contracts. Optional DB-backed tests via <code>TEST_DATABASE_URL</code>.</td>
-          <td>Test scope is deliberately limited to what's verifiable without a production environment — appropriate for a portfolio context.</td>
+          <td>Covers loader normalization, SQL object structure, and app query contracts. Optional DB-backed tests via <code>TEST_DATABASE_URL</code>.</td>
+          <td>Test scope is deliberately limited to what's verifiable without a production environment, appropriate for a portfolio context.</td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 
   <div class="doc-section">
     <h2 class="section-heading"><span class="section-num">03</span>Dashboard Workstreams</h2>
-    <p class="doc-prose">The Streamlit dashboard is organised into six operational workstreams, each addressing a distinct analytical lens on the incident process:</p>
+    <p class="doc-prose">The Streamlit dashboard is organized into six operational workstreams, each addressing a distinct analytical lens on the incident process:</p>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:20px;">
       <div class="arch-block">
@@ -156,7 +170,7 @@
       </div>
       <div class="arch-block">
         <h3>Intake</h3>
-        <p>Incident intake pattern analysis — volume by channel, category, time of day, and priority. Supports demand forecasting discussions.</p>
+        <p>Incident intake pattern analysis: volume by channel, category, time of day, and priority. Supports demand forecasting discussions.</p>
       </div>
       <div class="arch-block">
         <h3>Enablement</h3>
@@ -170,7 +184,7 @@
 
     <div class="arch-block">
       <h3>Database Connectivity</h3>
-      <p>Two connection strings are used: <code>DATABASE_URL_DIRECT</code> for bootstrapping (schema creation, initial seed) and <code>DATABASE_URL_POOLED</code> as the application's preferred runtime connection. Configuration is managed via environment variables — no credentials in code.</p>
+      <p>Two connection strings are used: <code>DATABASE_URL_DIRECT</code> for bootstrapping (schema creation, initial seed) and <code>DATABASE_URL_POOLED</code> as the application's preferred runtime connection. Configuration is managed via environment variables, with no credentials in code.</p>
     </div>
 
     <div class="arch-block">
@@ -180,21 +194,25 @@
 
     <div class="arch-block">
       <h3>Design Scope Boundary</h3>
-      <p>This is an analytics tool — it does not update tickets and relies on CSV input rather than live integrations. The system assumes event timestamps are sequentially reliable and treats reopens as meaningful quality signals. Process mining outputs are descriptive, not causal proof.</p>
+      <p>This is an analytics tool: it does not update tickets and relies on CSV input rather than live integrations. The system assumes event timestamps are sequentially reliable and treats reopens as meaningful quality signals. Process mining outputs are descriptive, not causal proof.</p>
     </div>
   </div>
 
 </div>
 
-<footer>
-  <div class="site-footer">
-    <p class="footer-left">ARCH-INC-001 · IncidentOps PMI Hub · Hadi Mercer Portfolio 2026</p>
-    <div class="footer-right">
-      <a href="../incidentops.html">← Back to Project</a>
-      <a href="../../index.html#projects">All Projects</a>
-    </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2026 Hadi Mercer. Designed and built by me, from requirements to deployment.</p>
+    <ul class="footer-links">
+      <li><a href="/projects/incidentops.html">Back to IncidentOps</a></li>
+      <li><a href="/#work">All projects</a></li>
+      <li><a href="mailto:hadibmercer@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
   </div>
 </footer>
-
 </body>
 </html>

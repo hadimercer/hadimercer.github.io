@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadence — Data Model | Hadi Mercer Portfolio</title>
-<meta name="description" content="UML data model for Cadence — HR Process Automation Hub. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<meta property="og:title" content="Cadence — Data Model | Hadi Mercer Portfolio">
-<meta property="og:description" content="UML data model for Cadence — HR Process Automation Hub. Part of Hadi Mercer's HR · People Analytics · Business Analysis portfolio.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/diagram-shell.css">
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadence: UML data model | Hadi Mercer</title>
+<meta name="description" content="UML class diagram for Cadence, a personal HR workflow project: the 13-table data model shared by four HR workflows.">
+<link rel="canonical" href="https://hadimercer.github.io/artifacts/cadence/uml.html">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1316" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Hadi Mercer">
+<meta property="og:title" content="Cadence: UML data model | Hadi Mercer">
+<meta property="og:description" content="UML class diagram for Cadence, a personal HR workflow project: the 13-table data model shared by four HR workflows.">
+<meta property="og:url" content="https://hadimercer.github.io/artifacts/cadence/uml.html">
+<meta property="og:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cadence: UML data model | Hadi Mercer">
+<meta name="twitter:description" content="UML class diagram for Cadence, a personal HR workflow project: the 13-table data model shared by four HR workflows.">
+<meta name="twitter:image" content="https://hadimercer.github.io/assets/img/og-hadi-mercer.png">
+<meta name="twitter:image:alt" content="Hadi Mercer. HR Operations, People Analytics and HR Technology.">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..600,50;1,9..144,400,50&amp;family=Inter:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/artifacts/shared/diagram-shell.css">
+<script src="/assets/js/site.js" defer></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38MGEGB275"></script>
 <script>
@@ -19,37 +41,51 @@
   gtag('config', 'G-38MGEGB275');
 </script>
 </head>
-<body>
+<body data-project="cadence">
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+</svg>
 
-<nav class="site-nav">
-  <a href="../../index.html" class="nav-logo">HM / Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="../../index.html#about">About</a></li>
-    <li><a href="../../index.html#projects">Projects</a></li>
-    <li><a href="https://github.com/hadimercer" target="_blank">GitHub ↗</a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="breadcrumb-bar">
-  <div class="breadcrumb">
-    <a href="../../index.html">Portfolio</a>
+<header class="site-header doc-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/">Hadi Mercer</a>
+    <span class="doc-crumb">· Documents</span>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="/projects/cadence.html"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg> <span class="label-long">Back to Cadence</span><span class="label-short">Cadence</span></a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+        <svg class="icon icon-moon" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg>
+        <svg class="icon icon-sun" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<div class="breadcrumb-bar" id="top">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
     <span class="breadcrumb-sep">/</span>
-    <a href="../cadence.html">Cadence</a>
+    <a href="/projects/cadence.html">Cadence</a>
     <span class="breadcrumb-sep">/</span>
     <span class="breadcrumb-current">UML Class Diagram</span>
-  </div>
+  </nav>
 </div>
 
 <div class="page-header">
   <p class="artifact-type-label">BA Artifact · UML Class Diagram</p>
-  <h1 class="page-title">Cadence — Data Model</h1>
+  <h1 class="page-title">Cadence: Data Model</h1>
   <p class="page-subtitle">13-table relational schema across 4 workflow groups: Headcount Reporting (WF1), Compensation Review (WF2), Performance Management (WF4), and Attrition Risk Scoring (WF3). PostgreSQL via Supabase.</p>
 </div>
 
 <div class="doc-meta-block">
   <div class="doc-meta-inner">
     <div class="doc-meta-cell"><div class="doc-meta-key">Document</div><div class="doc-meta-val">UML-CADENCE-001</div></div>
-    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 — Portfolio</div></div>
+    <div class="doc-meta-cell"><div class="doc-meta-key">Version</div><div class="doc-meta-val">1.0 · Portfolio</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Tables</div><div class="doc-meta-val">13</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Workflows</div><div class="doc-meta-val">4</div></div>
     <div class="doc-meta-cell"><div class="doc-meta-key">Author</div><div class="doc-meta-val">Hadi Mercer</div></div>
@@ -61,7 +97,7 @@
 
   <div class="diagram-card">
     <div class="diagram-header">
-      <h3>Full Data Model — 13 Tables</h3>
+      <h2>Full Data Model: 13 Tables</h2>
       <p>Cross-workflow schema where headcount_snapshots acts as the central employee record anchor. WF1 data feeds WF2 and WF3. WF4 data feeds both WF2 and WF3. Risk scoring aggregates signals from all three upstream workflows.</p>
     </div>
     <div class="diagram-panels">
@@ -70,7 +106,7 @@
           <button onclick="zoomDiag(-0.15)" class="source-chip">− Zoom Out</button>
           <button onclick="resetZoom()" class="source-chip">Reset</button>
           <button onclick="zoomDiag(0.15)" class="source-chip">+ Zoom In</button>
-          <span id="zoom-label" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-left:4px;">100%</span>
+          <span id="zoom-label" style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-left:4px;">100%</span>
         </div>
         <div class="diagram-frame" style="overflow-x:auto;">
           <div class="mermaid" style="min-width:1100px;">
@@ -283,55 +319,49 @@ classDiagram
   <div style="margin-top:32px;margin-bottom:8px;">
     <div class="legend-grid">
       <div class="legend-card">
-        <h3>WF1 — Headcount Reporting</h3>
-        <p><strong>headcount_snapshots, pipeline_run_log</strong> — Central employee record anchor. CSV upload pipeline with idempotent upsert. Feeds WF2 and WF3 downstream.</p>
+        <h2>WF1: Headcount Reporting</h2>
+        <p><strong>headcount_snapshots, pipeline_run_log</strong>: Central employee record anchor. CSV upload pipeline with idempotent upsert. Feeds WF2 and WF3 downstream.</p>
       </div>
       <div class="legend-card">
-        <h3>WF2 — Compensation Review</h3>
-        <p><strong>salary_bands, merit_cycles, merit_eligibility, merit_recommendations</strong> — Full merit cycle lifecycle. Eligibility engine auto-determines from WF1 data. Band compliance enforced at recommendation.</p>
+        <h2>WF2: Compensation Review</h2>
+        <p><strong>salary_bands, merit_cycles, merit_eligibility, merit_recommendations</strong>: Full merit cycle lifecycle. Eligibility engine auto-determines from WF1 data. Band compliance enforced at recommendation.</p>
       </div>
       <div class="legend-card">
-        <h3>WF4 — Performance Management</h3>
-        <p><strong>performance_reviews, one_on_ones, monthly_checkins</strong> — Weekly 1:1 capture, monthly check-ins with employee acknowledgement, and quarterly formal reviews with HR approval gate.</p>
+        <h2>WF4: Performance Management</h2>
+        <p><strong>performance_reviews, one_on_ones, monthly_checkins</strong>: Weekly 1:1 capture, monthly check-ins with employee acknowledgement, and quarterly formal reviews with HR approval gate.</p>
       </div>
       <div class="legend-card">
-        <h3>WF3 — Attrition Risk Scoring</h3>
-        <p><strong>attrition_risk_scores, risk_factor_config, retention_actions</strong> — Composite 0-100 risk score aggregating signals from WF1, WF2, and WF4. Configurable weights via risk_factor_config.</p>
+        <h2>WF3: Attrition Risk Scoring</h2>
+        <p><strong>attrition_risk_scores, risk_factor_config, retention_actions</strong>: Composite 0-100 risk score aggregating signals from WF1, WF2, and WF4. Configurable weights via risk_factor_config.</p>
       </div>
     </div>
   </div>
 
   <div class="callout-strip" style="margin-top:28px;">
-    <strong>Cross-workflow data feeds:</strong> WF1 supplies headcount and salary data to WF2 (eligibility) and WF3 (compa-ratio signal). WF4 supplies rating trends and check-in frequency to both WF2 (performance modifier) and WF3 (sentiment and engagement signals). WF2 supplies merit history to WF3 (time-since-merit signal). All feeds are read-only lookups — no circular dependencies.
+    <strong>Cross-workflow data feeds:</strong> WF1 supplies headcount and salary data to WF2 (eligibility) and WF3 (compa-ratio signal). WF4 supplies rating trends and check-in frequency to both WF2 (performance modifier) and WF3 (sentiment and engagement signals). WF2 supplies merit history to WF3 (time-since-merit signal). All feeds are read-only lookups, with no circular dependencies.
   </div>
 
 </div>
 
-<footer>
-  <div class="site-footer">
-    <p class="footer-left">UML-CADENCE-001 · Cadence · Hadi Mercer Portfolio 2026</p>
-    <div class="footer-right">
-      <a href="../cadence.html">← Back to Project</a>
-      <a href="../../index.html#projects">All Projects</a>
-    </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© 2026 Hadi Mercer. Designed and built by me, from requirements to deployment.</p>
+    <ul class="footer-links">
+      <li><a href="/projects/cadence.html">Back to Cadence</a></li>
+      <li><a href="/#work">All projects</a></li>
+      <li><a href="mailto:hadibmercer@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/hadimercer" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="/artifacts/shared/diagram-shell.js"></script>
 <script>
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: 'dark',
-    themeVariables: {
-      primaryColor: '#111518',
-      primaryTextColor: '#e8eaeb',
-      primaryBorderColor: '#00c896',
-      lineColor: '#8a9299',
-      secondaryColor: '#181d21',
-      tertiaryColor: '#0a0d0f',
-      edgeLabelBackground: '#0a0d0f',
-      clusterBkg: '#111518'
-    }
-  });
+  mermaid.initialize(Object.assign({ startOnLoad: true }, window.diagramTheme()));
 
   let _zoom = 1;
   function zoomDiag(delta) {
