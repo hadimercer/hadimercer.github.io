@@ -276,7 +276,7 @@ flowchart LR
   WF4Score["WF4 Data:\n1:1 Freq, Ratings"] -->|"sentiment, check-in freq"| ScoreEngine
   WF2Score["WF2 Data:\nMerit History"] -->|"time since merit"| ScoreEngine
   ScoreEngine -->|"Composite 0-100"| RAG{RAG\nStatus}
-  RAG -->|"RED < 40"| Alert["Alert:\nHR + Manager Dashboard"]
+  RAG -->|"RED &lt; 40"| Alert["Alert:\nHR + Manager Dashboard"]
   RAG -->|"AMBER 40-69"| Monitor["Monitor:\nFlagged on Dashboard"]
   RAG -->|"GREEN >= 70"| Clear["No Action\nRequired"]
   Alert -->|"Create retention action"| RetentionAction["Log Retention\nAction in System"]

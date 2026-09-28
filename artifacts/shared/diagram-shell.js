@@ -19,6 +19,34 @@
     activate(buttons[0].dataset.tabButton);
   });
 
+  // Anything that scrolls sideways (wide diagrams, tables on phones) must be reachable by keyboard.
+  function markScrollable() {
+    var heading = '', used = {};
+    d.querySelectorAll('h1, h2, h3, h4, .diagram-frame, .diagram-wrap, .table-scroll').forEach(function (el) {
+      if (/^H[1-4]$/.test(el.tagName)) { heading = el.textContent.replace(/\s+/g, ' ').trim(); return; }
+      if (el.scrollWidth > el.clientWidth + 1) {
+        var label = (el.classList.contains('table-scroll') ? 'Scrollable table' : 'Scrollable diagram') + (heading ? ': ' + heading : '');
+        used[label] = (used[label] || 0) + 1;
+        if (used[label] > 1) label += ' (' + used[label] + ')';
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('role', 'region');
+        el.setAttribute('aria-label', label);
+      } else {
+        el.removeAttribute('tabindex');
+        el.removeAttribute('role');
+        el.removeAttribute('aria-label');
+      }
+    });
+  }
+  if ('ResizeObserver' in window) {
+    var ro = new ResizeObserver(markScrollable);
+    d.querySelectorAll('.diagram-frame, .diagram-wrap, .table-scroll').forEach(function (el) {
+      ro.observe(el);
+      Array.from(el.children).forEach(function (child) { ro.observe(child); });
+    });
+  }
+  window.addEventListener('load', markScrollable);
+
   // Diagram palettes built from the site tokens.
   var FONT = 'Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
   var LIGHT = {

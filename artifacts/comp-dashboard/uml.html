@@ -188,7 +188,7 @@ sequenceDiagram
     DB-->>UI: Returns msa_code, msa_name
     UI->>DB: SELECT from bls_wage_data WHERE soc_code=? AND msa_code=? ORDER BY reference_year DESC LIMIT 1
     DB-->>UI: Returns pct_25, pct_50, pct_75, annual_mean
-    Note over UI: Computes gap $ and gap % vs BLS P50<br/>Applies below-market flag if midpoint < P25<br/>Renders grouped bar chart + KPI metrics
+    Note over UI: Computes gap $ and gap % vs BLS P50<br/>Applies below-market flag if midpoint &lt; P25<br/>Renders grouped bar chart + KPI metrics
     UI-->>User: Benchmarking view: Internal vs Market
     Note over UI: All queries cached via @st.cache_data(ttl=300)
       </div>
